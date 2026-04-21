@@ -1,5 +1,7 @@
 # LingMate
 
+![LingMate Demo](demo.gif)
+
 LingMate is an AI-powered language learning platform focused on conversational practice and scenario-based learning.
 
 ---
