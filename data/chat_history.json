@@ -1,0 +1,972 @@
+{
+  "roman-demo": [
+    {
+      "sender": "user",
+      "message": "Hi! I want to improve my English because I would like to travel and speak more confidently.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:36:15"
+    },
+    {
+      "sender": "bot",
+      "message": "That's a fantastic goal! Traveling and speaking confidently in English will open up so many experiences for you. How about we start with some common travel scenarios? What's one thing you'd love to be able to do or say confidently on your next trip?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:36:15"
+    },
+    {
+      "sender": "user",
+      "message": "Hello! Could I get a medium latte with oat milk, please?",
+      "mode": "lesson",
+      "timestamp": "2026-04-20T23:40:50"
+    },
+    {
+      "sender": "bot",
+      "message": "Certainly! And would that be for here or to go?",
+      "mode": "lesson",
+      "timestamp": "2026-04-20T23:40:50"
+    },
+    {
+      "sender": "user",
+      "message": "Hey! I want to practice my English for traveling and for explaining myself. Would you help me with that?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:57:35"
+    },
+    {
+      "sender": "bot",
+      "message": "Absolutely! That's a great focus. Explaining yourself clearly is super important, especially when traveling. How about we practice a common situation: asking for directions or explaining a problem you might have at a hotel?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:57:35"
+    },
+    {
+      "sender": "user",
+      "message": "Hey! I want to practice my English for traveling and for explaining myself. Would you help me with that?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:57:59"
+    },
+    {
+      "sender": "bot",
+      "message": "Absolutely! That's a great focus. Explaining yourself clearly is super important, especially when traveling. How about we practice a common situation: asking for directions or explaining a problem you might have at a hotel?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:57:59"
+    },
+    {
+      "sender": "user",
+      "message": "sure let's practice asking for directions",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:58:25"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:58:25"
+    },
+    {
+      "sender": "user",
+      "message": "I like animal I like to travel I like my life",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:58:54"
+    },
+    {
+      "sender": "bot",
+      "message": "It's wonderful that you like animals, travel, and your life! Since you enjoy traveling, let's practice asking for directions. Imagine you're in a new city and want to find a famous landmark. How would you ask for directions to the city's main museum?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:58:54"
+    },
+    {
+      "sender": "user",
+      "message": "I like anime I like to travel I like my life",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:59:05"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:59:05"
+    },
+    {
+      "sender": "user",
+      "message": "I like anime I like to travel I like my life",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:59:19"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-20T23:59:19"
+    },
+    {
+      "sender": "user",
+      "message": "I like anime I like to travel I like my life",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:11"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:11"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:26"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:26"
+    },
+    {
+      "sender": "user",
+      "message": "I am a student",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:41"
+    },
+    {
+      "sender": "bot",
+      "message": "That's great, Roman! Being a student is an important part of life. What do you study, or what do you enjoy most about being a student?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:41"
+    },
+    {
+      "sender": "user",
+      "message": "I am a student",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:48"
+    },
+    {
+      "sender": "bot",
+      "message": "You mentioned you're a student, Roman! That's interesting. What subject do you study, or what's your favorite part about being a student?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:00:48"
+    },
+    {
+      "sender": "user",
+      "message": "I spend a lot of time with young people who have a spark",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:01:32"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:01:32"
+    },
+    {
+      "sender": "user",
+      "message": "I spend a lot of time with young people who have a spark",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:01:43"
+    },
+    {
+      "sender": "bot",
+      "message": "Great! Let's keep practicing. Tell me some interesting stuff in 2–3 simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:01:43"
+    },
+    {
+      "sender": "user",
+      "message": "Hey, you allright?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:02:21"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:02:21"
+    },
+    {
+      "sender": "user",
+      "message": "I want to order a coffee",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:02:36"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:02:36"
+    },
+    {
+      "sender": "user",
+      "message": "I would also love some biscuits",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:03:46"
+    },
+    {
+      "sender": "bot",
+      "message": "Okay, biscuits. And what about your coffee order? What would you like to drink?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:03:46"
+    },
+    {
+      "sender": "user",
+      "message": "I want to have a cappucino",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:14"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:14"
+    },
+    {
+      "sender": "user",
+      "message": "Latte?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:24"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:24"
+    },
+    {
+      "sender": "user",
+      "message": "Coffee with milk?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:46"
+    },
+    {
+      "sender": "bot",
+      "message": "Yes, we do! Are you thinking of a latte, perhaps? Or a flat white?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:46"
+    },
+    {
+      "sender": "user",
+      "message": "Coffee with milk?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:53"
+    },
+    {
+      "sender": "bot",
+      "message": "Yes, we do! Are you thinking of a latte, perhaps? Or a flat white?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:04:53"
+    },
+    {
+      "sender": "user",
+      "message": "Tea?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:00"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:00"
+    },
+    {
+      "sender": "user",
+      "message": "Milk?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:11"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:11"
+    },
+    {
+      "sender": "user",
+      "message": "Juice?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:20"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:20"
+    },
+    {
+      "sender": "user",
+      "message": "A piece of cherry pie?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:36"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:36"
+    },
+    {
+      "sender": "user",
+      "message": "A latte would be great",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:49"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:49"
+    },
+    {
+      "sender": "user",
+      "message": "A cappucino",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:56"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:05:56"
+    },
+    {
+      "sender": "user",
+      "message": "Just coffee with milk",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:06:06"
+    },
+    {
+      "sender": "bot",
+      "message": "Sure! Would you like something else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:06:06"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:42:57"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! What do you study, and what do you enjoy doing in your free time?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:42:57"
+    },
+    {
+      "sender": "user",
+      "message": "I am a student.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:33"
+    },
+    {
+      "sender": "bot",
+      "message": "That's great! What subject do you study? You can answer in one or two simple sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:33"
+    },
+    {
+      "sender": "user",
+      "message": "I like anime and traveling.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:47"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice! Why do you like anime? Try to answer in 2 short sentences.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:47"
+    },
+    {
+      "sender": "user",
+      "message": "I want to travel abroad and speak confidently.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:58"
+    },
+    {
+      "sender": "bot",
+      "message": "Travel is a great topic. What countries would you like to visit, and why?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T00:43:58"
+    },
+    {
+      "sender": "user",
+      "message": "Hello!",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:12"
+    },
+    {
+      "sender": "bot",
+      "message": "Hello! What can I get for you today?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:12"
+    },
+    {
+      "sender": "user",
+      "message": "Could I get a latte, please?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:26"
+    },
+    {
+      "sender": "bot",
+      "message": "Certainly! And would you like that for here or to go?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:26"
+    },
+    {
+      "sender": "user",
+      "message": "With oat milk, please.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:36"
+    },
+    {
+      "sender": "bot",
+      "message": "Yes, we have oat milk. Anything else?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:36"
+    },
+    {
+      "sender": "user",
+      "message": "To go.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:45"
+    },
+    {
+      "sender": "bot",
+      "message": "Perfect. Anything else for your order?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:45"
+    },
+    {
+      "sender": "user",
+      "message": "How much is it?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:52"
+    },
+    {
+      "sender": "bot",
+      "message": "It's £4.50. Would you like to pay by card or cash?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:44:52"
+    },
+    {
+      "sender": "user",
+      "message": "I’ll pay by card.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:45:03"
+    },
+    {
+      "sender": "bot",
+      "message": "Great, your order is complete. Please wait a moment for your drink.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T00:45:03"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:34:16"
+    },
+    {
+      "sender": "bot",
+      "message": "Tell me about one hobby you really enjoy and explain why it is important to you.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:34:16"
+    },
+    {
+      "sender": "user",
+      "message": "I really enjoy coding with AI. It feels amazing to create nice and complicated projects within 10 minutes",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:35:42"
+    },
+    {
+      "sender": "bot",
+      "message": "Tell me about one hobby you really enjoy and explain why it is important to you.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:35:42"
+    },
+    {
+      "sender": "user",
+      "message": "I also like reading",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:36:17"
+    },
+    {
+      "sender": "bot",
+      "message": "Tell me about one hobby you really enjoy and explain why it is important to you.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:36:17"
+    },
+    {
+      "sender": "user",
+      "message": "I fell in love with Spanish recently and I am also really attracted to Arabic and Japanese",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:21:42"
+    },
+    {
+      "sender": "bot",
+      "message": "That's an impressive list of languages! Learning multiple languages is a great challenge. What is it about Spanish, Arabic, or Japanese that specifically fascinates you?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:21:42"
+    }
+  ],
+  "roman-b1-demo": [
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:51:47"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:51:47"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman, I study programming, I enjoy reading and learning languages",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:52:31"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! What do you study, and what do you enjoy doing in your free time?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T17:52:31"
+    },
+    {
+      "sender": "user",
+      "message": "hi nice to meet you I'm Roman",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:02:01"
+    },
+    {
+      "sender": "bot",
+      "message": "Hello! What can I get for you today?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:02:01"
+    },
+    {
+      "sender": "user",
+      "message": "What do you study?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:09:52"
+    },
+    {
+      "sender": "bot",
+      "message": "Could you repeat your order, please?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:09:52"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:20:31"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:20:31"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman, I study programming, I enjoy learning new languages",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:20:59"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! So you study programming and enjoy learning new languages. Which of these is most important to you right now?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:20:59"
+    },
+    {
+      "sender": "user",
+      "message": "Learning new languages I guess",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:21:23"
+    },
+    {
+      "sender": "bot",
+      "message": "That's fantastic! What languages are you currently learning or hoping to learn?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:21:23"
+    },
+    {
+      "sender": "user",
+      "message": "Currently I am learning spanish, I also hope to learn arabic and japanese someday",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:22:02"
+    },
+    {
+      "sender": "bot",
+      "message": "That's an ambitious and exciting list, Roman! What sparked your interest in Spanish, Arabic, and Japanese?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:22:02"
+    },
+    {
+      "sender": "user",
+      "message": "Spanish is emotional, quick and has a spark, those are the things I adore. Arabic sound system is fascinating, it has sounds that no other language has, it is also ancient, and I am really curious if I can learn Arabic writing system. As for Japanese, I really like anime, consequently I am really interested in Japanese culture. I dream of visiting Japan one day.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:25:13"
+    },
+    {
+      "sender": "bot",
+      "message": "That sounds interesting! Tell me about your favorite one and explain why you like it.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:25:13"
+    },
+    {
+      "sender": "user",
+      "message": "Hey! What is your name?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:28:29"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice! Tell me a little about yourself: where are you from and what do you study?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:28:29"
+    },
+    {
+      "sender": "user",
+      "message": "I am from Russia and I study Programming",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:28:58"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you! What do you study?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:28:58"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:13"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:13"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman, I study programming, I enjoy learning new languages.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:24"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! So you study programming and enjoy learning new languages. Which of these is most important to you right now?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:24"
+    },
+    {
+      "sender": "user",
+      "message": "Learning new languages I guess.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:59"
+    },
+    {
+      "sender": "bot",
+      "message": "That's a rich answer. Which language feels closest to your personality, and why?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T18:42:59"
+    },
+    {
+      "sender": "user",
+      "message": "Hey, what's your name?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:05"
+    },
+    {
+      "sender": "bot",
+      "message": "My name is Alex. Nice to meet you! What’s your name?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:05"
+    },
+    {
+      "sender": "user",
+      "message": "Nice to meet you too! My name is Roman",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:25"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! Where are you from?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:25"
+    },
+    {
+      "sender": "user",
+      "message": "I am from Russia. What about you?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:46"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you! Where are you from, and what do you study?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T18:47:46"
+    }
+  ],
+  "roman-clean-demo": [
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:11:45"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:11:45"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman, I study programming, E enjoy learning new languages",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:12:13"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! You study programming. What do you like most about it?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:12:13"
+    },
+    {
+      "sender": "user",
+      "message": "I really like building new projects out of nothing",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:12:44"
+    },
+    {
+      "sender": "bot",
+      "message": "Thanks! Now try to say the same idea in a slightly more structured way: one sentence about you, one sentence about what you do, and one sentence about what you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:12:44"
+    },
+    {
+      "sender": "user",
+      "message": "Hey! What is your name?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:13:58"
+    },
+    {
+      "sender": "bot",
+      "message": "My name is Alex. Nice to meet you! What’s your name?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:13:58"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:08"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you! Where are you from, and what do you study?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:08"
+    },
+    {
+      "sender": "user",
+      "message": "I am from Russia and I study programming",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:29"
+    },
+    {
+      "sender": "bot",
+      "message": "That sounds interesting! What do you enjoy most about studying programming?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:29"
+    },
+    {
+      "sender": "user",
+      "message": "Building new projects out of nothing. What about you?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:53"
+    },
+    {
+      "sender": "bot",
+      "message": "Hi! Nice to meet you too. I'm Alex. Where are you from?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T19:14:53"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:19:17"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:19:17"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:21:36"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:21:36"
+    },
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:23:36"
+    },
+    {
+      "sender": "bot",
+      "message": "Great. Start with 2–3 sentences: your name, what you study, and one hobby you enjoy.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:23:36"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman, I study programming, I enjoy walking",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:24:09"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! So you study programming and enjoy walking. Which of these is most important to you right now?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T19:24:09"
+    }
+  ],
+  "demo-user": [
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:04:59"
+    },
+    {
+      "sender": "bot",
+      "message": "That's a great goal! To introduce yourself, you can start with your name, where you are from, and what you do for a living or your hobbies. Why don't you try writing a few sentences about yourself?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:04:59"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman. I study computer science and I enjoy learning languages.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:05:32"
+    },
+    {
+      "sender": "bot",
+      "message": "It's nice to meet you, Roman! That's a great introduction. Since you study computer science, do you have a favorite programming language? Also, what made you interested in learning languages?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:05:32"
+    }
+  ],
+  "user-demo": [
+    {
+      "sender": "user",
+      "message": "I want to introduce myself in English.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:10:13"
+    },
+    {
+      "sender": "bot",
+      "message": "That's a great start! To introduce yourself, you can mention your name, where you are from, your profession or studies, and what you enjoy doing in your free time. Why don't you try writing a few sentences about yourself?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:10:13"
+    },
+    {
+      "sender": "user",
+      "message": "My name is Roman. I study computer science and I enjoy learning languages.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:10:44"
+    },
+    {
+      "sender": "bot",
+      "message": "Nice to meet you, Roman! That is a perfect introduction. Since you enjoy learning languages, what is your favorite language to study besides English?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:10:44"
+    },
+    {
+      "sender": "user",
+      "message": "I fell in love with Spanish recently and I am also really attracted to Arabic and Japanese.",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:11:51"
+    },
+    {
+      "sender": "bot",
+      "message": "That's an impressive list! Spanish is very melodic, and Arabic and Japanese are fascinating, although they are quite challenging. What do you find most interesting about these languages? Is it the culture, the script, or perhaps the sound?",
+      "mode": "free_talk",
+      "timestamp": "2026-04-21T21:11:51"
+    },
+    {
+      "sender": "user",
+      "message": "Hello!",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:12:57"
+    },
+    {
+      "sender": "bot",
+      "message": "Hello! Welcome to our coffee shop. What can I get for you today?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:12:57"
+    },
+    {
+      "sender": "user",
+      "message": "Could I get a medium latte with oat milk, please?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:13:34"
+    },
+    {
+      "sender": "bot",
+      "message": "Great choice! That will be £3.50. Would you like that for here or to go?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:13:34"
+    },
+    {
+      "sender": "user",
+      "message": "To go, please.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:14:01"
+    },
+    {
+      "sender": "bot",
+      "message": "Perfect. That will be £3.50, please. You can pay by card at the terminal right here. Do you need anything else with your coffee, perhaps a croissant?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:14:01"
+    },
+    {
+      "sender": "user",
+      "message": "No, thank you, just latte.",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:14:53"
+    },
+    {
+      "sender": "bot",
+      "message": "No problem at all! Your total is £3.50. You can tap your card on the reader whenever you're ready. Here is your receipt. Enjoy your day!",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:14:53"
+    },
+    {
+      "sender": "user",
+      "message": "Enjoy your day too!",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:15:23"
+    },
+    {
+      "sender": "bot",
+      "message": "No problem. What can I get for you today?",
+      "mode": "lesson",
+      "timestamp": "2026-04-21T21:15:23"
+    }
+  ]
+}

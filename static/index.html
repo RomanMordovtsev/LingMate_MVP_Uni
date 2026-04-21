@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LingMate MVP</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a37;
+      --muted: #667085;
+      --line: #e5eaf1;
+      --accent: #e54d2e;
+      --accent-2: #2463eb;
+      --accent-soft: #eef3ff;
+      --user: #dbeafe;
+      --bot: #fef3c7;
+      --shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-title {
+      font-size: 44px;
+      margin: 0 0 12px;
+      line-height: 1.05;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0 0 20px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      background: #fff4f1;
+      color: #a43d24;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .avatar-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      height: 520px;        /* фиксируем высоту */
+      overflow: hidden;     /* обрезаем лишнее */
+    }
+
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      object-fit: cover;
+      object-position: 22% center;
+    }
+
+    .avatar-caption {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #d7dde5;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, opacity .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    button.primary {
+      background: var(--accent);
+    }
+
+    button.secondary {
+      background: var(--accent-2);
+    }
+
+    button.ghost {
+      background: var(--accent-soft);
+      color: var(--accent-2);
+    }
+
+    .status-line {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .mode-card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid transparent;
+    }
+
+    .mode-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .mode-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .mode-card.accent {
+      border-color: #ffd4ca;
+      background: linear-gradient(180deg, #fffaf8 0%, #ffffff 100%);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1.2fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .dashboard-box {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .metric {
+      font-size: 34px;
+      font-weight: 800;
+      margin: 8px 0 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      background: #f2f4f7;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 28px;
+    }
+
+    .chatbox {
+      height: 340px;
+      overflow: auto;
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid var(--line);
+    }
+
+    .msg {
+      margin: 10px 0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    .user {
+      background: var(--user);
+    }
+
+    .bot {
+      background: var(--bot);
+    }
+
+    .lesson-meta {
+      background: #f9fbff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .lesson-meta ul {
+      margin: 8px 0 0 18px;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .topic-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+
+    .topic-buttons button {
+      width: auto;
+      padding: 10px 12px;
+      font-size: 14px;
+      border-radius: 999px;
+    }
+
+    pre {
+      margin: 0;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1024px) {
+      .hero,
+      .main-grid,
+      .dashboard-grid,
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="card">
+      <div class="pill-row">
+        <span class="pill">AI Language Partner</span>
+        <span class="pill">Scenario Lessons</span>
+        <span class="pill">Voice in Browser</span>
+      </div>
+
+      <h1 class="hero-title">LingMate</h1>
+      <p class="hero-subtitle">
+        Интеллектуальная платформа для изучения языка через живой диалог, сценарные уроки и персонализированную практику.
+      </p>
+
+      <div class="row">
+        <div>
+          <label>User ID</label>
+          <input id="userId" value="roman-demo" />
+        </div>
+        <div>
+          <label>Level</label>
+          <select id="level">
+            <option>A1</option>
+            <option>A2</option>
+            <option selected>B1</option>
+            <option>B2</option>
+            <option>C1</option>
+            <option>C2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <div>
+          <label>Target language</label>
+          <select id="targetLanguage">
+            <option value="en" selected>English</option>
+          </select>
+        </div>
+        <div>
+          <label>Native language</label>
+          <select id="nativeLanguage">
+            <option value="ru" selected>Russian</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label>Interests</label>
+        <input id="interests" value="music, travel, anime" />
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <button class="primary" onclick="saveSettings()">Save settings</button>
+        <button class="ghost" onclick="loadProgress()">Load progress</button>
+      </div>
+
+      <p class="status-line" id="statusLine">Статус: not loaded</p>
+    </div>
+
+    <div class="card avatar-box">
+      <img src="/static/yuji-lingmate.png" alt="LingMate avatar" />
+    </div>
+  </div>
+
+  <div class="mode-grid">
+    <div class="mode-card accent">
+      <h3>💬 Free Talk</h3>
+      <p>
+        Свободный разговор на английском с подсказками, мягкими исправлениями и постепенным развитием речи.
+      </p>
+    </div>
+    <div class="mode-card">
+      <h3>🎯 Lesson Mode</h3>
+      <p>
+        Пошаговая отработка реальных жизненных ситуаций: кафе, знакомство, поездки, отель и другие сценарии.
+      </p>
+    </div>
+    <div class="mode-card">
+      <h3>📈 Adaptive Progress</h3>
+      <p>
+        LingMate сохраняет лексику, пройденные сценарии и историю, чтобы обучение выглядело как единая система.
+      </p>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="dashboard-box">
+      <h3>Current Level</h3>
+      <div class="metric" id="dashboardLevel">B1</div>
+      <div class="muted">Selected by user profile</div>
+    </div>
+
+    <div class="dashboard-box">
+      <h3>Vocabulary Learned</h3>
+      <div class="metric" id="dashboardVocabCount">0</div>
+      <div class="muted">Accumulated during practice</div>
+    </div>
+
+    <div class="dashboard-box">
+      <h3>Scenarios Completed</h3>
+      <div class="metric" id="dashboardScenarioCount">0</div>
+      <div class="muted">Lesson flow progress</div>
+    </div>
+
+    <div class="dashboard-box">
+      <h3>Snapshot</h3>
+      <div class="muted">Latest vocabulary</div>
+      <div class="chips" id="dashboardVocabChips"></div>
+      <div class="muted" style="margin-top:12px;">Completed scenarios</div>
+      <div class="chips" id="dashboardScenarioChips"></div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="card">
+      <h2 class="section-title">Free Talk</h2>
+      <p class="muted">Start a natural conversation and practice speaking more confidently.</p>
+
+      <div class="topic-buttons">
+        <button class="ghost" onclick="fillFreeTalkTopic('I want to practice speaking about travel and communication abroad.')">Travel</button>
+        <button class="ghost" onclick="fillFreeTalkTopic('Let’s talk about music and my favorite artists.')">Music</button>
+        <button class="ghost" onclick="fillFreeTalkTopic('I want to introduce myself in English.')">Self-introduction</button>
+        <button class="ghost" onclick="fillFreeTalkTopic('Let’s talk about my daily life and studies.')">Daily life</button>
+      </div>
+
+      <div class="chatbox" id="freeTalkBox"></div>
+      <textarea id="freeTalkInput" placeholder="Write or dictate your message in English"></textarea>
+
+      <div class="row" style="margin-top:12px;">
+        <button class="secondary" onclick="sendFreeTalk()">Send</button>
+        <button class="ghost" onclick="dictateTo('freeTalkInput')">🎤 Dictate</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Lesson Mode</h2>
+      <p class="muted">Practice real-life situations step by step.</p>
+
+      <div class="row">
+        <select id="scenarioSelect">
+          <option value="coffee_shop">Coffee shop in London</option>
+          <option value="small_talk">Meeting a new person</option>
+          <option value="hotel_checkin">Hotel check-in</option>
+          <option value="airport_checkin">Airport check-in</option>
+        </select>
+        <button class="primary" onclick="startLesson()">Start lesson</button>
+      </div>
+
+      <div class="lesson-meta" id="lessonIntro" style="display:none;"></div>
+      <div class="chatbox" id="lessonBox" style="margin-top:12px;"></div>
+      <textarea id="lessonInput" placeholder="Answer in English"></textarea>
+
+      <div class="row" style="margin-top:12px;">
+        <button class="secondary" onclick="sendLesson()">Send</button>
+        <button class="ghost" onclick="dictateTo('lessonInput')">🎤 Dictate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px; display:none;" id="debugSnapshot">
+    <h2 class="section-title">Developer Snapshot</h2>
+    <pre id="progressDump">{}</pre>
+  </div>
+
+  <div class="footer-note">
+    LingMate MVP for pre-defense demo: hybrid conversation + scenario-based language practice
+  </div>
+
+</div>
+
+<script>
+const speak = (text, lang='en-US') => {
+  if (!('speechSynthesis' in window)) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+};
+
+function appendMessage(boxId, sender, text) {
+  const box = document.getElementById(boxId);
+  const div = document.createElement('div');
+  div.className = 'msg ' + sender;
+  div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function normalizeVocab(vocab) {
+  if (!Array.isArray(vocab)) return [];
+
+  return vocab.map(item => {
+    if (typeof item === 'string') return item;
+    if (item && typeof item === 'object') {
+      return item.phrase || item.word || item.text || item.label || JSON.stringify(item);
+    }
+    return String(item);
+  }).filter(Boolean);
+}
+
+async function api(path, method='GET', body=null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(path, opts);
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+function currentSettings() {
+  return {
+    user_id: document.getElementById('userId').value,
+    target_language: document.getElementById('targetLanguage').value,
+    native_language: document.getElementById('nativeLanguage').value,
+    level: document.getElementById('level').value,
+    interests: document.getElementById('interests').value.split(',').map(x => x.trim()).filter(Boolean)
+  };
+}
+
+async function saveSettings() {
+  const data = await api('/api/setup', 'POST', currentSettings());
+  document.getElementById('statusLine').textContent = 'Статус: profile saved and ready for practice';
+  document.getElementById('dashboardLevel').textContent = data.settings.level;
+  await loadProgress();
+}
+
+function fillFreeTalkTopic(text) {
+  document.getElementById('freeTalkInput').value = text;
+}
+
+async function sendFreeTalk() {
+  const input = document.getElementById('freeTalkInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendMessage('freeTalkBox', 'user', text);
+  input.value = '';
+
+  try {
+    const data = await api('/api/chat', 'POST', {
+      user_id: document.getElementById('userId').value,
+      message: text
+    });
+
+    const vocabList = normalizeVocab(data.vocab);
+    let botText = data.reply || '';
+
+    if (data.source === 'gemini' && data.correction) {
+      botText += '\n\nCorrection: ' + data.correction;
+//    } else if (data.source === 'fallback') {
+//      botText += '\n\nNote: AI tutor is temporarily unavailable, so LingMate continues in guided conversation mode.';
+    }
+
+    if (vocabList.length > 0) {
+      botText += '\nVocab: ' + vocabList.join(', ');
+    }
+
+    appendMessage('freeTalkBox', 'bot', botText);
+
+    if (data.reply) {
+      speak(data.reply, 'en-US');
+    }
+    await loadProgress();
+  } catch (err) {
+    appendMessage(
+      'freeTalkBox',
+      'bot',
+      'Let’s continue. Try saying that again in a slightly longer and clearer way.'
+    );
+    console.error(err);
+  }
+}
+
+async function startLesson() {
+  const scenarioId = document.getElementById('scenarioSelect').value;
+  const data = await api('/api/lesson/start', 'POST', {
+    user_id: document.getElementById('userId').value,
+    scenario_id: scenarioId
+  });
+
+  document.getElementById('lessonBox').innerHTML = '';
+  const intro = document.getElementById('lessonIntro');
+  intro.style.display = 'block';
+  intro.innerHTML = `
+    <strong>${data.title}</strong><br>
+    <div><b>Goal:</b> ${data.goal}</div>
+    <div><b>Situation:</b> ${data.situation}</div>
+
+    <div style="margin-top:10px;"><b>Example dialogue:</b></div>
+    <ul>
+      ${data.example_dialogue.map(item => `<li><b>${item.speaker}:</b> ${item.text}</li>`).join('')}
+    </ul>
+
+    <div style="margin-top:10px;"><b>Key phrases:</b></div>
+    <ul>
+      ${data.key_phrases.map(item => `
+        <li>
+          <b>${item.phrase}</b> — ${item.meaning}<br>
+          <span class="muted">Example: ${item.example}</span>
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}
+
+async function sendLesson() {
+  const input = document.getElementById('lessonInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendMessage('lessonBox', 'user', text);
+  input.value = '';
+
+  try {
+    const data = await api('/api/lesson/message', 'POST', {
+      user_id: document.getElementById('userId').value,
+      message: text
+    });
+
+    const vocabList = normalizeVocab(data.vocab);
+    let botText = data.roleplay_reply || '';
+
+    if (data.source === 'gemini' && data.correction) {
+      botText += '\n\nFeedback: ' + data.correction;
+//    } else if (data.source === 'fallback') {
+//      botText += '\n\nNote: AI tutor is temporarily unavailable, so LingMate continues this lesson in guided scenario mode.';
+    }
+
+    if (vocabList.length > 0) {
+      botText += '\nVocab: ' + vocabList.join(', ');
+    }
+
+    appendMessage('lessonBox', 'bot', botText);
+
+    if (data.roleplay_reply) {
+      speak(data.roleplay_reply, 'en-US');
+    }
+    await loadProgress();
+  } catch (err) {
+    appendMessage(
+      'lessonBox',
+      'bot',
+      'Let’s continue the situation. Try to say your request more clearly and politely.'
+    );
+    console.error(err);
+  }
+}
+
+async function loadProgress() {
+  try {
+    const userId = document.getElementById('userId').value;
+    const data = await api('/api/progress/' + encodeURIComponent(userId));
+
+    document.getElementById('progressDump').textContent = JSON.stringify(data, null, 2);
+
+    const settings = data.settings || {};
+    const progress = data.progress || {};
+    const vocabulary = Array.isArray(progress.vocabulary) ? progress.vocabulary : [];
+    const scenarios = Array.isArray(progress.completed_scenarios) ? progress.completed_scenarios : [];
+
+    document.getElementById('dashboardLevel').textContent = settings.level || document.getElementById('level').value || '-';
+    document.getElementById('dashboardVocabCount').textContent = vocabulary.length;
+    document.getElementById('dashboardScenarioCount').textContent = scenarios.length;
+
+    const vocabChips = document.getElementById('dashboardVocabChips');
+    vocabChips.innerHTML = '';
+    if (vocabulary.length === 0) {
+      vocabChips.innerHTML = '<span class="chip">No vocabulary yet</span>';
+    } else {
+      vocabulary.slice(-8).forEach(item => {
+        const span = document.createElement('span');
+        span.className = 'chip';
+        span.textContent = item;
+        vocabChips.appendChild(span);
+      });
+    }
+
+    const scenarioChips = document.getElementById('dashboardScenarioChips');
+    scenarioChips.innerHTML = '';
+    if (scenarios.length === 0) {
+      scenarioChips.innerHTML = '<span class="chip">No completed scenarios yet</span>';
+    } else {
+      scenarios.slice(-6).forEach(item => {
+        const span = document.createElement('span');
+        span.className = 'chip';
+        span.textContent = item;
+        scenarioChips.appendChild(span);
+      });
+    }
+  } catch (err) {
+    document.getElementById('progressDump').textContent = 'No progress yet. Save settings and start practicing.';
+    document.getElementById('dashboardLevel').textContent = document.getElementById('level').value || '-';
+    document.getElementById('dashboardVocabCount').textContent = '0';
+    document.getElementById('dashboardScenarioCount').textContent = '0';
+    document.getElementById('dashboardVocabChips').innerHTML = '<span class="chip">No vocabulary yet</span>';
+    document.getElementById('dashboardScenarioChips').innerHTML = '<span class="chip">No completed scenarios yet</span>';
+    console.error(err);
+  }
+}
+
+function dictateTo(targetId) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('В этом браузере нет speech recognition. Лучше использовать Chrome.');
+    return;
+  }
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  recognition.onresult = (event) => {
+    document.getElementById(targetId).value = event.results[0][0].transcript;
+  };
+  recognition.start();
+}
+
+window.addEventListener('load', async () => {
+  try {
+    const data = await api('/api/status');
+    document.getElementById('statusLine').textContent =
+      'Статус: system ready for practice';
+  } catch (err) {
+    document.getElementById('statusLine').textContent = 'Статус: backend unavailable';
+    console.error(err);
+  }
+
+  try {
+    await loadProgress();
+  } catch (err) {
+    document.getElementById('progressDump').textContent = 'No progress yet. Save settings and start practicing.';
+    console.error(err);
+  }
+});
+</script>
+</body>
+</html>

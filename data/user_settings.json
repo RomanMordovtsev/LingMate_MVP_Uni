@@ -1,0 +1,57 @@
+{
+  "roman-demo": {
+    "user_id": "roman-demo",
+    "target_language": "en",
+    "native_language": "ru",
+    "level": "B1",
+    "interests": [
+      "music",
+      "travel",
+      "anime"
+    ]
+  },
+  "roman-b1-demo": {
+    "user_id": "roman-b1-demo",
+    "target_language": "en",
+    "native_language": "ru",
+    "level": "B1",
+    "interests": [
+      "music",
+      "travel",
+      "anime"
+    ]
+  },
+  "roman-clean-demo": {
+    "user_id": "roman-clean-demo",
+    "target_language": "en",
+    "native_language": "ru",
+    "level": "B1",
+    "interests": [
+      "music",
+      "travel",
+      "anime"
+    ]
+  },
+  "demo-user": {
+    "user_id": "demo-user",
+    "target_language": "en",
+    "native_language": "ru",
+    "level": "B1",
+    "interests": [
+      "travel",
+      "languages",
+      "culture"
+    ]
+  },
+  "user-demo": {
+    "user_id": "user-demo",
+    "target_language": "en",
+    "native_language": "ru",
+    "level": "B1",
+    "interests": [
+      "travel",
+      "languages",
+      "culture"
+    ]
+  }
+}

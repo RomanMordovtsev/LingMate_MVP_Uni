@@ -1,0 +1,178 @@
+{
+  "roman-demo": {
+    "scenario_id": "small_talk",
+    "title": "Meeting a new person",
+    "target_language": "en",
+    "goal": "Introduce yourself, ask simple follow-up questions, and keep the conversation going.",
+    "situation": "You meet a student from another country after class. Start a friendly conversation and learn basic information about each other.",
+    "example_dialogue": [
+      {
+        "speaker": "You",
+        "text": "Hi, nice to meet you. I'm Roman."
+      },
+      {
+        "speaker": "Other person",
+        "text": "Nice to meet you too! Where are you from?"
+      },
+      {
+        "speaker": "You",
+        "text": "I'm from Russia. What about you?"
+      }
+    ],
+    "key_phrases": [
+      {
+        "phrase": "Nice to meet you",
+        "meaning": "вежливая фраза при знакомстве",
+        "example": "Nice to meet you!"
+      },
+      {
+        "phrase": "Where are you from?",
+        "meaning": "вопрос о том, из какой страны или города человек",
+        "example": "Where are you from?"
+      },
+      {
+        "phrase": "What do you study?",
+        "meaning": "вопрос о специальности или предмете обучения",
+        "example": "What do you study at university?"
+      },
+      {
+        "phrase": "How about you?",
+        "meaning": "короткий способ вернуть вопрос собеседнику",
+        "example": "I study computer science. How about you?"
+      }
+    ],
+    "teacher_notes": "Encourage reciprocal questions and a natural flow."
+  },
+  "roman-b1-demo": {
+    "scenario_id": "small_talk",
+    "title": "Meeting a new person",
+    "target_language": "en",
+    "goal": "Introduce yourself, ask simple follow-up questions, and keep the conversation going.",
+    "situation": "You meet a student from another country after class. Start a friendly conversation and learn basic information about each other.",
+    "example_dialogue": [
+      {
+        "speaker": "You",
+        "text": "Hi, nice to meet you. I'm Roman."
+      },
+      {
+        "speaker": "Other person",
+        "text": "Nice to meet you too! Where are you from?"
+      },
+      {
+        "speaker": "You",
+        "text": "I'm from Russia. What about you?"
+      }
+    ],
+    "key_phrases": [
+      {
+        "phrase": "Nice to meet you",
+        "meaning": "вежливая фраза при знакомстве",
+        "example": "Nice to meet you!"
+      },
+      {
+        "phrase": "Where are you from?",
+        "meaning": "вопрос о том, из какой страны или города человек",
+        "example": "Where are you from?"
+      },
+      {
+        "phrase": "What do you study?",
+        "meaning": "вопрос о специальности или предмете обучения",
+        "example": "What do you study at university?"
+      },
+      {
+        "phrase": "How about you?",
+        "meaning": "короткий способ вернуть вопрос собеседнику",
+        "example": "I study computer science. How about you?"
+      }
+    ],
+    "teacher_notes": "Encourage reciprocal questions and a natural flow."
+  },
+  "roman-clean-demo": {
+    "scenario_id": "small_talk",
+    "title": "Meeting a new person",
+    "target_language": "en",
+    "goal": "Introduce yourself, ask simple follow-up questions, and keep the conversation going.",
+    "situation": "You meet a student from another country after class. Start a friendly conversation and learn basic information about each other.",
+    "example_dialogue": [
+      {
+        "speaker": "You",
+        "text": "Hi, nice to meet you. I'm Roman."
+      },
+      {
+        "speaker": "Other person",
+        "text": "Nice to meet you too! Where are you from?"
+      },
+      {
+        "speaker": "You",
+        "text": "I'm from Russia. What about you?"
+      }
+    ],
+    "key_phrases": [
+      {
+        "phrase": "Nice to meet you",
+        "meaning": "вежливая фраза при знакомстве",
+        "example": "Nice to meet you!"
+      },
+      {
+        "phrase": "Where are you from?",
+        "meaning": "вопрос о том, из какой страны или города человек",
+        "example": "Where are you from?"
+      },
+      {
+        "phrase": "What do you study?",
+        "meaning": "вопрос о специальности или предмете обучения",
+        "example": "What do you study at university?"
+      },
+      {
+        "phrase": "How about you?",
+        "meaning": "короткий способ вернуть вопрос собеседнику",
+        "example": "I study computer science. How about you?"
+      }
+    ],
+    "teacher_notes": "Encourage reciprocal questions and a natural flow."
+  },
+  "user-demo": {
+    "scenario_id": "coffee_shop",
+    "title": "Coffee shop in London",
+    "target_language": "en",
+    "goal": "Order a drink politely, ask for options, and pay.",
+    "situation": "You are in a coffee shop in London. You want to order a drink, ask about milk options, and complete the order politely.",
+    "example_dialogue": [
+      {
+        "speaker": "Customer",
+        "text": "Hello! Could I get a medium latte with oat milk, please?"
+      },
+      {
+        "speaker": "Barista",
+        "text": "Sure. For here or to go?"
+      },
+      {
+        "speaker": "Customer",
+        "text": "To go, please."
+      }
+    ],
+    "key_phrases": [
+      {
+        "phrase": "Could I get...?",
+        "meaning": "вежливая просьба заказать что-то",
+        "example": "Could I get a latte, please?"
+      },
+      {
+        "phrase": "For here or to go?",
+        "meaning": "вопрос о том, будете ли вы есть или пить на месте или брать с собой",
+        "example": "For here, please."
+      },
+      {
+        "phrase": "How much is it?",
+        "meaning": "вопрос о цене",
+        "example": "How much is it?"
+      },
+      {
+        "phrase": "Oat milk",
+        "meaning": "овсяное молоко",
+        "example": "Do you have oat milk?"
+      }
+    ],
+    "teacher_notes": "Focus on polite requests and basic café interaction."
+  }
+}
