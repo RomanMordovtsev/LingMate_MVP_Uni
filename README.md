@@ -29,6 +29,7 @@ The system adapts to the user level and supports continuous dialogue.
 
 ```bash
 pip install -r requirements.txt
+```bash
 Create .env file based on .env.example
 Run the project:
 python main.py
