@@ -1,15 +1,19 @@
-import random
-import re
-import os
-import json
-from typing import Any, Dict, List
+"""
+LLMService — высокоуровневая обёртка над любым LLM-провайдером.
 
-try:
-    from google import genai
-    from google.genai import types
-except Exception:
-    genai = None
-    types = None
+После рефакторинга сервис не знает, какая модель за ним стоит:
+Gemini, Ollama или что-то ещё. Логика fallback (правила без модели)
+полностью сохранена — она используется, когда провайдер недоступен
+или возвращает невалидный ответ.
+
+Публичный интерфейс не изменился: main.py продолжает работать как раньше.
+"""
+
+import json
+import re
+from typing import Any, Dict, List, Optional
+
+from .llm import LLMProvider, make_provider, make_provider_chain
 
 
 SYSTEM_FREE_TALK = """You are LingMate, an AI language tutor.
@@ -28,42 +32,231 @@ SYSTEM_LESSON = """You are LingMate in guided lesson mode.
 
 Rules:
 - The learner studies {target_language}, level {level}, native language {native_language}.
-- You are simulating a scenario.
-- Stay in character for the scenario, but after your role-play reply also provide feedback.
-- Keep the role-play natural and short.
-- Always return valid JSON with keys: roleplay_reply, correction, vocab, progress_note, should_finish.
-- should_finish must be true only when the learner has completed the scenario goal.
+- You are simulating a scenario. Stay strictly in character (e.g. barista, receptionist, airline staff, new acquaintance) for the WHOLE conversation. Never break character.
+- Speak only in {target_language} inside roleplay_reply.
+- NEVER simply echo or repeat back the learner's words. Always reply with the NEXT natural step that another person in this role would say — a follow-up question, a confirmation that pushes the dialogue forward, a piece of new information, or a request for the next detail.
+- If the learner gives a one-word or very short answer, accept it briefly and ask the next question that moves the scenario forward.
+- Keep roleplay_reply to 1–2 short sentences. Use natural conversational tone, not textbook tone.
+- Do NOT loop. Do NOT ask "anything else?", "do you need help with something else?" or any equivalent more than once. If the learner has already declined extras, move toward closing.
+
+ENDING THE SCENARIO (very important):
+- Set should_finish: true as soon as the learner has accomplished the scenario goal — usually within 4–7 turns. Examples of completion: the order is fully placed, the check-in or registration is done, introductions and a follow-up question have been exchanged.
+- ALSO set should_finish: true if the learner clearly signals they are done — for {target_language} this includes phrases like: {completion_phrases}. Other languages don't count: only react to closing phrases in {target_language}.
+- When should_finish is true: roleplay_reply MUST be a short, natural closing line in {target_language}. Do NOT ask another question.
+- Otherwise should_finish must be false.
+
+CORRECTION:
+- If the learner's last message contains ANY error — grammar, spelling, missing diacritics (á é í ó ú ñ ü ç ğ ş ı, etc.), missing inverted punctuation in Spanish (¿ ¡), wrong word order, wrong article, wrong verb form — correction MUST contain a concrete fix in 1 short sentence. Write the corrected form explicitly.
+- Use {target_language} for correction. Use {native_language} only when the explanation truly cannot fit in {target_language} at the learner's level.
+- Only return correction as an empty string if the learner's message is fully correct.
+- correction must be a plain string, NOT an object.
+
+VOCAB:
+- vocab is a list of 1–3 useful content words (nouns, verbs, adjectives) FROM YOUR OWN roleplay_reply that a learner at this level may not know yet. Plain strings, e.g. ["receipt", "to go"].
+- Do NOT include function words (and, or, of, the, sin, de, en, von, mit, di, ile, etc.).
+- Do NOT include the learner's own words.
+- Empty list is preferred over forced or trivial entries.
+
+OUTPUT FORMAT:
+- Always return ONE valid JSON object with keys: roleplay_reply, correction, vocab, progress_note, should_finish.
+- progress_note: one short sentence in {native_language} about how the learner is doing.
+- No prose, no markdown fences, no explanations outside the JSON.
 """
 
 
-class LLMService:
-    def __init__(self) -> None:
-        self.api_key = os.getenv("GEMINI_API_KEY", "").strip()
-        self.model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-        self.gemini_enabled = os.getenv("GEMINI_ENABLED", "true").strip().lower() == "true"
-        self.client = None
+# Closing phrases the LEARNER commonly uses to signal "I'm done" in each
+# supported target language. Used by SYSTEM_LESSON via {completion_phrases}
+# and by a post-processing heuristic to force should_finish when the
+# model misses the cue.
+LESSON_USER_CLOSERS = {
+    "en": ["thanks", "thank you", "that's all", "that's it", "no, thank you", "i'm good", "bye", "goodbye", "see you"],
+    "es": ["gracias", "muchas gracias", "eso es todo", "nada más", "no, gracias", "está bien así", "adiós", "hasta luego"],
+    "fr": ["merci", "merci beaucoup", "c'est tout", "rien d'autre", "non, merci", "ça ira", "au revoir", "à bientôt"],
+    "de": ["danke", "danke schön", "das ist alles", "nichts weiter", "nein, danke", "passt so", "tschüss", "auf wiedersehen"],
+    "it": ["grazie", "grazie mille", "è tutto", "nient'altro", "no, grazie", "va bene così", "arrivederci", "ciao"],
+    "tr": ["teşekkürler", "teşekkür ederim", "bu kadar", "başka bir şey yok", "hayır, teşekkürler", "yeterli", "hoşça kal", "görüşürüz"],
+}
 
-        if self.gemini_enabled and self.api_key and genai is not None:
-            self.client = genai.Client(api_key=self.api_key)
+# Closing phrases the ROLE (barista, receptionist, etc.) commonly uses to
+# wrap up the interaction. If the model says one of these but forgets to
+# set should_finish=true, the heuristic forces it.
+LESSON_ROLE_CLOSERS = {
+    "en": ["have a great day", "have a good day", "have a nice day", "you're welcome", "see you", "goodbye", "take care"],
+    "es": ["que tengas un buen día", "que tenga un buen día", "que vaya bien", "que le vaya bien", "buen día", "hasta luego", "que disfrute"],
+    "fr": ["bonne journée", "passez une bonne journée", "au revoir", "à bientôt", "bon voyage"],
+    "de": ["schönen tag noch", "einen schönen tag", "tschüss", "auf wiedersehen", "schönen tag"],
+    "it": ["buona giornata", "arrivederci", "buon proseguimento", "a presto"],
+    "tr": ["iyi günler", "hoşça kal", "görüşürüz", "iyi yolculuklar", "iyi geceler"],
+}
+
+
+def _completion_phrases_for(target_language: str) -> str:
+    """Format the learner-closer list as a quoted, comma-joined string for the prompt."""
+    phrases = LESSON_USER_CLOSERS.get(target_language, LESSON_USER_CLOSERS["en"])
+    return ", ".join(f'"{p}"' for p in phrases)
+
+
+def _contains_any(text: str, phrases) -> bool:
+    """Case-insensitive substring check for any phrase in the list."""
+    if not text:
+        return False
+    low = text.lower()
+    return any(p in low for p in phrases)
+
+
+class LLMService:
+    """
+    Сервис, объединяющий выбранный LLM-провайдер и rule-based fallback.
+
+    Если провайдер не настроен или упал с ошибкой — автоматически
+    переключаемся на fallback. Это гарантирует, что приложение
+    остаётся рабочим даже без интернета и без запущенной Ollama.
+
+    В режиме LLM_PROVIDER=auto сервис получает chain провайдеров:
+    при ошибке/неконфигурированности первого прозрачно пробует
+    следующего, и только когда упали все — включает rule-based fallback.
+    """
+
+    def __init__(self, provider: Optional[LLMProvider] = None) -> None:
+        # Back-compat: если явно передали один провайдер — chain из одного.
+        # Иначе — берём chain из фабрики (один провайдер для gemini/ollama,
+        # двух-провайдерная цепочка для auto).
+        if provider is not None:
+            self.providers: List[LLMProvider] = [provider]
+        else:
+            self.providers = make_provider_chain()
+        # Первый провайдер цепочки используется для is_configured(),
+        # provider_name и обратно-совместимого _call_gemini().
+        self.provider: LLMProvider = self.providers[0]
 
     def is_configured(self) -> bool:
-        return self.client is not None
+        # В chain достаточно одного работающего провайдера — этого хватает
+        # для LLMService, чтобы не уходить в rule-based fallback с порога.
+        return any(p.is_configured() for p in self.providers)
+
+    @property
+    def provider_name(self) -> str:
+        """Имя первого провайдера цепочки — для /api/status и отладки."""
+        return self.provider.name
 
     def _call_gemini(self, system_prompt: str, user_prompt: str) -> Dict[str, Any]:
-        try:
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                config=types.GenerateContentConfig(
-                    system_instruction=system_prompt,
-                    temperature=0.7,
-                    response_mime_type="application/json",
-                ),
-                contents=user_prompt,
-            )
-            text = response.text or "{}"
-            return json.loads(text)
-        except Exception as e:
-            raise RuntimeError(f"Gemini request failed: {e}")
+        """
+        Историческое имя метода — оставлено для обратной совместимости
+        с эндпоинтом /api/test-gemini. Делегирует вызов первому провайдеру
+        цепочки, каким бы он ни был.
+        """
+        return self.provider.generate_json(system_prompt, user_prompt)
+
+    def _try_chain(self, system_prompt: str, user_prompt: str):
+        """
+        Перебираем провайдеров цепочки до первого успешного.
+
+        Возвращает кортеж (result_dict, provider_name) или (None, None),
+        если все провайдеры в цепочке упали или не настроены.
+        Логи в stdout помогают видеть, какой провайдер сработал.
+        """
+        for p in self.providers:
+            if not p.is_configured():
+                continue
+            try:
+                result = p.generate_json(system_prompt, user_prompt)
+                return result, p.name
+            except Exception as e:
+                print(f"[LLMService] {p.name} failed, trying next: {type(e).__name__}: {e}")
+                continue
+        return None, None
+
+    # ------------------------------------------------------------------
+    # Публичные методы
+    # ------------------------------------------------------------------
+
+    def free_talk(
+        self,
+        *,
+        settings: Dict[str, Any],
+        progress: Dict[str, Any],
+        history: List[Dict[str, Any]],
+        message: str,
+    ) -> Dict[str, Any]:
+        if not self.is_configured():
+            result = self._fallback_free_talk(message, history, settings, progress)
+            result["source"] = "fallback"
+            return result
+
+        system_prompt = SYSTEM_FREE_TALK.format(**settings)
+        user_prompt = json.dumps(
+            {
+                "history": history[-8:],
+                "progress": progress,
+                "message": message,
+            },
+            ensure_ascii=False,
+        )
+
+        result, used_name = self._try_chain(system_prompt, user_prompt)
+        if not isinstance(result, dict) or "reply" not in result:
+            result = self._fallback_free_talk(message, history, settings, progress)
+            result["source"] = "fallback"
+            return result
+        result["source"] = used_name
+        return result
+
+    def lesson_turn(
+        self,
+        *,
+        settings: Dict[str, Any],
+        lesson: Dict[str, Any],
+        history: List[Dict[str, Any]],
+        message: str,
+    ) -> Dict[str, Any]:
+        if not self.is_configured():
+            result = self._fallback_lesson_turn(message, lesson, history)
+            result["source"] = "fallback"
+            return result
+
+        target_language = settings.get("target_language", "en")
+        system_prompt = SYSTEM_LESSON.format(
+            completion_phrases=_completion_phrases_for(target_language),
+            **settings,
+        )
+        user_prompt = json.dumps(
+            {
+                "lesson": lesson,
+                "history": history[-8:],
+                "message": message,
+            },
+            ensure_ascii=False,
+        )
+
+        result, used_name = self._try_chain(system_prompt, user_prompt)
+        if not isinstance(result, dict) or "roleplay_reply" not in result:
+            result = self._fallback_lesson_turn(message, lesson, history)
+            result["source"] = "fallback"
+            return result
+
+        # Heuristic safety net: small open-source models (Qwen 2.5 7B and
+        # similar) often produce a perfect closing line in roleplay_reply but
+        # forget to set should_finish=true. We force the flag when either:
+        #   (a) the learner's last message contained a closing phrase
+        #       (e.g. "gracias", "thanks", "danke") — they are signalling done;
+        #   (b) the model's roleplay_reply contained a role closing phrase
+        #       (e.g. "que tengas un buen día", "have a great day") — they
+        #       are already wrapping up.
+        # On Gemini both branches normally are no-ops (the model gets it
+        # right). On Ollama this is what actually closes the lesson.
+        user_closers = LESSON_USER_CLOSERS.get(target_language, LESSON_USER_CLOSERS["en"])
+        role_closers = LESSON_ROLE_CLOSERS.get(target_language, LESSON_ROLE_CLOSERS["en"])
+        if not result.get("should_finish"):
+            if _contains_any(message, user_closers) or _contains_any(result.get("roleplay_reply", ""), role_closers):
+                result["should_finish"] = True
+
+        result["source"] = used_name
+        return result
+
+    # ------------------------------------------------------------------
+    # Rule-based fallback — используется при недоступности провайдера.
+    # Логика сохранена из исходного llm_service.py без изменений.
+    # ------------------------------------------------------------------
 
     def _fallback_free_talk(
         self,
@@ -528,57 +721,3 @@ class LLMService:
             "progress_note": "User continues scenario practice.",
             "should_finish": False
         }
-
-    def free_talk(self, *, settings: Dict[str, Any], progress: Dict[str, Any], history: List[Dict[str, Any]], message: str) -> Dict[str, Any]:
-        if self.client is None:
-            result = self._fallback_free_talk(message, history, settings, progress)
-            result["source"] = "fallback"
-            return result
-
-        system_prompt = SYSTEM_FREE_TALK.format(**settings)
-        user_prompt = json.dumps({
-            "history": history[-8:],
-            "progress": progress,
-            "message": message
-        }, ensure_ascii=False)
-
-        try:
-            result = self._call_gemini(system_prompt, user_prompt)
-            if not isinstance(result, dict):
-                result = self._fallback_free_talk(message, history, settings, progress)
-                result["source"] = "fallback"
-                return result
-
-            result["source"] = "gemini"
-            return result
-        except Exception:
-            result = self._fallback_free_talk(message, history, settings, progress)
-            result["source"] = "fallback"
-            return result
-
-    def lesson_turn(self, *, settings: Dict[str, Any], lesson: Dict[str, Any], history: List[Dict[str, Any]], message: str) -> Dict[str, Any]:
-        if self.client is None:
-            result = self._fallback_lesson_turn(message, lesson, history)
-            result["source"] = "fallback"
-            return result
-
-        system_prompt = SYSTEM_LESSON.format(**settings)
-        user_prompt = json.dumps({
-            "lesson": lesson,
-            "history": history[-8:],
-            "message": message
-        }, ensure_ascii=False)
-
-        try:
-            result = self._call_gemini(system_prompt, user_prompt)
-            if not isinstance(result, dict) or "roleplay_reply" not in result:
-                result = self._fallback_lesson_turn(message, lesson, history)
-                result["source"] = "fallback"
-                return result
-
-            result["source"] = "gemini"
-            return result
-        except Exception:
-            result = self._fallback_lesson_turn(message, lesson, history)
-            result["source"] = "fallback"
-            return result

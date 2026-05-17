@@ -90,7 +90,13 @@ def root() -> FileResponse:
 def status():
     return {
         "ok": True,
-        "gemini_configured": llm.is_configured(),
+        # Имя текущего провайдера: gemini, ollama, ... — для отладки и UI.
+        "llm_provider": llm.provider_name,
+        # Готов ли провайдер обрабатывать запросы.
+        "llm_configured": llm.is_configured(),
+        # Старое поле сохраняется для обратной совместимости с index.html.
+        # Истинно, когда выбран Gemini И он настроен.
+        "gemini_configured": llm.provider_name == "gemini" and llm.is_configured(),
         "scenarios": [{"id": key, **value} for key, value in SCENARIOS.items()]
     }
 
@@ -121,7 +127,9 @@ def chat(req: ChatRequest):
     store.add_message(req.user_id, "bot", result["reply"], mode="free_talk")
 
     progress_note = {
-        "mistakes": clean_correction(result.get("correction")) if result.get("source") == "gemini" else [],
+        # Сохраняем коррекции от любой настоящей модели (gemini, ollama, ...),
+        # но не от rule-based fallback — он не делает реальных коррекций.
+        "mistakes": clean_correction(result.get("correction")) if result.get("source") != "fallback" else [],
         "vocabulary": clean_vocab(result.get("vocab", []))
     }
     store.save_progress_note(req.user_id, progress_note)
@@ -171,7 +179,7 @@ def lesson_message(req: LessonMessageRequest):
     store.add_message(req.user_id, "bot", result["roleplay_reply"], mode="lesson")
 
     progress_note = {
-        "mistakes": clean_correction(result.get("correction")) if result.get("source") == "gemini" else [],
+        "mistakes": clean_correction(result.get("correction")) if result.get("source") != "fallback" else [],
         "vocabulary": clean_vocab(result.get("vocab", [])),
         "completed_scenarios": [lesson["scenario_id"]] if result.get("should_finish") else []
     }
@@ -189,16 +197,23 @@ def progress(user_id: str):
         "history": store.get_history(user_id, limit=20)
     }
 
-@app.get("/api/test-gemini")
-def test_gemini():
+@app.get("/api/test-llm")
+def test_llm():
+    """Универсальный тест текущего LLM-провайдера."""
     try:
         result = llm._call_gemini(
             "You are a test. Return JSON.",
             '{"message": "Hello"}'
         )
-        return {"ok": True, "result": result}
+        return {"ok": True, "provider": llm.provider_name, "result": result}
     except Exception as e:
-        return {"ok": False, "error": str(e)}
+        return {"ok": False, "provider": llm.provider_name, "error": str(e)}
+
+
+# Старое имя — оставлено для обратной совместимости.
+@app.get("/api/test-gemini")
+def test_gemini():
+    return test_llm()
 
 if __name__ == "__main__":
     import uvicorn

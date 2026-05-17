@@ -19,3 +19,13 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Runtime user state — chat history, progress, active lessons
+data/*.json
+
+# Internal dev/debug scripts
+debug_ollama*.py
+APPLY_LLM_LAYER.md
+
+# Pytest cache
+.pytest_cache/
