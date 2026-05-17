@@ -10,6 +10,19 @@ __pycache__/
 .venv/
 venv/
 
+# Runtime user state — per-user JSON created by storage.py at startup.
+# The data/ directory itself stays in git (README + .gitkeep) so the
+# folder exists after a clone; only the user-specific files are ignored.
+data/*.json
+!data/.gitkeep
+
+# Internal dev/debug scripts
+debug_ollama*.py
+APPLY_LLM_LAYER.md
+
+# Pytest cache
+.pytest_cache/
+
 # VS Code
 .vscode/
 
@@ -19,13 +32,3 @@ Thumbs.db
 
 # Logs
 *.log
-
-# Runtime user state — chat history, progress, active lessons
-data/*.json
-
-# Internal dev/debug scripts
-debug_ollama*.py
-APPLY_LLM_LAYER.md
-
-# Pytest cache
-.pytest_cache/
