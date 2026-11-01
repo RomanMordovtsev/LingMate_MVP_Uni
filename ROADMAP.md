@@ -15,7 +15,7 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, multili
 ## Phase 1 — Foundations
 - [ ] **1.1 SQLite storage.** Replace JSON files with SQLite (keep the `JsonStore` interface; migration script for existing data). Needed for profiles, error tracking and spaced repetition.
 - [ ] **1.2 Learner profile + onboarding.** Profile: all languages with levels (L1 + others), target language/variant, goal (`relocated` | `planning_move` | `travel` | `work` | `study` | `partner_family` | `hobby`), place (country/city, optional), interests, daily-goal minutes, preferred feedback timing. Short onboarding flow in the UI (Russian labels), including the "who do you want to be in this language" question. (sla §1, syllabus-design §1)
-- [ ] **1.3 Structured corrective feedback.** LLM JSON contract: `correction` → object with `original`, `corrected`, `error_category` (article, gender, agreement, ser_estar, tense_aspect, mood, preposition, clitic, word_order, lexical, spelling_accent), `cf_type` (recast | explicit | metalinguistic | elicitation | clarification), `is_transfer` + `transfer_source` language, `explanation` (short, learner's L1). Backward compatible frontend. (morphosyntax §2, §7; sla §4)
+- [ ] **1.3 Structured corrective feedback.** LLM JSON contract: `correction` → object with `original`, `corrected`, `error_category` (article, gender, agreement, ser_estar, tense_aspect, mood, preposition, clitic, word_order, lexical, spelling_accent, register), `cf_type` (recast | explicit | metalinguistic | elicitation | clarification), `is_transfer` + `transfer_source` language, `explanation` (short, learner's L1). Backward compatible frontend. (morphosyntax §2, §7; sla §4)
 - [ ] **1.4 Noticeable feedback in the UI.** Highlight changed morphemes (diff view) in corrections. (morphosyntax §2, §6)
 - [ ] **1.5 Transfer maps.** `core/pedagogy/l1_maps/` with `ru_es.py` first (articles, ser/estar, gender mismatches, preterite/imperfect, subjunctive, clitics) and an interface for other pairs; may reference other known languages (IT↔ES). (morphosyntax §7, sla §4)
 - [ ] **1.6 Error log as learner corpus.** Store each structured correction; `/api/progress/{user}/errors` with per-category counts, trends, and *persistent* errors (fossilization risk) and avoided structures. (morphosyntax §10, sla §5)
@@ -24,7 +24,7 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, multili
 - [ ] **2.1 Daily goal + forgiving streak.** Learner-set daily goal; streak with automatic rest days (or weekly streak option); totals never reset. (engagement §1–2)
 - [ ] **2.2 Session shape + home screen.** Warm-up review → main task → wrap-up (1 highlight, 1 thing to remember) → teaser. Home screen shows today's plan, streak, next real-life task. (engagement §6)
 - [ ] **2.3 Yuji reactions.** Mascot states (greeting, thinking, celebrating, encouraging) and short messages tied to effort and milestones; occasional "how languages are learned" facts from the readings. Never guilt-tripping. Reuse the existing Yuji art; ask Roman before generating new art. (engagement §3, sla §2)
-- [ ] **2.4 Reminders.** [?] needs a decision on delivery (browser notifications / PWA / email / Telegram bot). Agent: draft options with pros/cons in the PR, don't implement until Roman chooses.
+- [ ] **2.4 Reminders.** Roman's decision (2026-11-01): web → browser push notifications (Web Push + service worker); mobile app (later) → app push; both → **one email per day**. In-app/browser: 3–4 gentle reminders spread over the day, skipped once the daily goal is done. Email time learner-configurable, default options ~15:00 (after lunch) or ~20:00 (home). Settings: on/off per channel, quiet hours, times. Slices: (a) scheduling logic + settings, pure and unit-tested; (b) browser push; (c) email. Email needs a sending service: prefer free tier / SMTP via env vars; ask Roman before adding any paid service. Tone per engagement §3 (never guilt). (engagement §1, §3)
 
 ## Phase 3 — Adaptive practice
 - [ ] **3.1 Spaced repetition** (SM-2 or FSRS-lite) for vocabulary, chunks and recurrent error categories; daily review queue feeds the warm-up.
@@ -47,7 +47,8 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, multili
 ## Phase 5 — Measuring progress
 - [ ] **5.1 CEFR can-do tracker** (CEFR CV 2020 descriptors) with evidence from completed tasks. (syllabus-design §8, sla §3)
 - [ ] **5.2 Weekly progress report + reflection prompt** (accuracy per category, words retained, tasks done, "what was hard / what next"). (sla §8)
-- [ ] **5.3 Evaluation harness** for correction quality (fixed learner utterances with known errors; precision/recall per category) to compare prompts/models objectively.
+- [ ] **5.3 Evaluation harness** for correction quality (fixed learner utterances with known errors; precision/recall per category) to compare prompts/models objectively. Seed data: `eval/cases/*.jsonl` (Roman's real errors, from `docs/learner/roman-spanish.md`); add synthetic cases per error category. Offline-runnable with mock providers; `python -m eval.run --provider <name>` for real ones. (research-methods §2–3)
+- [ ] **5.6 Model / dialogue-system comparison.** Using 5.3, compare providers (Gemini, local Ollama models, Claude API if a key exists, rule-based / own components) on: correction precision/recall, role-play coherence and staying in role, task-outcome detection, latency, cost. Rubric scoring with an LLM judge + spot checks by Roman. Output a per-situation recommendation (e.g. model A for free talk, model B for corrections) and a routing config in the factory. Constraints: the cloud agent cannot reach Gemini/OpenAI/HuggingFace/Ollama (network allowlist) and has no keys; keys only via environment settings, never the repo. Local-model runs are done by Roman on his machine with a script the agent writes; results committed as JSON reports.
 - [ ] **5.4 Engagement metrics** (D1/D7/D30, sessions/week) reported next to learning metrics. (engagement §9)
 - [ ] **5.5 Data ethics basics.** Consent text, export/delete my data, anonymised logs. Needed before multi-user release or any research use. (research-methods §5)
 
@@ -57,6 +58,8 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, multili
 
 ## Later / ideas (need Roman's approval before starting)
 - Basque mini-module, accessibility settings for older learners (multilingual-education §7), work-goal scenario pack, PWA/mobile, deploy to a free host, multi-user auth, more target languages polished to Spanish's level.
+
+- **Research Methods project (due 10 Feb 2027)** may be built on LingMate (e.g. a small case study of feedback types). The agent may prepare tooling (data export, metrics), but Roman writes the project himself: AI is not allowed in assessed work, so the agent never drafts its text.
 
 ## Waiting for input
 - Remaining material from Multilingual Education, Phonetics and Research Methods (courses still running) → update the matching `docs/research/` files.

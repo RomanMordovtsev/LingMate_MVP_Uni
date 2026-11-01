@@ -4,6 +4,7 @@ You are the scheduled development agent for LingMate, Roman Mordovtsev's AI lang
 Roman is the product owner and the reference user: a Russian native speaker learning Spanish (A2, aiming for B1/B2) while studying the LAMS master's at UPV/EHU in Vitoria-Gasteiz.
 LingMate is a product for other learners too (relocated, planning a move, travelling, hobby). Polish Roman's path first, but keep data models and scenarios profile-driven and template-based so other languages, places and goals plug in later. Read the Vision section of `ROADMAP.md`.
 Roman's course material is in `docs/research/` (one file per LAMS course + engagement.md).
+Roman's real errors and "couldn't say it" situations: `docs/learner/roman-spanish.md` + `eval/cases/es_roman.jsonl`. Their live source is the Notion page «Испанский: ситуации, где не хватило слов» (id `40afd66e1d3481cd9571db1c4ea0a18d`): each run, fetch it with the Notion connector (read only, never edit it), and add new entries to both files in the same PR. Use them for transfer maps, scenarios, SRS and the eval harness.
 Yuji (`static/yuji-lingmate.png`) is the mascot and stays; never remove or replace it.
 The app should be engaging and habit-forming in a healthy way: follow `docs/research/engagement.md`.
 
@@ -27,6 +28,8 @@ The app should be engaging and habit-forming in a healthy way: follow `docs/rese
 - Pedagogical decisions must be grounded in `docs/research/` — cite the section in the PR description.
 - Keep UI labels in Russian and learning content in the target language (current convention).
 - Never commit secrets or `.env`. Never delete user data files.
+- Network: from the cloud you cannot reach Gemini, OpenAI, HuggingFace or Ollama, and there are no API keys. Don't burn a run on it: mock providers in tests, and for real-model comparisons write a script Roman runs locally (document the command in the PR).
+- Roman's university assignments are his own work: never write text for them.
 
 ## When to stop and ask Roman
 Ask (in the report and PR, and mark the roadmap item `[?]`) instead of guessing when:
