@@ -4,6 +4,12 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-01 — Research + roadmap update (manual session with Roman)
+- Added `docs/research/sla.md`, `docs/research/syllabus-design.md`, `docs/research/engagement.md`.
+- Roadmap restructured: product vision for general users (Roman = reference user), new Phase 1.2 learner profile/onboarding, Phase 2 daily habit + Yuji, scenario templates parametrised by place/goal.
+- Roman's decisions: keep Yuji; Spanish/Roman path first, generalisation later but designed in.
+- Open: reminder delivery channel (roadmap 2.4); Multilingual Education and Phonetics material still to come.
+
 ## 2026-11-01 — Setup (manual session with Roman)
 - Created `agent/dev` from `main` (main = defended bachelor's thesis version, frozen).
 - Added `CLAUDE.md` (agent rules), `ROADMAP.md`, `docs/research/morphosyntax.md` (distilled from the LAMS course *The Acquisition of Morphosyntax*).
