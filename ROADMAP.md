@@ -5,7 +5,7 @@ LingMate is an AI language-learning companion for adults who want to **actually 
 
 **Reference user (dogfooding):** Roman — Russian L1, English C1, Italian A1, Spanish A2 → B1/B2, living in Vitoria-Gasteiz (Spain), LAMS master's student. Spanish (es-ES) for a relocated learner is the first fully polished path. Design every data model and scenario so other languages, places and goals plug in later without rewrites (profile-driven, template-based), but don't spend runs building content for other user types before Roman's path works end to end.
 
-Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, engagement.md). Cite sections in PRs.
+Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, multilingual-education.md, phonetics.md, research-methods.md, engagement.md). Cite sections in PRs.
 
 ## Rules for the roadmap
 - Work top to bottom. One item (or a coherent slice of one) per agent run.
@@ -31,7 +31,7 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, engagem
 - [ ] **3.2 Feedback policy engine.** Pure, unit-tested module choosing CF type per error: prompts for forms the learner has produced correctly before; explicit/metalinguistic for new, transfer or persistent errors; ignore errors beyond current stage; graded hints. (morphosyntax §2, §10; syllabus-design §5–6; sla §5)
 - [ ] **3.3 Pre-task focus-on-form tip** from the learner's most frequent relevant error category. (morphosyntax §5)
 - [ ] **3.4 Scenario repetition scheduling** with varied details. (morphosyntax §5)
-- [ ] **3.5 "¿Cómo se dice…?" / L1 word drop-in** inside the chat. (morphosyntax §8–9)
+- [ ] **3.5 "¿Cómo se dice…?" / repertoire drop-in** inside the chat: the learner may use any of their languages; the tutor answers inline and may explain via the closest known language. (morphosyntax §8–9, multilingual-education §1)
 
 ## Phase 4 — Real-life tasks
 - [ ] **4.1 Task cycle.** Every scenario = pre-task (goal, key chunks, form tip) → task (dialogue with explicit non-linguistic `outcome`, checked by the model) → post-task (feedback summary, items to review). (syllabus-design §3, morphosyntax §4)
@@ -41,15 +41,22 @@ Pedagogy: `docs/research/` (morphosyntax.md, sla.md, syllabus-design.md, engagem
 - [ ] **4.5 Mini-projects.** Multi-day sequences with a final product (email to landlord, trip plan, voice message). (syllabus-design §7)
 - [ ] **4.6 Content mode (CLIL-style)** for hobby learners: discuss short texts on the learner's interests. (syllabus-design §7)
 - [ ] **4.7 Collaborative writing / dictogloss mode.** (morphosyntax §1, §6)
+- [ ] **4.8 "Do it in real life" missions.** After a scenario, suggest a real-world mini-task (ask at the pharmacy, read a sign, greet a neighbour), then a short debrief chat. (multilingual-education §3)
+- [ ] **4.9 Intercultural notes** in scenarios (how things are done in Spain / Basque Country) with one reflection question. (multilingual-education §2)
 
 ## Phase 5 — Measuring progress
 - [ ] **5.1 CEFR can-do tracker** (CEFR CV 2020 descriptors) with evidence from completed tasks. (syllabus-design §8, sla §3)
 - [ ] **5.2 Weekly progress report + reflection prompt** (accuracy per category, words retained, tasks done, "what was hard / what next"). (sla §8)
 - [ ] **5.3 Evaluation harness** for correction quality (fixed learner utterances with known errors; precision/recall per category) to compare prompts/models objectively.
 - [ ] **5.4 Engagement metrics** (D1/D7/D30, sessions/week) reported next to learning metrics. (engagement §9)
+- [ ] **5.5 Data ethics basics.** Consent text, export/delete my data, anonymised logs. Needed before multi-user release or any research use. (research-methods §5)
+
+## Phase 6 — Pronunciation (after Phase 3; needs Roman's approval for new dependencies)
+- [ ] **6.1 Perception training** with minimal pairs for RU→ES priorities (unstressed vowels, /ɾ/–/r/, approximant b/d/g) using browser TTS. (phonetics §1–3)
+- [ ] **6.2 Production feedback** [?]: record in browser, acoustic analysis (duration, formants) for a few target contrasts. Decide on dependency (e.g. Parselmouth) and voice-data privacy first. (phonetics §5)
 
 ## Later / ideas (need Roman's approval before starting)
-- Pronunciation feedback (after Phonetics course material), Basque mini-module, PWA/mobile, deploy to a free host, multi-user auth, more target languages polished to Spanish's level.
+- Basque mini-module, accessibility settings for older learners (multilingual-education §7), work-goal scenario pack, PWA/mobile, deploy to a free host, multi-user auth, more target languages polished to Spanish's level.
 
 ## Waiting for input
-- Material from Multilingual Education and Phonetics → new files in `docs/research/`.
+- Remaining material from Multilingual Education, Phonetics and Research Methods (courses still running) → update the matching `docs/research/` files.
