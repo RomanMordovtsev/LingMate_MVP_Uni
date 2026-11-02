@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-02 — 1.1 SQLite storage (scheduled run)
+- Branch `agent/sqlite-storage` → PR into `agent/dev`.
+- `SqliteStore` in `core/storage.py` with the exact `JsonStore` interface; `make_store()` picks SQLite by default (`LINGMATE_STORAGE=json` keeps the old files, `LINGMATE_DB_PATH` moves the DB). Auto-imports old JSON on first start with an empty DB; JSON files are only read. Manual: `python -m core.migrate_json`.
+- Decision: mistakes/vocabulary/settings/lessons stored as JSON payload columns, so structured corrections (1.3) and the richer profile (1.2) need no schema change; 1.6 can add indexed category columns later. `schema_version` table for future migrations.
+- Notion: new situation 02.11 «¡Que aproveche!» added to `docs/learner/roman-spanish.md` (no utterance → no eval case).
+- Tests: 15 → 22 passing (parity test JsonStore vs SqliteStore, migration, CLI, auto-import).
+- Open: none.
+
 ## 2026-11-01 — Learner data, reminders decision, model comparison (manual session with Roman)
 - Added `docs/learner/roman-spanish.md` (from Notion page 40afd66e…, plus errors from chats) and `eval/cases/es_roman.jsonl` (3 gold cases) with `tests/test_eval_cases.py`. 15 tests passing.
 - Roman decided reminders (2.4, `[?]` removed): browser push 3–4/day + one daily email (~15:00 or ~20:00).

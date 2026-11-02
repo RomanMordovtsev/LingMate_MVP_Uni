@@ -18,6 +18,7 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | tú with strangers/older people instead of usted (pragmatics/register) | register | bus 31.10 |
 | vague all-purpose verb (`¿puedo?`) instead of the situational chunk (`¿me deja pasar?`) | lexical / chunk | bus 31.10 |
 | hesitation in service encounters: doesn't know the formula (`¿me pones…?`) | chunk | bar 31.10 |
+| missing social routine formulas (`¡Que aproveche!`, que + subjuntivo wishes) | chunk / pragmatics | meal 02.11 |
 | anglicism / calque: `la línea` for a queue (EN *line*) | lexical, transfer EN | queue 2026-10 |
 | verb + preposition: `esforzarse` without `por/en` | preposition | compliment 2026-10 |
 | spelling under EN influence: `possible` → `posible` | spelling_accent, transfer EN | compliment 2026-10 |
@@ -25,6 +26,12 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 02.11.2026 — Wishing someone a good meal
+- Problem: someone is eating (home, work, café): didn't know what to say. No utterance recorded, so no eval case.
+- Better: **¡Que aproveche!** (most common in Spain) / **¡Buen provecho!** / **¡Que aproveches!** (tú) / **¡Que aprovechéis!** (vosotros) / **¡Aprovecha!** (colloquial) / Basque **On egin!** (appreciated in Vitoria).
+- Replies: Gracias. / Gracias, igualmente. / ¿Quieres? (offering some)
+- Grammar: **que + subjuntivo** for wishes (¡Que te mejores! ¡Que descanses! ¡Que te vaya bien!); aprovechar / el provecho.
 
 ### 31.10.2026 — Ordering a Coke in a bar
 - Problem: always hesitates how to ask.
