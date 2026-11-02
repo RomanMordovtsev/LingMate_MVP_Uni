@@ -149,7 +149,7 @@ LingMate_MVP_Uni/
 │   │   └── factory.py          #   provider chain builder
 │   ├── llm_service.py          # high-level service: prompts, fallback, heuristics
 │   ├── scenarios.py            # 24 scripted scenarios across 6 languages
-│   ├── storage.py              # JSON persistence for users, history, progress
+│   ├── storage.py              # SQLite persistence (JsonStore kept as fallback)
 │   └── models.py               # Pydantic request models
 ├── static/index.html           # Single-page UI (Russian labels, target-language content)
 ├── tests/                      # pytest suite
