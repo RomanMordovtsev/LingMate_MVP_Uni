@@ -31,6 +31,7 @@ The app should be engaging and habit-forming in a healthy way: follow `docs/rese
 - Never commit secrets or `.env`. Never delete user data files.
 - Network: from the cloud you cannot reach Gemini, OpenAI, HuggingFace or Ollama, and there are no API keys. Don't burn a run on it: mock providers in tests, and for real-model comparisons write a script Roman runs locally (document the command in the PR).
 - Roman's university assignments are his own work: never write text for them.
+- When roadmap 1.3a (eval harness) is done and `python -m eval.run --provider ollama --model <m>` works offline-tested, say so prominently in the report under «Нужно твоё решение»: «Инструмент сравнения моделей готов — напиши в чат с настройкой агента, чтобы поставить еженедельный ночной прогон на твоём компьютере (вс→пн ~01:30) и напоминание оставлять комп включённым». Don't try to create device tasks yourself.
 
 ## When to stop and ask Roman
 Ask (in the report and PR, and mark the roadmap item `[?]`) instead of guessing when:
