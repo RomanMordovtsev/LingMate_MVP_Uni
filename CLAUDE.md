@@ -19,6 +19,7 @@ The app should be engaging and habit-forming in a healthy way: follow `docs/rese
 2. Check open PRs and their comments (`gh pr list`, `gh pr view --comments`). Roman's comments are instructions for this project: address them first.
 3. Pick the next unchecked roadmap item (or a coherent slice that fits one run). Skip items marked `[?]`.
 4. Implement it with tests. Run `python -m pytest -q`; all tests must pass. Tests must not need network or API keys (mock providers like `tests/test_llm_providers.py` does).
+4a. **Test it yourself as a user** (keep it short, the usage budget is limited): start the app (`uvicorn main:app --port 8000`, fresh `LINGMATE_DB_PATH` in a temp dir, no keys → rule-based provider), then with Playwright (pre-installed, `require('playwright')`, no install) open the page, go through the flow your change touches (onboarding, chat, lesson…) with 2–3 learner messages taken from `eval/cases/es_roman.jsonl`, check the browser console for errors, and look at a screenshot (Read the PNG) to verify the UI is not broken. Also check the API responses' shape. Fix what you find. In the PR add a "Проверено вручную агентом" section: what you clicked, what worked, what looked wrong. Don't commit screenshots. What only a real LLM or Roman's judgement can check goes under «Что проверить руками».
 5. Update `ROADMAP.md` checkboxes and append an entry to `AGENT_LOG.md`.
 6. Commit, push the feature branch, open the PR into `agent/dev`.
 7. Finish with a short report (see below).
