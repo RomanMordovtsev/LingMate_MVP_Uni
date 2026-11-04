@@ -322,6 +322,21 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Onboarding / learner profile (roadmap 1.2) */
+    #onboarding { margin-top: 24px; }
+    #onboarding h2 { margin: 0 0 4px; }
+    .ob-step { margin-top: 16px; }
+    .ob-step > label { font-weight: bold; display: block; margin-bottom: 6px; }
+    .ob-hint { color: var(--muted); font-size: 14px; margin: 2px 0 8px; }
+    .choice-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .choice-row button { width: auto; padding: 8px 14px; border: 1px solid var(--line); background: #fff; color: var(--text); }
+    .choice-row button.on { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+    .lang-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
+    .lang-row select { flex: 1; width: auto; min-width: 0; }
+    .lang-row button { width: 44px; flex: 0 0 44px; padding: 10px 0; }
+    #obLanguages + button { width: auto; }
+    .ob-error { color: var(--accent); min-height: 1em; }
   </style>
 </head>
 <body>
@@ -386,6 +401,7 @@
       <div class="row" style="margin-top:12px;">
         <button class="primary" onclick="saveSettings()">Сохранить настройки</button>
         <button class="ghost" onclick="loadProgress()">Обновить прогресс</button>
+        <button class="ghost" onclick="openOnboarding()">Мой профиль</button>
       </div>
 
       <p class="status-line" id="statusLine">Статус: не загружено</p>
@@ -393,6 +409,67 @@
 
     <div class="card avatar-box">
       <img src="/static/yuji-lingmate.png" alt="LingMate avatar" />
+    </div>
+  </div>
+
+  <div class="card" id="onboarding" style="display:none;">
+    <h2>Давай познакомимся</h2>
+    <p class="ob-hint">Пара минут — и Юдзи будет подбирать темы и ситуации под тебя. Всё можно поменять позже.</p>
+
+    <div class="ob-step">
+      <label>Какой язык учишь и какой у тебя уровень?</label>
+      <div class="row">
+        <select id="obTarget"></select>
+        <select id="obLevel"><option>A1</option><option selected>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select>
+      </div>
+    </div>
+
+    <div class="ob-step">
+      <label>Какие языки ты уже знаешь?</label>
+      <p class="ob-hint">Родной и все остальные — LingMate сможет объяснять через самый близкий.</p>
+      <div id="obLanguages"></div>
+      <button class="ghost" type="button" onclick="addLangRow()">+ Добавить язык</button>
+    </div>
+
+    <div class="ob-step">
+      <label>Зачем тебе этот язык?</label>
+      <div class="choice-row" id="obGoal"></div>
+    </div>
+
+    <div class="ob-step">
+      <label>Где ты им пользуешься или будешь?</label>
+      <div class="row">
+        <input id="obCountry" placeholder="Страна (необязательно)" />
+        <input id="obCity" placeholder="Город (необязательно)" />
+      </div>
+    </div>
+
+    <div class="ob-step">
+      <label>Что тебе интересно?</label>
+      <input id="obInterests" placeholder="музыка, футбол, кулинария" />
+    </div>
+
+    <div class="ob-step">
+      <label>Сколько минут в день реально уделять?</label>
+      <p class="ob-hint">Лучше мало, но каждый день. Больше, чем ты выбрал, мы не попросим.</p>
+      <div class="choice-row" id="obMinutes"></div>
+    </div>
+
+    <div class="ob-step">
+      <label>Когда исправлять ошибки?</label>
+      <div class="choice-row" id="obFeedback"></div>
+    </div>
+
+    <div class="ob-step">
+      <label>Кем ты хочешь быть в этом языке?</label>
+      <p class="ob-hint">Своими словами, на любом языке. Например: «Хочу спокойно говорить с соседями и врачом».</p>
+      <textarea id="obIdealSelf" maxlength="300"></textarea>
+    </div>
+
+    <p class="ob-error" id="obError"></p>
+    <div class="row">
+      <button class="primary" onclick="saveProfile()">Сохранить профиль</button>
+      <button class="ghost" onclick="closeOnboarding()">Позже</button>
     </div>
   </div>
 
@@ -890,6 +967,151 @@ function dictateTo(targetId) {
   recognition.start();
 }
 
+// ---------------------------------------------------------------------------
+// Onboarding / learner profile (roadmap 1.2). UI labels in Russian.
+// ---------------------------------------------------------------------------
+const OB_LANGS = [
+  ['ru', 'Русский'], ['en', 'English'], ['es', 'Español'], ['it', 'Italiano'], ['fr', 'Français'],
+  ['de', 'Deutsch'], ['pt', 'Português'], ['tr', 'Türkçe'], ['uk', 'Українська'], ['eu', 'Euskara'],
+  ['ca', 'Català'], ['pl', 'Polski'], ['zh', '中文'], ['ja', '日本語'], ['ar', 'العربية'],
+];
+const OB_LEVELS = ['L1', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const OB_GOALS = [
+  ['relocated', 'Я уже переехал(а)'], ['planning_move', 'Планирую переезд'], ['travel', 'Путешествия'],
+  ['work', 'Работа'], ['study', 'Учёба'], ['partner_family', 'Партнёр / семья'], ['hobby', 'Для себя, хобби'],
+];
+const OB_MINUTES = [[5, '5 мин'], [10, '10 мин'], [15, '15 мин'], [20, '20 мин'], [30, '30 мин']];
+const OB_FEEDBACK = [['immediate', 'Сразу, по ходу'], ['end_of_session', 'В конце, не перебивая']];
+const obState = { goal: null, minutes: 10, feedback: 'immediate' };
+
+function renderChoices(containerId, options, key) {
+  const box = document.getElementById(containerId);
+  box.innerHTML = '';
+  options.forEach(([value, label]) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.dataset.value = value;
+    if (obState[key] === value) b.classList.add('on');
+    b.onclick = () => {
+      obState[key] = value;
+      document.getElementById('obError').textContent = '';
+      renderChoices(containerId, options, key);
+    };
+    box.appendChild(b);
+  });
+}
+
+function addLangRow(code = 'en', level = 'B1') {
+  const row = document.createElement('div');
+  row.className = 'lang-row';
+  const langSel = document.createElement('select');
+  OB_LANGS.forEach(([c, n]) => langSel.add(new Option(n, c, false, c === code)));
+  const lvlSel = document.createElement('select');
+  OB_LEVELS.forEach(l => lvlSel.add(new Option(l === 'L1' ? 'родной' : l, l, false, l === level)));
+  const del = document.createElement('button');
+  del.type = 'button'; del.className = 'ghost'; del.textContent = '×';
+  del.onclick = () => row.remove();
+  row.append(langSel, lvlSel, del);
+  document.getElementById('obLanguages').appendChild(row);
+}
+
+function fillOnboarding(p) {
+  p = p || {};
+  const target = document.getElementById('obTarget');
+  if (!target.options.length) {
+    Array.from(document.getElementById('targetLanguage').options)
+      .forEach(o => target.add(new Option(o.textContent, o.value)));
+  }
+  target.value = p.target_language || 'es';
+  document.getElementById('obLevel').value = p.level || 'A2';
+  document.getElementById('obLanguages').innerHTML = '';
+  (p.languages && p.languages.length ? p.languages : [{ code: 'ru', level: 'L1' }])
+    .forEach(l => addLangRow(l.code, l.level));
+  document.getElementById('obCountry').value = p.country || '';
+  document.getElementById('obCity').value = p.city || '';
+  document.getElementById('obInterests').value = (p.interests || []).join(', ');
+  document.getElementById('obIdealSelf').value = p.ideal_self || '';
+  obState.goal = p.goal || null;
+  obState.minutes = p.daily_goal_minutes || 10;
+  obState.feedback = p.feedback_timing || 'immediate';
+  renderChoices('obGoal', OB_GOALS, 'goal');
+  renderChoices('obMinutes', OB_MINUTES, 'minutes');
+  renderChoices('obFeedback', OB_FEEDBACK, 'feedback');
+  document.getElementById('obError').textContent = '';
+}
+
+async function openOnboarding() {
+  const userId = document.getElementById('userId').value;
+  let profile = null;
+  try { profile = (await api('/api/profile/' + encodeURIComponent(userId))).profile; } catch (e) { console.error(e); }
+  fillOnboarding(profile);
+  const card = document.getElementById('onboarding');
+  card.style.display = 'block';
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeOnboarding() {
+  document.getElementById('onboarding').style.display = 'none';
+}
+
+async function saveProfile() {
+  const err = document.getElementById('obError');
+  const languages = Array.from(document.querySelectorAll('#obLanguages .lang-row')).map(r => {
+    const [lang, lvl] = r.querySelectorAll('select');
+    return { code: lang.value, level: lvl.value };
+  });
+  if (!languages.some(l => l.level === 'L1')) { err.textContent = 'Отметь хотя бы один родной язык.'; return; }
+  if (!obState.goal) { err.textContent = 'Выбери, зачем тебе язык.'; return; }
+  const target = document.getElementById('obTarget').value;
+  const body = {
+    user_id: document.getElementById('userId').value,
+    target_language: target,
+    target_variant: LANG_TO_VOICE[target] || null,
+    level: document.getElementById('obLevel').value,
+    languages,
+    goal: obState.goal,
+    country: document.getElementById('obCountry').value,
+    city: document.getElementById('obCity').value,
+    interests: document.getElementById('obInterests').value.split(',').map(x => x.trim()).filter(Boolean),
+    daily_goal_minutes: obState.minutes,
+    feedback_timing: obState.feedback,
+    ideal_self: document.getElementById('obIdealSelf').value,
+  };
+  try {
+    const data = await api('/api/profile', 'POST', body);
+    applyProfileToQuickForm(data.profile);
+    closeOnboarding();
+    document.getElementById('statusLine').textContent = 'Статус: профиль сохранён, можно практиковаться';
+    await loadProgress();
+  } catch (e) {
+    err.textContent = 'Не получилось сохранить: проверь поля.';
+    console.error(e);
+  }
+}
+
+function applyProfileToQuickForm(p) {
+  if (!p) return;
+  document.getElementById('targetLanguage').value = p.target_language;
+  document.getElementById('level').value = p.level;
+  document.getElementById('interests').value = (p.interests || []).join(', ');
+  const native = (p.languages || []).find(l => l.level === 'L1');
+  const nativeSel = document.getElementById('nativeLanguage');
+  if (native && Array.from(nativeSel.options).some(o => o.value === native.code)) nativeSel.value = native.code;
+  refreshScenarioDropdown();
+}
+
+async function checkOnboarding() {
+  const userId = document.getElementById('userId').value;
+  const data = await api('/api/profile/' + encodeURIComponent(userId));
+  if (data.onboarding_completed) {
+    applyProfileToQuickForm(data.profile);
+  } else {
+    fillOnboarding(data.profile);
+    document.getElementById('onboarding').style.display = 'block';
+  }
+}
+
 window.addEventListener('load', async () => {
   try {
     const data = await api('/api/status');
@@ -908,6 +1130,12 @@ window.addEventListener('load', async () => {
     await loadProgress();
   } catch (err) {
     document.getElementById('progressDump').textContent = 'Прогресса пока нет. Сохрани настройки и начни практику.';
+    console.error(err);
+  }
+
+  try {
+    await checkOnboarding();
+  } catch (err) {
     console.error(err);
   }
 });

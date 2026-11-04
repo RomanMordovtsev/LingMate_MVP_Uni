@@ -6,6 +6,7 @@ from fastapi.responses import FileResponse
 
 from core.models import UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest
 from core.storage import make_store
+from core.profile import LearnerProfile, profile_from_settings
 from core.scenarios import SCENARIOS
 from core.llm_service import LLMService
 
@@ -103,8 +104,28 @@ def status():
 
 @app.post("/api/setup")
 def setup_user(settings: UserSettings):
-    store.save_settings(settings.user_id, settings.model_dump())
-    return {"ok": True, "settings": settings.model_dump()}
+    # Merge: the quick settings form must not wipe the onboarding profile (roadmap 1.2).
+    merged = {**(store.get_settings(settings.user_id) or {}), **settings.model_dump()}
+    if merged.get("languages"):
+        # Keep the repertoire's L1 in sync with the quick form's native language.
+        others = [l for l in merged["languages"] if l.get("level") != "L1"
+                  and l.get("code") != merged["native_language"]]
+        merged["languages"] = [{"code": merged["native_language"], "level": "L1"}] + others
+    store.save_settings(settings.user_id, merged)
+    return {"ok": True, "settings": merged}
+
+
+@app.get("/api/profile/{user_id}")
+def get_profile(user_id: str):
+    profile = profile_from_settings(store.get_settings(user_id))
+    return {"profile": profile, "onboarding_completed": bool(profile and profile["onboarding_completed"])}
+
+
+@app.post("/api/profile")
+def save_profile(profile: LearnerProfile):
+    settings = {**(store.get_settings(profile.user_id) or {}), **profile.to_settings()}
+    store.save_settings(profile.user_id, settings)
+    return {"ok": True, "profile": profile_from_settings(settings)}
 
 
 @app.post("/api/chat")

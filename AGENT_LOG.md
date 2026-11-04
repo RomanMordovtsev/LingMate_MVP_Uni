@@ -4,6 +4,17 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-04 — 1.2 Learner profile + onboarding (scheduled run)
+- Branch `agent/learner-profile` → PR into `agent/dev`. 1.1 marked `[x]` (PR #1 merged).
+- `core/profile.py`: `LearnerProfile` (whole repertoire with levels incl. L1, target + variant + level, goal enum, country/city, interests, daily goal 5–60 min, feedback timing, "who do you want to be" ≤300 chars). Stored inside the existing `user_settings` JSON (no schema change); legacy keys kept so prompts/old endpoints work.
+- API: `GET /api/profile/{user}`, `POST /api/profile`; `/api/setup` now **merges** into existing settings so the quick form does not wipe the profile.
+- Prompts: `profile_context()` appends repertoire (other languages as possible transfer sources), goal, place, interests and ideal self to free-talk and lesson system prompts; empty for users without onboarding (prompts unchanged).
+- UI: onboarding card (Russian labels) shown on first visit / until completed; «Мой профиль» button reopens it. Self-tested with Playwright: no console errors.
+- `feedback_timing` is stored but not yet acted on: the feedback policy (3.2) will use it.
+- Notion: new entry 03.11 «adelante» added to `docs/learner/roman-spanish.md` (comprehension question, no eval case).
+- Tests: 22 → 36 passing.
+- Open: none blocking; see PR «Что проверить руками».
+
 ## 2026-11-02 — 1.1 SQLite storage (scheduled run)
 - Branch `agent/sqlite-storage` → PR into `agent/dev`.
 - `SqliteStore` in `core/storage.py` with the exact `JsonStore` interface; `make_store()` picks SQLite by default (`LINGMATE_STORAGE=json` keeps the old files, `LINGMATE_DB_PATH` moves the DB). Auto-imports old JSON on first start with an empty DB; JSON files are only read. Manual: `python -m core.migrate_json`.
