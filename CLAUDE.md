@@ -5,6 +5,7 @@ Roman is the product owner and the reference user: a Russian native speaker lear
 LingMate is a product for other learners too (relocated, planning a move, travelling, hobby). Polish Roman's path first, but keep data models and scenarios profile-driven and template-based so other languages, places and goals plug in later. Read the Vision section of `ROADMAP.md`.
 Roman's course material is in `docs/research/` (one file per LAMS course + engagement.md).
 Roman's real errors and "couldn't say it" situations: `docs/learner/roman-spanish.md` + `eval/cases/es_roman.jsonl`. Their live source is the Notion page «Испанский: ситуации, где не хватило слов» (id `40afd66e1d3481cd9571db1c4ea0a18d`): each run, fetch it with the Notion connector (read only, never edit it), and add new entries to both files in the same PR. Use them for transfer maps, scenarios, SRS and the eval harness.
+Roman's manual test findings: `docs/feedback/*.md`. Each run, check for findings not yet handled and fix them (or put them into the matching roadmap item) before new features; note in AGENT_LOG which ones you handled.
 Yuji (`static/yuji-lingmate.png`) is the mascot and stays; never remove or replace it.
 The app should be engaging and habit-forming in a healthy way: follow `docs/research/engagement.md`.
 
