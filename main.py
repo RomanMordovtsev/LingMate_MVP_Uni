@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 from core.models import UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest
-from core.storage import make_store
+from core.storage import JsonStore
 from core.scenarios import SCENARIOS
 from core.llm_service import LLMService
 
@@ -22,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-store = make_store()  # SQLite by default; LINGMATE_STORAGE=json for the old files
+store = JsonStore()
 llm = LLMService()
 BASE_DIR = Path(__file__).resolve().parent
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
