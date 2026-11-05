@@ -18,7 +18,7 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | tú with strangers/older people instead of usted (pragmatics/register) | register | bus 31.10 |
 | vague all-purpose verb (`¿puedo?`) instead of the situational chunk (`¿me deja pasar?`) | lexical / chunk | bus 31.10 |
 | hesitation in service encounters: doesn't know the formula (`¿me pones…?`) | chunk | bar 31.10 |
-| missing social routine formulas (`¡Que aproveche!`, que + subjuntivo wishes) | chunk / pragmatics | meal 02.11 |
+| missing social routine formulas (`¡Que aproveche!`, que + subjuntivo wishes, `¿se puede?` / `con permiso`) | chunk / pragmatics | meal 02.11, adelante 03.11 |
 | anglicism / calque: `la línea` for a queue (EN *line*) | lexical, transfer EN | queue 2026-10 |
 | verb + preposition: `esforzarse` without `por/en` | preposition | compliment 2026-10 |
 | spelling under EN influence: `possible` → `posible` | spelling_accent, transfer EN | compliment 2026-10 |
@@ -26,6 +26,12 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 03.11.2026 — What does «adelante» mean
+- Question (comprehension, no utterance → no eval case): hears «adelante» often.
+- Meanings: **¡Adelante!** = come in (after knocking) / go ahead (permission, encouragement); *sigue adelante* = keep going; **más adelante** = later / further on; **en adelante / de aquí en adelante** = from now on; **salir adelante** = get through hard times; **sacar adelante** algo = pull something off.
+- Use: knocking → **Hola, ¿se puede?**; entering → **Con permiso**; letting someone pass → **Adelante, pasa / pase usted**; being let through → **Gracias**.
+- Contrast: **adelante** (direction, "forward") vs **delante (de)** (location, "in front of": *Está delante de la puerta*). Synonym for "come in": ¡Pasa! / ¡Pase! Related: el adelanto, adelantar.
 
 ### 02.11.2026 — Wishing someone a good meal
 - Problem: someone is eating (home, work, café): didn't know what to say. No utterance recorded, so no eval case.

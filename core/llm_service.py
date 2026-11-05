@@ -14,6 +14,7 @@ import re
 from typing import Any, Dict, List, Optional
 
 from .llm import LLMProvider, make_provider, make_provider_chain
+from .profile import profile_context
 
 
 SYSTEM_FREE_TALK = """You are LingMate, an AI language tutor.
@@ -183,7 +184,7 @@ class LLMService:
             result["source"] = "fallback"
             return result
 
-        system_prompt = SYSTEM_FREE_TALK.format(**settings)
+        system_prompt = SYSTEM_FREE_TALK.format(**settings) + profile_context(settings)
         user_prompt = json.dumps(
             {
                 "history": history[-8:],
@@ -218,7 +219,7 @@ class LLMService:
         system_prompt = SYSTEM_LESSON.format(
             completion_phrases=_completion_phrases_for(target_language),
             **settings,
-        )
+        ) + profile_context(settings)
         user_prompt = json.dumps(
             {
                 "lesson": lesson,
