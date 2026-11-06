@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-06 — 1.3 Structured corrective feedback + Roman's test findings (scheduled run)
+- Branch `agent/structured-feedback` → PR into `agent/dev`. 1.2 marked `[x]` (PR #2 merged). No open PRs / comments.
+- `core/feedback.py`: contract (`original`, `corrected`, `error_category` ×12, `cf_type` ×5, `is_transfer`, `transfer_source`, `explanation` in L1) + tolerant `normalize_correction` (legacy strings, aliases like "spelling"→`spelling_accent`, bad enums → safe defaults, self-identical "corrections" dropped). Both system prompts get the same contract block.
+- Feedback 2026-11-05 handled: **§1** one retry with 1.5 s backoff on 503/429/UNAVAILABLE before the next provider; responses carry `source` + `model`; UI label under replies with `?debug=1`. **§4** prompt: correct only the current `message`, never earlier turns. **§5** prompt: colloquial forms (*porfa*, tú with a barman) are not register errors. **§3** partly: free-talk prompt asks to respond to the learner's content, not repeat itself, not assert unsure cultural facts (needs live check). **§2** covered by contract (EN calques as lexical transfer) — needs live check. **§6, §7** moved into roadmap 4.1 / 4.2.
+- Progress log still stores one readable line per correction (`original → corrected — explanation [category]`); the structured error log is 1.6.
+- Notion: 3 new entries (05.11 cenar, 06.11 postal, 06.11 calefacción) → `docs/learner/roman-spanish.md`; vocabulary questions, no eval cases.
+- Tests: 36 → 51.
+- Open: whether real models follow the contract (Gemini / qwen2.5) — Roman's local check; then 1.3a.
+
 ## 2026-11-04 — 1.2 Learner profile + onboarding (scheduled run)
 - Branch `agent/learner-profile` → PR into `agent/dev`. 1.1 marked `[x]` (PR #1 merged).
 - `core/profile.py`: `LearnerProfile` (whole repertoire with levels incl. L1, target + variant + level, goal enum, country/city, interests, daily goal 5–60 min, feedback timing, "who do you want to be" ≤300 chars). Stored inside the existing `user_settings` JSON (no schema change); legacy keys kept so prompts/old endpoints work.

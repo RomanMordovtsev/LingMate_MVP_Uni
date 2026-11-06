@@ -22,10 +22,29 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | anglicism / calque: `la línea` for a queue (EN *line*) | lexical, transfer EN | queue 2026-10 |
 | verb + preposition: `esforzarse` without `por/en` | preposition | compliment 2026-10 |
 | spelling under EN influence: `possible` → `posible` | spelling_accent, transfer EN | compliment 2026-10 |
+| everyday household / service vocabulary gaps (heating, postcards, meals) | lexical / chunk | 05.11, 06.11 |
+| gender of nouns not ending in -o/-a (`la postal`, `-ción`) | gender | 06.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 06.11.2026 — «Отопление» (heating)
+- Question (vocabulary, no utterance → no eval case). Relevant to renting in Vitoria (4.3 landlord scenario).
+- **la calefacción** (central / individual), el radiador, la caldera, el termostato, la estufa, el aire acondicionado; **encender / apagar**, **subir / bajar la calefacción**.
+- Chunks: ¿Podemos encender la calefacción? / La calefacción no funciona. / El radiador de mi habitación está frío. / **¿La calefacción está incluida en el alquiler?** / Hace frío en casa.
+- Form: -ción nouns are feminine, stress on the last syllable; plural loses the accent (calefacciones).
+
+### 06.11.2026 — «Открытка» (postcard)
+- Question (vocabulary, no eval case).
+- **la postal / la tarjeta postal** (sent by post) vs **la tarjeta (de felicitación / de cumpleaños / de Navidad)**, colloquial *el christmas*.
+- Chunks: Te he mandado una postal desde Vitoria. / ¿Dónde puedo comprar postales y sellos? / Quería enviar esta postal a Rusia. Related: el sello, Correos, el buzón, enviar / mandar.
+- Form: **la postal** is feminine despite -l (gender trap → `gender` category, SRS); *tarjeta* also = bank card.
+
+### 05.11.2026 — «Ужинать» (to have dinner)
+- Question (vocabulary, no eval case).
+- **cenar / la cena**; *cenar algo* without a preposition (Esta noche ceno pasta — not *ceno con*); salir a cenar; ¿Quedamos para cenar? ¿Qué hay para cenar?
+- Other meals in Spain: desayunar, **comer** (= lunch, 14–15h), almorzar (late-morning snack in Spain), merendar. Culture: dinner 21:00–22:30 (intercultural note, 4.9).
 
 ### 03.11.2026 — What does «adelante» mean
 - Question (comprehension, no utterance → no eval case): hears «adelante» often.

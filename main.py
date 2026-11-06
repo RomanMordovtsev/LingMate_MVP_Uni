@@ -9,6 +9,7 @@ from core.storage import make_store
 from core.profile import LearnerProfile, profile_from_settings
 from core.scenarios import SCENARIOS
 from core.llm_service import LLMService
+from core.feedback import correction_to_text
 
 from dotenv import load_dotenv
 
@@ -29,7 +30,10 @@ BASE_DIR = Path(__file__).resolve().parent
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
-def clean_correction(text: str | None) -> list[str]:
+def clean_correction(correction: dict | str | None) -> list[str]:
+    # Structured corrections (roadmap 1.3) are logged as one readable line for now;
+    # the full object goes to the error log in 1.6.
+    text = correction_to_text(correction) if isinstance(correction, dict) else correction
     if not text:
         return []
 
