@@ -11,10 +11,16 @@ Gemini, Ollama или что-то ещё. Логика fallback (правила 
 
 import json
 import re
+import time
 from typing import Any, Dict, List, Optional
 
 from .llm import LLMProvider, make_provider, make_provider_chain
+from .feedback import correction_contract, normalize_correction
 from .profile import profile_context
+
+# Transient provider errors worth one retry before falling back (docs/feedback/2026-11-05 §1).
+_RETRYABLE = ("503", "429", "unavailable", "resource_exhausted", "overloaded")
+_RETRY_DELAY_S = 1.5
 
 
 SYSTEM_FREE_TALK = """You are LingMate, an AI language tutor.
@@ -24,8 +30,8 @@ Rules:
 - The learner studies {target_language} and speaks {native_language}.
 - Their current level is {level}.
 - Keep the main conversation in {target_language}.
-- If the learner makes mistakes, correct them briefly in {target_language}. Use {native_language} only if the mistake is complex.
-- Keep answers concise and useful for language practice.
+- Respond to what the learner actually said in "message": pick up their content, ask a follow-up about it, and do not repeat sentences you already used in "history".
+- Keep answers concise and useful for language practice. Facts about local culture must be accurate; if unsure, ask instead of asserting.
 - Always return valid JSON with keys: reply, correction, vocab, encouragement.
 """
 
@@ -46,12 +52,6 @@ ENDING THE SCENARIO (very important):
 - When should_finish is true: roleplay_reply MUST be a short, natural closing line in {target_language}. Do NOT ask another question.
 - Otherwise should_finish must be false.
 
-CORRECTION:
-- If the learner's last message contains ANY error — grammar, spelling, missing diacritics (á é í ó ú ñ ü ç ğ ş ı, etc.), missing inverted punctuation in Spanish (¿ ¡), wrong word order, wrong article, wrong verb form — correction MUST contain a concrete fix in 1 short sentence. Write the corrected form explicitly.
-- Use {target_language} for correction. Use {native_language} only when the explanation truly cannot fit in {target_language} at the learner's level.
-- Only return correction as an empty string if the learner's message is fully correct.
-- correction must be a plain string, NOT an object.
-
 VOCAB:
 - vocab is a list of 1–3 useful content words (nouns, verbs, adjectives) FROM YOUR OWN roleplay_reply that a learner at this level may not know yet. Plain strings, e.g. ["receipt", "to go"].
 - Do NOT include function words (and, or, of, the, sin, de, en, von, mit, di, ile, etc.).
@@ -59,7 +59,7 @@ VOCAB:
 - Empty list is preferred over forced or trivial entries.
 
 OUTPUT FORMAT:
-- Always return ONE valid JSON object with keys: roleplay_reply, correction, vocab, progress_note, should_finish.
+- Always return ONE valid JSON object with keys: roleplay_reply, correction, vocab, progress_note, should_finish. correction follows the CORRECTION rules below.
 - progress_note: one short sentence in {native_language} about how the learner is doing.
 - No prose, no markdown fences, no explanations outside the JSON.
 """
@@ -97,6 +97,11 @@ def _completion_phrases_for(target_language: str) -> str:
     return ", ".join(f'"{p}"' for p in phrases)
 
 
+def _is_retryable(error: Exception) -> bool:
+    text = str(error).lower()
+    return any(marker in text for marker in _RETRYABLE)
+
+
 def _contains_any(text: str, phrases) -> bool:
     """Case-insensitive substring check for any phrase in the list."""
     if not text:
@@ -129,6 +134,8 @@ class LLMService:
         # Первый провайдер цепочки используется для is_configured(),
         # provider_name и обратно-совместимого _call_gemini().
         self.provider: LLMProvider = self.providers[0]
+        self.retry_delay = _RETRY_DELAY_S
+        self.last_model: Optional[str] = None
 
     def is_configured(self) -> bool:
         # В chain достаточно одного работающего провайдера — этого хватает
@@ -159,12 +166,17 @@ class LLMService:
         for p in self.providers:
             if not p.is_configured():
                 continue
-            try:
-                result = p.generate_json(system_prompt, user_prompt)
-                return result, p.name
-            except Exception as e:
-                print(f"[LLMService] {p.name} failed, trying next: {type(e).__name__}: {e}")
-                continue
+            for attempt in (1, 2):
+                try:
+                    result = p.generate_json(system_prompt, user_prompt)
+                    self.last_model = getattr(p, "model_name", None)
+                    return result, p.name
+                except Exception as e:
+                    print(f"[LLMService] {p.name} attempt {attempt} failed: {type(e).__name__}: {e}")
+                    if attempt == 1 and _is_retryable(e):
+                        time.sleep(self.retry_delay)
+                        continue
+                    break
         return None, None
 
     # ------------------------------------------------------------------
@@ -181,10 +193,11 @@ class LLMService:
     ) -> Dict[str, Any]:
         if not self.is_configured():
             result = self._fallback_free_talk(message, history, settings, progress)
-            result["source"] = "fallback"
+            result["source"], result["model"] = "fallback", None
             return result
 
-        system_prompt = SYSTEM_FREE_TALK.format(**settings) + profile_context(settings)
+        system_prompt = (SYSTEM_FREE_TALK.format(**settings) + correction_contract(settings)
+                         + profile_context(settings))
         user_prompt = json.dumps(
             {
                 "history": history[-8:],
@@ -197,10 +210,9 @@ class LLMService:
         result, used_name = self._try_chain(system_prompt, user_prompt)
         if not isinstance(result, dict) or "reply" not in result:
             result = self._fallback_free_talk(message, history, settings, progress)
-            result["source"] = "fallback"
+            result["source"], result["model"] = "fallback", None
             return result
-        result["source"] = used_name
-        return result
+        return self._finish(result, used_name)
 
     def lesson_turn(
         self,
@@ -212,14 +224,14 @@ class LLMService:
     ) -> Dict[str, Any]:
         if not self.is_configured():
             result = self._fallback_lesson_turn(message, lesson, history)
-            result["source"] = "fallback"
+            result["source"], result["model"] = "fallback", None
             return result
 
         target_language = settings.get("target_language", "en")
         system_prompt = SYSTEM_LESSON.format(
             completion_phrases=_completion_phrases_for(target_language),
             **settings,
-        ) + profile_context(settings)
+        ) + correction_contract(settings) + profile_context(settings)
         user_prompt = json.dumps(
             {
                 "lesson": lesson,
@@ -232,7 +244,7 @@ class LLMService:
         result, used_name = self._try_chain(system_prompt, user_prompt)
         if not isinstance(result, dict) or "roleplay_reply" not in result:
             result = self._fallback_lesson_turn(message, lesson, history)
-            result["source"] = "fallback"
+            result["source"], result["model"] = "fallback", None
             return result
 
         # Heuristic safety net: small open-source models (Qwen 2.5 7B and
@@ -251,7 +263,13 @@ class LLMService:
             if _contains_any(message, user_closers) or _contains_any(result.get("roleplay_reply", ""), role_closers):
                 result["should_finish"] = True
 
+        return self._finish(result, used_name)
+
+    def _finish(self, result: Dict[str, Any], used_name: str) -> Dict[str, Any]:
+        """Normalise the structured correction and tag which provider/model answered."""
+        result["correction"] = normalize_correction(result.get("correction"))
         result["source"] = used_name
+        result["model"] = self.last_model
         return result
 
     # ------------------------------------------------------------------
