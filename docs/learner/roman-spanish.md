@@ -8,7 +8,7 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 
 ## How to use this file
 - **Transfer map (roadmap 1.5):** each error tagged below is a candidate rule for `core/pedagogy/l1_maps/ru_es.py`.
-- **Eval harness (5.3):** each "said → better" pair is a gold case.
+- **Eval harness (1.3a, `eval/`):** each "said → better" pair is a gold case; synthetic cases built from these situations live in `eval/cases/es_synthetic.jsonl`.
 - **Scenarios (4.3):** each situation is a scenario seed for the relocation pack (bar, bus, queue…).
 - **SRS (3.1):** listed chunks go into the review queue.
 
@@ -22,12 +22,18 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | anglicism / calque: `la línea` for a queue (EN *line*) | lexical, transfer EN | queue 2026-10 |
 | verb + preposition: `esforzarse` without `por/en` | preposition | compliment 2026-10 |
 | spelling under EN influence: `possible` → `posible` | spelling_accent, transfer EN | compliment 2026-10 |
-| everyday household / service vocabulary gaps (heating, postcards, meals) | lexical / chunk | 05.11, 06.11 |
+| everyday household / service vocabulary gaps (heating, postcards, meals, milk types) | lexical / chunk | 05.11, 06.11, 07.11 |
 | gender of nouns not ending in -o/-a (`la postal`, `-ción`) | gender | 06.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 07.11.2026 — Виды молока (kinds of milk)
+- Question (vocabulary, no utterance → no eval case of his own; correct café orders added as clean cases in `es_synthetic.jsonl`). Directly feeds roadmap 4.1 café follow-up chunks (feedback 2026-11-05 §6).
+- Cow's milk: **leche entera / semidesnatada / desnatada / sin lactosa**; leche fresca vs **UHT / de larga duración**, el brik; de cabra, de oveja. "Normal" milk: just **leche**; vs plant milk **leche normal** (colloquial) / **leche de vaca**. Barista may ask: *¿Leche normal o de avena?*
+- Plant drinks: **de avena / soja / almendra(s) / arroz / coco / avellana**; labels *sin azúcares añadidos*, *barista*, *con calcio*. In EU shops the label says **bebida de avena** (not "leche"); in cafés people say *leche de avena*.
+- Chunks: **Un café con leche de avena, por favor.** / **¿Tenéis leche vegetal / sin lactosa?** / *¿Con leche fría o caliente?* / **Un cortado con leche de soja.**
 
 ### 06.11.2026 — «Отопление» (heating)
 - Question (vocabulary, no utterance → no eval case). Relevant to renting in Vitoria (4.3 landlord scenario).

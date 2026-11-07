@@ -4,6 +4,17 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-07 — 1.3a Evaluation harness (scheduled run)
+- Branch `agent/eval-harness` → PR into `agent/dev`. 1.3 marked `[x]` (PR #5 merged). No open PRs, no new comments.
+- `eval/run.py` CLI: `python -m eval.run --provider gemini|ollama|rule [--model M] [--id CASE] [--cases F] [--out DIR]`. Uses `LLMService.free_talk` with the real prompts + `normalize_correction`, so the eval measures what the app does. Writes `eval/reports/<date>-<provider>-<model>.json` + `.md`. Exit 2 with a hint if the provider is not configured. Keys only from env/.env; scrubbed from error strings.
+- `eval/scoring.py` (pure): detection, case-level category recall, category precision (wrong category / correction on correct input = FP), corrected-text match vs `acceptable` (punctuation-insensitive, accent-sensitive; fragment substitution), false-positive rate on correct input, transfer-source accuracy, latency; provider failures counted separately.
+- Dataset: `es_synthetic.jsonl` — 25 error cases (every category ≥2) built from Roman's situations + 6 correct utterances (`expect_correction: false`, e.g. *porfa* in a café, feedback §5). Schema check extended. Total 34 cases.
+- Rule baseline: 0% detection (expected: fallback never corrects) — the floor for comparisons.
+- Notion: new entry 07.11 «Виды молока» → `docs/learner/roman-spanish.md` (vocabulary; feeds 4.1 café chunks).
+- Docs/feedback 2026-11-05: all items already handled or moved (see 2026-11-06); nothing new.
+- Tests: 51 → 62. No UI changes, so no Playwright pass this run; CLI run by hand (rule OK, ollama → exit 2).
+- Open: real-model runs + weekly night task on Roman's computer (his decision).
+
 ## 2026-11-06 — 1.3 Structured corrective feedback + Roman's test findings (scheduled run)
 - Branch `agent/structured-feedback` → PR into `agent/dev`. 1.2 marked `[x]` (PR #2 merged). No open PRs / comments.
 - `core/feedback.py`: contract (`original`, `corrected`, `error_category` ×12, `cf_type` ×5, `is_transfer`, `transfer_source`, `explanation` in L1) + tolerant `normalize_correction` (legacy strings, aliases like "spelling"→`spelling_accent`, bad enums → safe defaults, self-identical "corrections" dropped). Both system prompts get the same contract block.
