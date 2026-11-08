@@ -1,0 +1,3 @@
+# Ollama models evaluated every Monday night (roadmap 5.7). One tag per line.
+# Maintained by the agent; Roman's laptop: CPU only, 16 GB RAM -> keep each model <= ~6 GB.
+qwen2.5:7b-instruct  # baseline 08.11: 7% detection, 18 s

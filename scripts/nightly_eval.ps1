@@ -35,6 +35,21 @@ foreach ($m in $GeminiModels) {
 try { Invoke-RestMethod http://127.0.0.1:11434/api/tags -TimeoutSec 5 | Out-Null }
 catch { Log "starting ollama"; Start-Process ollama -ArgumentList "serve" -WindowStyle Hidden; Start-Sleep 15 }
 
+# Candidate list maintained by the agent (roadmap 5.7). Missing models are pulled
+# if there is enough free disk space; installed models are never deleted here.
+$cand = "eval\model_candidates.txt"
+if ($OllamaModels.Count -eq 0 -and (Test-Path $cand)) {
+    $OllamaModels = Get-Content $cand | ForEach-Object { ($_ -split "#")[0].Trim() } | Where-Object { $_ }
+    try { $have = (Invoke-RestMethod http://127.0.0.1:11434/api/tags -TimeoutSec 10).models.name } catch { $have = @() }
+    $modelsDir = if ($env:OLLAMA_MODELS) { $env:OLLAMA_MODELS } else { "$env:USERPROFILE\.ollama" }
+    $freeGB = [math]::Round((Get-PSDrive ($modelsDir.Substring(0,1))).Free / 1GB)
+    foreach ($m in $OllamaModels) {
+        if ($have -contains $m -or $have -contains "$m:latest") { continue }
+        if ($freeGB -lt 20) { Log "skip pull $m: only $freeGB GB free on $modelsDir"; continue }
+        Log "pull $m"
+        ollama pull $m 2>&1 | Out-File -Append -Encoding utf8 $log
+    }
+}
 if ($OllamaModels.Count -eq 0) {
     try { $OllamaModels = (Invoke-RestMethod http://127.0.0.1:11434/api/tags -TimeoutSec 10).models.name }
     catch { Log "ollama not reachable, skipping local models" }
