@@ -9,24 +9,26 @@ param(
 )
 
 $ErrorActionPreference = "Continue"
+$env:PYTHONIOENCODING = "utf-8"   # Windows console is cp1251; eval prints Spanish text
+$env:PYTHONUTF8 = "1"
 Set-Location (Join-Path $PSScriptRoot "..")
 $date = Get-Date -Format "yyyy-MM-dd"
 New-Item -ItemType Directory -Force -Path "eval\reports" | Out-Null
 $log = "eval\reports\nightly-$date.log"
-function Log($msg) { "$(Get-Date -Format 'HH:mm:ss') $msg" | Tee-Object -FilePath $log -Append }
+function Log($msg) { "$(Get-Date -Format 'HH:mm:ss') $msg" | Out-File -Append -Encoding utf8 $log }
 
 Log "start"
 git fetch origin 2>&1 | Out-Null
-git checkout agent/dev 2>&1 | Out-File -Append $log
-git pull --ff-only 2>&1 | Out-File -Append $log
+git checkout agent/dev 2>&1 | Out-File -Append -Encoding utf8 $log
+git pull --ff-only 2>&1 | Out-File -Append -Encoding utf8 $log
 
 $py = ".\.venv\Scripts\python.exe"
 if (-not (Test-Path $py)) { Log "no .venv found, stopping"; exit 1 }
-& $py -m pip install -q -r requirements.txt 2>&1 | Out-File -Append $log
+& $py -m pip install -q -r requirements.txt 2>&1 | Out-File -Append -Encoding utf8 $log
 
 foreach ($m in $GeminiModels) {
     Log "gemini $m"
-    & $py -m eval.run --provider gemini --model $m 2>&1 | Out-File -Append $log
+    & $py -m eval.run --provider gemini --model $m 2>&1 | Out-File -Append -Encoding utf8 $log
 }
 
 # Make sure Ollama is up.
@@ -40,6 +42,6 @@ if ($OllamaModels.Count -eq 0) {
 foreach ($m in $OllamaModels) {
     if ($m -match "embed") { continue }
     Log "ollama $m"
-    & $py -m eval.run --provider ollama --model $m 2>&1 | Out-File -Append $log
+    & $py -m eval.run --provider ollama --model $m 2>&1 | Out-File -Append -Encoding utf8 $log
 }
 Log "done"
