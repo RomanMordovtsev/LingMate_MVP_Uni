@@ -41,6 +41,7 @@ CORRECTION_CONTRACT = """CORRECTION (structured; feedback only about the learner
     "is_transfer": true if the error likely comes from another language the learner knows,
     "transfer_source": language code of that language (e.g. "en", "ru", "it") or null,
     "explanation": "<one short sentence in {native_language}>"}}
+- If is_transfer is true, transfer_source is REQUIRED: the code of the learner's language the error comes from (e.g. "en" for an English calque, "ru" for a missing article).
 - Missing accents (á é í ó ú ñ) and missing ¿ ¡ count as spelling_accent errors.
 - Calques and false friends from ANY known language (e.g. English "line" → "línea" instead of "cola") are lexical errors with is_transfer true.
 - Register must fit the situation and place: everyday colloquial forms (e.g. "porfa", tú with a barman in Spain) are fine in informal settings and are NOT errors. Flag register only when it is clearly wrong (e.g. tú with an older stranger or an official).

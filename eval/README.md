@@ -10,7 +10,12 @@ python -m eval.run --provider rule                                  # baseline, 
 python -m eval.run --provider ollama --model qwen2.5:7b-instruct    # local Ollama running
 python -m eval.run --provider gemini --model gemini-2.5-flash       # GEMINI_API_KEY in .env
 python -m eval.run --provider ollama --model llama3.1:8b --id roman-2026-10-queue   # one case
+python -m eval.run --provider gemini --model gemini-2.5-flash --sleep 8   # more pause for free-tier limits
 ```
+
+Rate limits: `--sleep` seconds between cases (default 4 for gemini, 0 otherwise); on
+429/503 the runner retries after 5, 15 and 30 s. Model names keep their dots in file names
+(`gemini-2.5-flash`), `:` and `/` become `-` (`qwen2.5-7b-instruct`).
 
 Output: `reports/<date>-<provider>-<model>.json` (every case + correction) and `.md` (summary).
 
@@ -24,7 +29,11 @@ Output: `reports/<date>-<provider>-<model>.json` (every case + correction) and `
 - **False positives on correct input**: cases with `"expect_correction": false` (e.g.
   *porfa* in a café, docs/feedback/2026-11-05 §5) that still got a correction.
 - **Transfer source right**: on transfer cases, `is_transfer` and `transfer_source` match.
-- **Latency**: per successful call; provider failures (fallback answered) are counted separately.
+  Diagnostics: *transfer flagged* (gold transfer cases with a correction where the model set
+  `is_transfer`) and *transfer_source filled* (flagged corrections that name a language).
+- **Provider failures** (429/503/timeouts after all retries) are listed separately and
+  **excluded** from every quality metric: metrics are over answered cases.
+- **Latency**: per answered call.
 
 ## Cases
 - `es_roman.jsonl`: Roman's real utterances (from `docs/learner/roman-spanish.md`).

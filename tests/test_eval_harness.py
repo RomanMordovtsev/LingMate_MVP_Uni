@@ -142,3 +142,98 @@ def test_errors_are_scrubbed_of_api_key(monkeypatch):
                         lambda self, **kw: (_ for _ in ()).throw(RuntimeError("bad key SECRET123")))
     report = runner.run([dict(QUEUE)], Boom([QUEUE]), retry_delay=0)
     assert "SECRET123" not in json.dumps(report) and report["cases"][0]["provider_failed"]
+
+
+# --- docs/feedback/2026-11-08 ---------------------------------------------------
+
+def test_report_names_keep_dots_and_sanitise_tags(tmp_path):
+    names = set()
+    for provider, model in [("gemini", "gemini-2.5-flash"), ("gemini", "gemini-2.0-flash"),
+                            ("ollama", "qwen2.5:7b-instruct"), ("ollama", "qwen2.5:3b")]:
+        report = {"meta": {"date": "2026-11-08", "provider": provider, "model": model},
+                  "summary": aggregate([]), "cases": []}
+        path = runner.write_report(report, tmp_path)
+        names.add(path.name)
+    assert "2026-11-08-gemini-gemini-2.5-flash.json" in names
+    assert "2026-11-08-ollama-qwen2.5-7b-instruct.json" in names
+    assert len(list(tmp_path.glob("*.json"))) == 4 and len(list(tmp_path.glob("*.md"))) == 4
+
+
+def test_failures_are_excluded_from_metrics():
+    cases = runner.load_cases(runner.CASES_DIR.glob("*.jsonl"))
+    fail = {c["id"] for c in cases[:10]}
+    s = runner.run(cases, GoldProvider(cases, fail_ids=fail), retry_delay=0)["summary"]
+    assert s["provider_failures"] == 10 and s["answered"] == len(cases) - 10
+    assert s["detection_rate"] == s["category_recall"] == 1.0   # failures are not misses
+
+
+class FlakyProvider(GoldProvider):
+    """Rate-limited: the first `n` calls raise 429."""
+    def __init__(self, cases, n):
+        super().__init__(cases)
+        self.left = n
+
+    def generate_json(self, s, u):
+        if self.left:
+            self.left -= 1
+            raise RuntimeError("429 RESOURCE_EXHAUSTED")
+        return super().generate_json(s, u)
+
+
+def test_eval_backoff_retries_429_and_sleeps_between_cases():
+    cases = [dict(QUEUE, target="es-ES", l1="ru"), dict(QUEUE, id="q2", original="Estoy en la línea.")]
+    waits = []
+    import core.llm_service as svc_mod
+    orig = svc_mod.time.sleep
+    svc_mod.time.sleep = waits.append
+    try:
+        report = runner.run(cases, FlakyProvider(cases, 3), retry_delays=[5, 15, 30],
+                            sleep=4, sleeper=waits.append)
+    finally:
+        svc_mod.time.sleep = orig
+    assert report["summary"]["provider_failures"] == 0
+    assert waits == [5, 15, 30, 4]   # backoff on case 1, then the pause before case 2
+
+
+def test_app_default_still_retries_once():
+    cases = [dict(QUEUE, target="es-ES", l1="ru")]
+    report = runner.run(cases, FlakyProvider(cases, 2), retry_delay=0)
+    assert report["summary"]["provider_failures"] == 1
+
+
+def test_transfer_diagnostics():
+    rows = [score_case(QUEUE, corr("la línea", "la cola", "lexical", "en")),
+            score_case(QUEUE, dict(corr("la línea", "la cola", "lexical"), is_transfer=True)),
+            score_case(QUEUE, corr("la línea", "la cola", "lexical"))]
+    s = aggregate(rows)
+    assert s["transfer_flagged_rate"] == round(2 / 3, 3)
+    assert s["transfer_source_filled"] == 0.5
+
+
+def test_markdown_lists_failures_separately():
+    cases = [dict(QUEUE, target="es-ES", l1="ru")]
+    report = runner.run(cases, GoldProvider(cases, fail_ids={"q"}), retry_delay=0)
+    report["meta"] = {"date": "d", "provider": "ollama", "model": "m"}
+    md = runner.to_markdown(report)
+    assert "Provider failures (not scored)" in md and "## Misses" not in md
+
+
+def test_main_survives_cp1251_console(tmp_path, monkeypatch):
+    import io, sys
+    out = io.TextIOWrapper(io.BytesIO(), encoding="cp1251")
+    monkeypatch.setattr(sys, "stdout", out)
+    cases = [dict(QUEUE, target="es-ES", l1="ru")]
+
+    class WrongCat(GoldProvider):   # a miss → "la línea → la cola [preposition]" in the markdown
+        def generate_json(self, s, u):
+            r = super().generate_json(s, u)
+            r["correction"]["error_category"] = "preposition"
+            return r
+
+    monkeypatch.setattr(runner, "make_provider", lambda name, model: WrongCat(cases))
+    f = tmp_path / "c.jsonl"
+    f.write_text(json.dumps(cases[0]) + "\n", encoding="utf-8")
+    assert runner.main(["--provider", "ollama", "--cases", str(f), "--out", str(tmp_path / "r"),
+                        "--sleep", "0"]) == 0
+    out.flush()
+    assert "→".encode("utf-8") in out.buffer.getvalue()
