@@ -75,6 +75,8 @@ def score_case(case: Dict[str, Any], corr: Optional[Dict[str, Any]]) -> Dict[str
         "category_hit": bool(expected and predicted and predicted in gold),
         "text_match": bool(expected and text_matches(case, corr)),
         "false_positive": bool(not expected and corr is not None),
+        "predicted_is_transfer": bool(corr and corr.get("is_transfer")),
+        "predicted_transfer_source": (corr or {}).get("transfer_source"),
     }
     if expected and case.get("is_transfer"):
         result["transfer_hit"] = bool(corr and corr.get("is_transfer")
@@ -88,7 +90,10 @@ def _ratio(num: int, den: int) -> Optional[float]:
 
 
 def aggregate(scored: Iterable[Dict[str, Any]], latencies: Iterable[float] = ()) -> Dict[str, Any]:
-    scored = list(scored)
+    # Provider failures (429/503, timeouts) are not the model's misses: score only
+    # answered cases and report failures separately (docs/feedback/2026-11-08 §2).
+    every = list(scored)
+    scored = [s for s in every if not s.get("provider_failed")]
     lat = [x for x in latencies if x is not None]
     err = [s for s in scored if s["expected_correction"]]
     clean = [s for s in scored if not s["expected_correction"]]
@@ -113,8 +118,12 @@ def aggregate(scored: Iterable[Dict[str, Any]], latencies: Iterable[float] = ())
                     for c in cats}
     total_tp, total_fp = sum(tp.values()), sum(fp.values())
 
+    flagged = [s for s in scored if s["detected"] and s.get("predicted_is_transfer")]
+    gold_transfer_detected = [s for s in transfer if s["detected"]]
     return {
-        "cases": len(scored),
+        "cases": len(every),
+        "answered": len(scored),
+        "provider_failures": len(every) - len(scored),
         "error_cases": len(err),
         "clean_cases": len(clean),
         "detection_rate": _ratio(sum(s["detected"] for s in err), len(err)),
@@ -123,6 +132,11 @@ def aggregate(scored: Iterable[Dict[str, Any]], latencies: Iterable[float] = ())
         "text_match_rate": _ratio(sum(s["text_match"] for s in err), len(err)),
         "false_positive_rate": _ratio(sum(s["false_positive"] for s in clean), len(clean)),
         "transfer_accuracy": _ratio(sum(s["transfer_hit"] for s in transfer), len(transfer)),
+        # Diagnostics for §5: does the model flag transfer at all, and name the source?
+        "transfer_flagged_rate": _ratio(sum(s.get("predicted_is_transfer", False) for s in gold_transfer_detected),
+                                        len(gold_transfer_detected)),
+        "transfer_source_filled": _ratio(sum(bool(s.get("predicted_transfer_source")) for s in flagged),
+                                         len(flagged)),
         "per_category": per_category,
         "latency_s": {
             "mean": round(statistics.mean(lat), 3) if lat else None,

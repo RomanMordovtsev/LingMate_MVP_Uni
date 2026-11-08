@@ -135,6 +135,9 @@ class LLMService:
         # provider_name и обратно-совместимого _call_gemini().
         self.provider: LLMProvider = self.providers[0]
         self.retry_delay = _RETRY_DELAY_S
+        # Waits before extra attempts on 429/503. None = one retry after retry_delay
+        # (the app). The eval harness sets a longer backoff for free-tier limits.
+        self.retry_delays: Optional[List[float]] = None
         self.last_model: Optional[str] = None
 
     def is_configured(self) -> bool:
@@ -166,15 +169,18 @@ class LLMService:
         for p in self.providers:
             if not p.is_configured():
                 continue
-            for attempt in (1, 2):
+            delays = list(self.retry_delays) if self.retry_delays is not None else [self.retry_delay]
+            attempt = 0
+            while True:
+                attempt += 1
                 try:
                     result = p.generate_json(system_prompt, user_prompt)
                     self.last_model = getattr(p, "model_name", None)
                     return result, p.name
                 except Exception as e:
                     print(f"[LLMService] {p.name} attempt {attempt} failed: {type(e).__name__}: {e}")
-                    if attempt == 1 and _is_retryable(e):
-                        time.sleep(self.retry_delay)
+                    if delays and _is_retryable(e):
+                        time.sleep(delays.pop(0))
                         continue
                     break
         return None, None
