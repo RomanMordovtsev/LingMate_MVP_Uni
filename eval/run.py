@@ -17,6 +17,9 @@ Free-tier rate limits (429/503): the runner waits --sleep seconds between
 cases (default 4 s for gemini, 0 otherwise) and retries with a longer backoff
 (EVAL_RETRY_DELAYS). Cases that still fail are counted as provider failures and
 excluded from the quality metrics (docs/feedback/2026-11-08 §2).
+A quota that resets in hours (e.g. Gemini free tier: 20 requests/day/model)
+is not retried: the run stops calling the model, marks the remaining cases as
+skipped failures and the report says so (PR #8, nightly eval 2026-11-09).
 """
 
 import argparse
@@ -99,7 +102,14 @@ def run(cases: List[Dict[str, Any]], provider: LLMProvider, *, retry_delay: floa
     svc.retry_delays = retry_delays
     expect_model = provider.name != "rule"
     rows, latencies = [], []
+    quota_stop: Optional[str] = None
     for i, case in enumerate(cases):
+        if quota_stop:
+            row = score_case(case, None)
+            row.update({"latency_s": 0.0, "source": "skipped", "provider_failed": True,
+                        "correction": None, "error": "skipped: provider quota exhausted"})
+            rows.append(row)
+            continue
         if i and sleep > 0:
             sleeper(sleep)
         start = clock()
@@ -122,7 +132,14 @@ def run(cases: List[Dict[str, Any]], provider: LLMProvider, *, retry_delay: floa
         if progress:
             mark = "FAIL" if failed else ("ok" if row["category_hit"] or not (row["expected_correction"] or row["false_positive"]) else "miss")
             progress(f"[{len(rows)}/{len(cases)}] {case['id']}: {mark} ({elapsed:.1f}s)")
+        blocked = svc.quota_exhausted.get(provider.name)
+        if blocked:
+            quota_stop = _scrub(blocked[1])[:300]
+            if progress:
+                progress(f"quota exhausted after {len(rows)} cases: skipping the remaining "
+                         f"{len(cases) - len(rows)} (retry another day or with fewer cases)")
     summary = aggregate(rows, latencies)
+    summary["quota_stopped"] = quota_stop
     return {"summary": summary, "cases": rows}
 
 
@@ -139,6 +156,12 @@ def to_markdown(report: Dict[str, Any]) -> str:
         f"{s['clean_cases']} correct). Provider failures: {s['provider_failures']} "
         "(excluded from the metrics below).",
         "",
+    ]
+    if s.get("quota_stopped"):
+        lines += [f"**Stopped early: provider quota exhausted** after "
+                  f"{sum(1 for r in report['cases'] if r.get('source') != 'skipped')} cases; "
+                  "the rest were skipped. Compare this model on another day or with fewer cases.", ""]
+    lines += [
         "| Metric | Value |", "|---|---|",
         f"| Detection (error cases) | {_pct(s['detection_rate'])} |",
         f"| Category recall | {_pct(s['category_recall'])} |",

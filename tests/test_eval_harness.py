@@ -237,3 +237,76 @@ def test_main_survives_cp1251_console(tmp_path, monkeypatch):
                         "--sleep", "0"]) == 0
     out.flush()
     assert "→".encode("utf-8") in out.buffer.getvalue()
+
+
+# --- daily quota: stop instead of retrying (PR #8 nightly eval 2026-11-09) ---
+
+DAILY_429 = ("429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota "
+             "* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, "
+             "limit: 20, model: gemini-2.5-flash, description: Generate content requests per day limit exceeded "
+             "on Free Tier.\\nPlease retry in 7h26m44.994790271s.', 'details': [{'quotaId': "
+             "'GenerateRequestsPerDayPerProjectPerModel-FreeTier'}, {'retryDelay': '26804s'}]}}")
+
+
+class QuotaProvider(GoldProvider):
+    """Answers `ok` cases, then hits the per-day free-tier quota for good."""
+    def __init__(self, cases, ok):
+        super().__init__(cases)
+        self.ok, self.calls = ok, 0
+
+    def generate_json(self, s, u):
+        self.calls += 1
+        if self.calls > self.ok:
+            raise RuntimeError(DAILY_429)
+        return super().generate_json(s, u)
+
+
+def test_quota_pause_detection():
+    from core.llm_service import quota_pause_s
+    assert quota_pause_s(RuntimeError(DAILY_429)) == 26804.0
+    assert quota_pause_s(RuntimeError("429 Please retry in 7h26m44.99s.")) == 26804.99
+    assert quota_pause_s(RuntimeError("429 RESOURCE_EXHAUSTED per day limit")) == 3600.0
+    # short per-minute limits and 503s keep the normal backoff
+    assert quota_pause_s(RuntimeError("429 RESOURCE_EXHAUSTED")) is None
+    assert quota_pause_s(RuntimeError("429 Please retry in 12.5s")) is None
+    assert quota_pause_s(RuntimeError("503 UNAVAILABLE retry in 2h")) is None
+
+
+def test_eval_stops_on_daily_quota_without_retries():
+    cases = runner.load_cases(runner.CASES_DIR.glob("*.jsonl"))[:6]
+    waits = []
+    import core.llm_service as svc_mod
+    orig = svc_mod.time.sleep
+    svc_mod.time.sleep = waits.append
+    try:
+        prov = QuotaProvider(cases, ok=2)
+        report = runner.run(cases, prov, retry_delays=[5, 15, 30], sleep=0)
+    finally:
+        svc_mod.time.sleep = orig
+    assert waits == []                      # no backoff on a per-day quota
+    assert prov.calls == 3                  # 2 answers + 1 failed call, then nothing
+    s = report["summary"]
+    assert s["answered"] == 2 and s["provider_failures"] == 4
+    assert "per day" in s["quota_stopped"]
+    assert [r["source"] for r in report["cases"]][3:] == ["skipped"] * 3
+    report["meta"] = {"date": "2026-11-09", "provider": "gemini", "model": "gemini-2.5-flash"}
+    assert "Stopped early: provider quota exhausted" in runner.to_markdown(report)
+
+
+def test_app_skips_exhausted_provider_until_reset():
+    from core.llm_service import LLMService
+    cases = [dict(QUEUE, target="es-ES", l1="ru")]
+    prov = QuotaProvider(cases, ok=0)
+    svc = LLMService(provider=prov)
+    now = [1000.0]
+    svc.clock = lambda: now[0]
+    svc.retry_delay = 0
+    settings = runner.settings_for(cases[0])
+    for _ in range(3):
+        out = svc.free_talk(settings=settings, progress=runner.PROGRESS, history=[], message=QUEUE["original"])
+        assert out["source"] == "fallback"
+    assert prov.calls == 1                  # later messages don't waste a call
+    now[0] += 26805
+    prov.ok = 10
+    out = svc.free_talk(settings=settings, progress=runner.PROGRESS, history=[], message=QUEUE["original"])
+    assert out["source"] != "fallback" and prov.calls == 2
