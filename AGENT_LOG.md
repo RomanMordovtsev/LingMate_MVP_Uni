@@ -4,6 +4,12 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-09 (2) — C.8 step 1: hosting comparison (same scheduled run)
+- Branch `agent/hosting-comparison` → PR #10 into `agent/dev` (docs only, independent of PR #9).
+- `docs/hosting/comparison-2026-11-09.md`: Render+Neon, Hetzner VPS, Fly.io, Oracle Always Free, Render+Supabase, Koyeb — cost, card, sleep/cold start, EU, backups, code changes, ops. Facts from vendor docs + 2026 third-party write-ups (some pages blocked: Fly docs, Render regions — marked as unverified).
+- Recommendation: €0 start = Render free web + Neon free Postgres (Frankfurt) + own nightly export (needs a `PostgresStore`); always-on ≈€3–8/month = Hetzner/Fly + SQLite as is. Not: Oracle (idle reclaim, 2026 cut), Supabase (weekly pause), Render Postgres (deleted after 30 days).
+- C.8 marked `[?]`: 4 questions for Roman in the doc.
+
 ## 2026-11-08 — docs/feedback/2026-11-08 (first local eval) fixes (scheduled run)
 - Branch `agent/eval-fixes` → PR #7 into `agent/dev`. 1.3a marked `[x]` (PR #6 merged). No open PRs, no comments.
 - Feedback 2026-11-08 handled: **§1** report names: extensions appended as text (no `with_suffix`), `:`/`/` → `-`, dots kept: `2026-11-08-gemini-gemini-2.5-flash.json`, `…-ollama-qwen2.5-7b-instruct.json`; test with 4 model names. **§2** provider failures are excluded from all quality metrics (summary has `answered` + `provider_failures`; Markdown lists failures in their own section); `--sleep` between cases (default 4 s gemini, 0 otherwise); eval-only backoff 5/15/30 s on 429/503 (`LLMService.retry_delays`; the app keeps one 1.5 s retry). So the 08.11 Gemini numbers (14–17 failures scored as misses) were understated: re-run needed. **§3** noted: qwen2.5:7b-instruct = 7% detection, 18 s/answer → not usable for corrections; replacement is 5.7 scouting (next even Saturday). **§4** `eval.run` reconfigures stdout/stderr to utf-8 (`errors=replace`); test with a cp1251 console. **§5** new diagnostics `transfer_flagged_rate` / `transfer_source_filled` to see whether models set `is_transfer` and name the language at all; contract now says `transfer_source` is required when `is_transfer` is true (needs live check).
