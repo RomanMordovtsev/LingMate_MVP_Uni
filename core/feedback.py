@@ -10,7 +10,10 @@ Grounding: error categories follow the RU/EN→ES problem areas in
 docs/research/morphosyntax.md §7 and the CF typology in §2 / sla.md §4.
 """
 
-from typing import Any, Dict, Optional
+import difflib
+import re
+import unicodedata
+from typing import Any, Dict, List, Optional
 
 ERROR_CATEGORIES = (
     "article", "gender", "agreement", "ser_estar", "tense_aspect", "mood",
@@ -121,3 +124,87 @@ def correction_to_text(correction: Optional[Dict[str, Any]]) -> str:
     parts = [p for p in (head, correction.get("explanation")) if p]
     tag = f" [{correction['error_category']}]" if correction.get("error_category") else ""
     return " — ".join(parts) + tag
+
+
+# ----------------------------------------------------------------------
+# Diff view (roadmap 1.4): make the recast *noticeable*.
+# Learners miss morphosyntactic recasts unless the changed morpheme is
+# visibly marked (docs/research/morphosyntax.md §2; textual enhancement §6).
+# ----------------------------------------------------------------------
+
+_TOKEN_RE = re.compile(r"\w+|\s+|[^\w\s]", re.UNICODE)
+
+
+def _fold(token: str) -> str:
+    """Case- and accent-insensitive key: "Dónde" and "donde" align."""
+    decomposed = unicodedata.normalize("NFD", token.lower())
+    return "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
+
+
+def _push(segments: List[Dict[str, str]], op: str, text: str) -> None:
+    if not text:
+        return
+    if segments and segments[-1]["op"] == op:
+        segments[-1]["text"] += text
+    else:
+        segments.append({"op": op, "text": text})
+
+
+def _same_stem(x: str, y: str) -> bool:
+    """True when only an ending/accent changed ("cansado" → "cansada",
+    "fuí" → "fui"), so marking letters is clearer than swapping the word.
+    "la" → "el" or "soy" → "estoy" are different words: whole-word swap."""
+    if not (re.match(r"\w", x) and re.match(r"\w", y)):
+        return False
+    fx, fy = _fold(x), _fold(y)
+    if fx == fy:
+        return True
+    prefix = 0
+    for cx, cy in zip(fx, fy):
+        if cx != cy:
+            break
+        prefix += 1
+    return prefix >= 2 and prefix * 2 >= min(len(fx), len(fy))
+
+
+def _char_diff(segments: List[Dict[str, str]], a: str, b: str) -> None:
+    sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            _push(segments, "equal", a[i1:i2])
+        else:
+            _push(segments, "del", a[i1:i2])
+            _push(segments, "ins", b[j1:j2])
+
+
+def _pair(segments: List[Dict[str, str]], x: str, y: str) -> None:
+    if x == y:
+        _push(segments, "equal", x)
+    elif _same_stem(x, y):
+        _char_diff(segments, x, y)
+    else:
+        _push(segments, "del", x)
+        _push(segments, "ins", y)
+
+
+def correction_diff(original: str, corrected: str) -> List[Dict[str, str]]:
+    """Segments [{"op": "equal"|"del"|"ins", "text": ...}] turning `original`
+    into `corrected`. Words are aligned ignoring case and accents; a word that
+    only changed an ending or an accent is refined to letters. Empty list when
+    there is nothing to compare.
+    Concatenating equal+del gives `original`; equal+ins gives `corrected`."""
+    original, corrected = (original or "").strip(), (corrected or "").strip()
+    if not original or not corrected or original == corrected:
+        return []
+    a, b = _TOKEN_RE.findall(original), _TOKEN_RE.findall(corrected)
+    segments: List[Dict[str, str]] = []
+    sm = difflib.SequenceMatcher(None, [_fold(t) for t in a], [_fold(t) for t in b], autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        left, right = a[i1:i2], b[j1:j2]
+        if tag == "equal" or (tag == "replace" and len(left) == len(right)):
+            for x, y in zip(left, right):
+                _pair(segments, x, y)
+        else:
+            _push(segments, "del", "".join(left))
+            _push(segments, "ins", "".join(right))
+    return segments

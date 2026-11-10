@@ -268,6 +268,34 @@
       background: var(--user);
     }
 
+    /* Diff view for corrections (roadmap 1.4) */
+    .correction {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-left: 3px solid #f5a524;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      white-space: normal;
+    }
+    .correction-label { font-weight: 600; }
+    .diff del {
+      color: #b42318;
+      background: #fee4e2;
+      text-decoration: line-through;
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+    .diff ins {
+      color: #067647;
+      background: #d1fadf;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+    .correction-full { margin-top: 4px; }
+    .correction-expl { margin-top: 4px; font-size: 0.95em; }
+
     .bot {
       background: var(--bot);
     }
@@ -633,13 +661,15 @@ function onTargetLanguageChange() {
   refreshScenarioDropdown();
 }
 
-function appendMessage(boxId, sender, text) {
+function appendMessage(boxId, sender, text, extra) {
   const box = document.getElementById(boxId);
   const div = document.createElement('div');
   div.className = 'msg ' + sender;
   div.textContent = text;
+  if (extra) div.appendChild(extra);
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
+  return div;
 }
 
 function toText(value) {
@@ -675,6 +705,52 @@ function formatCorrection(c) {
   if (tags.length) out += ' (' + tags.join(', ') + ')';
   if (c.explanation) out += '\n' + c.explanation;
   return out;
+}
+
+// Diff view (roadmap 1.4): the changed letters/words are visibly marked, so a
+// grammar recast is not read as plain conversation (morphosyntax §2, §6).
+// Uses correction.diff from the server; plain text if there is no diff.
+function renderCorrection(c) {
+  if (!c || typeof c !== 'object' || !Array.isArray(c.diff) || c.diff.length === 0) return null;
+  const block = document.createElement('div');
+  block.className = 'correction';
+  const head = document.createElement('div');
+  const label = document.createElement('span');
+  label.className = 'correction-label';
+  label.textContent = 'Исправление: ';
+  head.appendChild(label);
+  const line = document.createElement('span');
+  line.className = 'diff';
+  c.diff.forEach(seg => {
+    const tag = seg.op === 'del' ? 'del' : seg.op === 'ins' ? 'ins' : 'span';
+    const el = document.createElement(tag);
+    el.textContent = seg.text;
+    if (seg.op === 'del') el.title = 'было';
+    if (seg.op === 'ins') el.title = 'правильно';
+    line.appendChild(el);
+  });
+  head.appendChild(line);
+  const tags = [];
+  if (c.error_category) tags.push(ERROR_CATEGORY_RU[c.error_category] || c.error_category);
+  if (c.is_transfer && c.transfer_source) tags.push('влияние ' + (LANG_RU[c.transfer_source] || c.transfer_source));
+  if (tags.length) {
+    const t = document.createElement('span');
+    t.className = 'muted';
+    t.textContent = ' (' + tags.join(', ') + ')';
+    head.appendChild(t);
+  }
+  block.appendChild(head);
+  const full = document.createElement('div');
+  full.className = 'correction-full';
+  full.textContent = '✓ ' + c.corrected;
+  block.appendChild(full);
+  if (c.explanation) {
+    const ex = document.createElement('div');
+    ex.className = 'correction-expl';
+    ex.textContent = c.explanation;
+    block.appendChild(ex);
+  }
+  return block;
 }
 
 // Debug label "which provider/model answered" (docs/feedback/2026-11-05 §1).
@@ -820,8 +896,10 @@ async function sendFreeTalk() {
     const vocabList = normalizeVocab(data.vocab);
     let botText = toText(data.reply);
 
+    let correctionEl = null;
     if (data.source !== 'fallback' && data.correction) {
-      botText += formatCorrection(data.correction);
+      correctionEl = renderCorrection(data.correction);
+      if (!correctionEl) botText += formatCorrection(data.correction);
     //    } else if (data.source === 'fallback') {
 //      botText += '\n\nNote: AI tutor is temporarily unavailable, so LingMate continues in guided conversation mode.';
     }
@@ -831,7 +909,7 @@ async function sendFreeTalk() {
     }
 
     botText += modelLabel(data);
-    appendMessage('freeTalkBox', 'bot', botText);
+    appendMessage('freeTalkBox', 'bot', botText, correctionEl);
 
     if (data.reply) {
       speak(toText(data.reply));
@@ -898,8 +976,10 @@ async function sendLesson() {
     const vocabList = normalizeVocab(data.vocab);
     let botText = toText(data.roleplay_reply);
 
+    let correctionEl = null;
     if (data.source !== 'fallback' && data.correction) {
-      botText += formatCorrection(data.correction);
+      correctionEl = renderCorrection(data.correction);
+      if (!correctionEl) botText += formatCorrection(data.correction);
 //    } else if (data.source === 'fallback') {
 //      botText += '\n\nNote: AI tutor is temporarily unavailable, so LingMate continues this lesson in guided scenario mode.';
     }
@@ -909,7 +989,7 @@ async function sendLesson() {
     }
 
     botText += modelLabel(data);
-    appendMessage('lessonBox', 'bot', botText);
+    appendMessage('lessonBox', 'bot', botText, correctionEl);
 
     if (data.roleplay_reply) {
       speak(toText(data.roleplay_reply));
