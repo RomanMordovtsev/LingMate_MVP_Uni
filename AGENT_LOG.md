@@ -4,6 +4,12 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-09 (2) — C.8 step 1: hosting comparison (same scheduled run)
+- Branch `agent/hosting-comparison` → PR #10 into `agent/dev` (docs only, independent of PR #9).
+- `docs/hosting/comparison-2026-11-09.md`: Render+Neon, Hetzner VPS, Fly.io, Oracle Always Free, Render+Supabase, Koyeb — cost, card, sleep/cold start, EU, backups, code changes, ops. Facts from vendor docs + 2026 third-party write-ups (some pages blocked: Fly docs, Render regions — marked as unverified).
+- Recommendation: €0 start = Render free web + Neon free Postgres (Frankfurt) + own nightly export (needs a `PostgresStore`); always-on ≈€3–8/month = Hetzner/Fly + SQLite as is. Not: Oracle (idle reclaim, 2026 cut), Supabase (weekly pause), Render Postgres (deleted after 30 days).
+- C.8 marked `[?]`: 4 questions for Roman in the doc.
+
 ## 2026-11-09 — Daily-quota stop for eval + app (scheduled run)
 - Branch `agent/eval-quota-stop` → PR #9 into `agent/dev`. Open PR #8 (Roman's nightly reports, no comments) read: its finding 2 (gemini-2.5-flash: 20 req/day free tier, then 28 cases × ~51 s of useless retries) handled here.
 - `core/llm_service.quota_pause_s()`: a 429 whose RetryInfo/`retry in …` is > 5 min, or a per-day quota, is not retried; the provider is skipped until the reset time (default 1 h). Short per-minute 429s and 503s keep the old backoff. In the app: no wasted call per message once the daily quota is gone (next provider in the chain / fallback).
