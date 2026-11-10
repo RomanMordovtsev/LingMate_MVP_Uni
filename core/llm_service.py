@@ -21,6 +21,10 @@ from .profile import profile_context
 # Transient provider errors worth one retry before falling back (docs/feedback/2026-11-05 §1).
 _RETRYABLE = ("503", "429", "unavailable", "resource_exhausted", "overloaded")
 _RETRY_DELAY_S = 1.5
+# A quota that resets in hours (free-tier daily limit) is not worth retrying:
+# skip the provider until it resets (PR #8 nightly eval: 28 cases x ~51 s wasted).
+_LONG_RETRY_S = 300.0
+_DEFAULT_QUOTA_PAUSE_S = 3600.0
 
 
 SYSTEM_FREE_TALK = """You are LingMate, an AI language tutor.
@@ -102,6 +106,32 @@ def _is_retryable(error: Exception) -> bool:
     return any(marker in text for marker in _RETRYABLE)
 
 
+def _retry_after_s(text: str) -> Optional[float]:
+    """Seconds from Gemini's RetryInfo ('retryDelay': '26804s') or 'retry in 7h26m44.9s'."""
+    m = re.search(r"retryDelay'?\"?\s*:\s*'?\"?(\d+(?:\.\d+)?)s", text)
+    if m:
+        return float(m.group(1))
+    m = re.search(r"retry in\s+(?:(\d+)h)?\s*(?:(\d+)m(?!s))?\s*(?:(\d+(?:\.\d+)?)s)?", text, re.I)
+    if m and any(m.groups()):
+        h, mi, sec = (float(g) if g else 0.0 for g in m.groups())
+        return h * 3600 + mi * 60 + sec
+    return None
+
+
+def quota_pause_s(error: Exception) -> Optional[float]:
+    """How long to stop calling a provider after this error, or None if it is not
+    a long quota exhaustion (per-day limit or a RetryInfo longer than _LONG_RETRY_S)."""
+    text = str(error)
+    if "429" not in text and "resource_exhausted" not in text.lower():
+        return None
+    wait = _retry_after_s(text)
+    if wait is not None and wait > _LONG_RETRY_S:
+        return wait
+    if re.search(r"perday|per day", text, re.I):
+        return wait if wait and wait > _LONG_RETRY_S else _DEFAULT_QUOTA_PAUSE_S
+    return None
+
+
 def _contains_any(text: str, phrases) -> bool:
     """Case-insensitive substring check for any phrase in the list."""
     if not text:
@@ -139,6 +169,9 @@ class LLMService:
         # (the app). The eval harness sets a longer backoff for free-tier limits.
         self.retry_delays: Optional[List[float]] = None
         self.last_model: Optional[str] = None
+        # provider name -> (monotonic time when it may be called again, reason)
+        self.quota_exhausted: Dict[str, Any] = {}
+        self.clock = time.monotonic
 
     def is_configured(self) -> bool:
         # В chain достаточно одного работающего провайдера — этого хватает
@@ -169,6 +202,9 @@ class LLMService:
         for p in self.providers:
             if not p.is_configured():
                 continue
+            blocked = self.quota_exhausted.get(p.name)
+            if blocked and self.clock() < blocked[0]:
+                continue
             delays = list(self.retry_delays) if self.retry_delays is not None else [self.retry_delay]
             attempt = 0
             while True:
@@ -179,6 +215,11 @@ class LLMService:
                     return result, p.name
                 except Exception as e:
                     print(f"[LLMService] {p.name} attempt {attempt} failed: {type(e).__name__}: {e}")
+                    pause = quota_pause_s(e)
+                    if pause is not None:
+                        self.quota_exhausted[p.name] = (self.clock() + pause, f"{type(e).__name__}: {e}")
+                        print(f"[LLMService] {p.name}: quota exhausted, skipping it for {pause / 60:.0f} min")
+                        break
                     if delays and _is_retryable(e):
                         time.sleep(delays.pop(0))
                         continue
