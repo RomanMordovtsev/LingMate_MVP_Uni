@@ -15,7 +15,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 from .llm import LLMProvider, make_provider, make_provider_chain
-from .feedback import correction_contract, normalize_correction
+from .feedback import correction_contract, correction_diff, normalize_correction
 from .profile import profile_context
 
 # Transient provider errors worth one retry before falling back (docs/feedback/2026-11-05 §1).
@@ -314,7 +314,11 @@ class LLMService:
 
     def _finish(self, result: Dict[str, Any], used_name: str) -> Dict[str, Any]:
         """Normalise the structured correction and tag which provider/model answered."""
-        result["correction"] = normalize_correction(result.get("correction"))
+        correction = normalize_correction(result.get("correction"))
+        if correction:
+            # Diff view for the UI (roadmap 1.4); empty when there is no pair.
+            correction["diff"] = correction_diff(correction["original"], correction["corrected"])
+        result["correction"] = correction
         result["source"] = used_name
         result["model"] = self.last_model
         return result

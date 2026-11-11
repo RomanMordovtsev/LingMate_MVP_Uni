@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-10 — 1.4 Noticeable feedback: diff view (scheduled run)
+- Branch `agent/correction-diff` → PR into `agent/dev`. No open PRs, no comments; PRs #8–#10 merged. Notion: no new entries since 07.11. docs/feedback: nothing new.
+- `core/feedback.correction_diff(original, corrected)` → segments `equal/del/ins`. Words are aligned ignoring case and accents (so `Donde esta` → `¿Dónde está` marks only `¿`, `ó`, `á`); a word with the same stem is refined to letters (`cansado` → `cansada` marks `o`→`a`); different words are swapped whole (`la` → `el`, `Soy` → `Estoy`). Grounding: morphosyntax §2 (recasts of morphosyntax go unnoticed unless the changed morpheme is marked), §6 (textual enhancement).
+- `LLMService._finish` adds `correction["diff"]` (empty for legacy string corrections); the progress log is unchanged (one text line).
+- UI: correction block under the reply with struck red deletions, bold green insertions, full corrected sentence, category/transfer tags and explanation; legacy corrections keep the old text.
+- Tests: 72 → 116 (diff reconstructs both sides on all 34 eval cases). Playwright: rule fallback + 3 mocked corrections, no console errors.
+- Decision: 1.4 left `[~]` — the "consistently highlight target forms in bot replies over weeks" half of §6 needs the error log (1.6) to know the learner's target forms.
+
 ## 2026-11-09 (2) — C.8 step 1: hosting comparison (same scheduled run)
 - Branch `agent/hosting-comparison` → PR #10 into `agent/dev` (docs only, independent of PR #9).
 - `docs/hosting/comparison-2026-11-09.md`: Render+Neon, Hetzner VPS, Fly.io, Oracle Always Free, Render+Supabase, Koyeb — cost, card, sleep/cold start, EU, backups, code changes, ops. Facts from vendor docs + 2026 third-party write-ups (some pages blocked: Fly docs, Render regions — marked as unverified).
