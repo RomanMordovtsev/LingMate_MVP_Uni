@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-11 — 1.5 Transfer maps (scheduled run)
+- Branch `agent/transfer-maps` → PR into `agent/dev`. No open PRs, no comments; PR #11 merged. Notion: no new entries since 07.11. docs/feedback: nothing new. Roman's C.8 hosting decisions (commit 5065a78) read; not started this run (roadmap order: 1.5 first).
+- `core/pedagogy/l1_maps/`: `TransferRule` (category, RU title, source/target example, note per L1, prompt hint, markers on accent-folded text, kind `negative` | `bridge`). Maps: `ru_es` (articles, ser/estar, gender -ma and mismatches, aspect, subjunctive, clitics, pensar en, meal verbs + bridge ты/вы → tú/usted), `en_es` (línea/cola, embarazada, actualmente, realizar, librería, double consonants, esforzarse por, depender de, pensar en, to be, calques — from Roman's real errors), `it_es` (burro, salire + bridges stare, articles, congiuntivo, imperfetto, clitics). Another pair = one module.
+- Matching: word-marker rules first; category-level contrast only from the source the model flagged, or the L1 when nothing was flagged (no guessing "English" for an unflagged error); bridges from any known language. `is_transfer` stays the model's call.
+- `LLMService._finish` adds `correction.transfer_note`; prompts get `prompt_hints` (≤3 per language, ≤7 lines) only for onboarded learners — legacy and eval prompts unchanged.
+- UI: contrast line ("по-английски «stand in line» → la cola" + note) and "Подсказка" line under the correction (chat + lesson share `renderCorrection`).
+- Tests: 116 → 138 (all 3 real Roman errors get a note). Playwright with a fake provider: 3 messages from eval cases, notes rendered, no console errors.
+- Grounding: morphosyntax §7, sla §4, multilingual-education §1.
+
 ## 2026-11-10 — 1.4 Noticeable feedback: diff view (scheduled run)
 - Branch `agent/correction-diff` → PR into `agent/dev`. No open PRs, no comments; PRs #8–#10 merged. Notion: no new entries since 07.11. docs/feedback: nothing new.
 - `core/feedback.correction_diff(original, corrected)` → segments `equal/del/ins`. Words are aligned ignoring case and accents (so `Donde esta` → `¿Dónde está` marks only `¿`, `ó`, `á`); a word with the same stem is refined to letters (`cansado` → `cansada` marks `o`→`a`); different words are swapped whole (`la` → `el`, `Soy` → `Estoy`). Grounding: morphosyntax §2 (recasts of morphosyntax go unnoticed unless the changed morpheme is marked), §6 (textual enhancement).
