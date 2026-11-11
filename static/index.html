@@ -295,6 +295,8 @@
     }
     .correction-full { margin-top: 4px; }
     .correction-expl { margin-top: 4px; font-size: 0.95em; }
+    .correction-transfer { margin-top: 6px; font-size: 0.92em; }
+    .correction-transfer .tn-title { font-weight: 600; }
 
     .bot {
       background: var(--bot);
@@ -693,6 +695,23 @@ const ERROR_CATEGORY_RU = {
 };
 const LANG_RU = { en: 'английского', ru: 'русского', it: 'итальянского', es: 'испанского', fr: 'французского', de: 'немецкого', tr: 'турецкого' };
 
+const LANG_ADV_RU = { en: 'по-английски', ru: 'по-русски', it: 'по-итальянски', es: 'по-испански', fr: 'по-французски', de: 'по-немецки', tr: 'по-турецки' };
+
+// Transfer map contrast (roadmap 1.5, morphosyntax §7): "по-русски X → по-испански Y" + note;
+// bridge = a known language that works like the target here (sla §4).
+function transferLines(c) {
+  const tn = c && c.transfer_note;
+  if (!tn) return [];
+  const out = [];
+  if (tn.contrast) {
+    const x = tn.contrast;
+    out.push({ title: x.title,
+               text: (LANG_ADV_RU[x.source] || x.source) + ' «' + x.source_example + '» → ' + x.target_example.replace(/[.]$/, '') + '. ' + x.note });
+  }
+  if (tn.bridge) out.push({ title: 'Подсказка: ' + tn.bridge.title.charAt(0).toLowerCase() + tn.bridge.title.slice(1), text: tn.bridge.note });
+  return out;
+}
+
 function formatCorrection(c) {
   if (!c) return '';
   if (typeof c === 'string') return '\n\nИсправление: ' + c;
@@ -704,6 +723,7 @@ function formatCorrection(c) {
   if (c.is_transfer && c.transfer_source) tags.push('влияние ' + (LANG_RU[c.transfer_source] || c.transfer_source));
   if (tags.length) out += ' (' + tags.join(', ') + ')';
   if (c.explanation) out += '\n' + c.explanation;
+  transferLines(c).forEach(t => { out += '\n' + t.title + ': ' + t.text; });
   return out;
 }
 
@@ -750,6 +770,16 @@ function renderCorrection(c) {
     ex.textContent = c.explanation;
     block.appendChild(ex);
   }
+  transferLines(c).forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'correction-transfer';
+    const title = document.createElement('span');
+    title.className = 'tn-title';
+    title.textContent = t.title + ': ';
+    el.appendChild(title);
+    el.appendChild(document.createTextNode(t.text));
+    block.appendChild(el);
+  });
   return block;
 }
 

@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Optional
 
 from .llm import LLMProvider, make_provider, make_provider_chain
 from .feedback import correction_contract, correction_diff, normalize_correction
+from .pedagogy.l1_maps import prompt_hints, transfer_note
 from .profile import profile_context
 
 # Transient provider errors worth one retry before falling back (docs/feedback/2026-11-05 §1).
@@ -244,7 +245,7 @@ class LLMService:
             return result
 
         system_prompt = (SYSTEM_FREE_TALK.format(**settings) + correction_contract(settings)
-                         + profile_context(settings))
+                         + profile_context(settings) + prompt_hints(settings))
         user_prompt = json.dumps(
             {
                 "history": history[-8:],
@@ -259,7 +260,7 @@ class LLMService:
             result = self._fallback_free_talk(message, history, settings, progress)
             result["source"], result["model"] = "fallback", None
             return result
-        return self._finish(result, used_name)
+        return self._finish(result, used_name, settings)
 
     def lesson_turn(
         self,
@@ -278,7 +279,7 @@ class LLMService:
         system_prompt = SYSTEM_LESSON.format(
             completion_phrases=_completion_phrases_for(target_language),
             **settings,
-        ) + correction_contract(settings) + profile_context(settings)
+        ) + correction_contract(settings) + profile_context(settings) + prompt_hints(settings)
         user_prompt = json.dumps(
             {
                 "lesson": lesson,
@@ -310,14 +311,17 @@ class LLMService:
             if _contains_any(message, user_closers) or _contains_any(result.get("roleplay_reply", ""), role_closers):
                 result["should_finish"] = True
 
-        return self._finish(result, used_name)
+        return self._finish(result, used_name, settings)
 
-    def _finish(self, result: Dict[str, Any], used_name: str) -> Dict[str, Any]:
+    def _finish(self, result: Dict[str, Any], used_name: str,
+                settings: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Normalise the structured correction and tag which provider/model answered."""
         correction = normalize_correction(result.get("correction"))
         if correction:
             # Diff view for the UI (roadmap 1.4); empty when there is no pair.
             correction["diff"] = correction_diff(correction["original"], correction["corrected"])
+            # Explicit contrast with a known language (roadmap 1.5, morphosyntax §7).
+            correction["transfer_note"] = transfer_note(correction, settings)
         result["correction"] = correction
         result["source"] = used_name
         result["model"] = self.last_model
