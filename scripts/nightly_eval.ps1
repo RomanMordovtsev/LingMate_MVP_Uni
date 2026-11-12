@@ -5,7 +5,11 @@
 
 param(
     [string[]]$GeminiModels = @("gemini-flash-lite-latest", "gemini-2.5-flash"),
-    [string[]]$OllamaModels = @()   # empty = every model from `ollama list`
+    [string[]]$OllamaModels = @(),  # empty = every model from `ollama list`
+    # Each model runs once per profile: "" = no profile (legacy prompts), "roman" =
+    # eval/profiles/roman.json (profile context + transfer hints), so the report shows
+    # whether the hints help (docs/feedback/2026-11-11).
+    [string[]]$Profiles = @("", "roman")
 )
 
 $ErrorActionPreference = "Continue"
@@ -16,6 +20,14 @@ $date = Get-Date -Format "yyyy-MM-dd"
 New-Item -ItemType Directory -Force -Path "eval\reports" | Out-Null
 $log = "eval\reports\nightly-$date.log"
 function Log($msg) { "$(Get-Date -Format 'HH:mm:ss') $msg" | Out-File -Append -Encoding utf8 $log }
+function RunEval($provider, $model) {
+    foreach ($p in $Profiles) {
+        $extra = @()
+        if ($p) { $extra = @("--profile", $p) }
+        Log "$provider $model profile=$(if ($p) { $p } else { 'none' })"
+        & $py -m eval.run --provider $provider --model $model @extra 2>&1 | Out-File -Append -Encoding utf8 $log
+    }
+}
 
 Log "start"
 git fetch origin 2>&1 | Out-Null
@@ -27,8 +39,7 @@ if (-not (Test-Path $py)) { Log "no .venv found, stopping"; exit 1 }
 & $py -m pip install -q -r requirements.txt 2>&1 | Out-File -Append -Encoding utf8 $log
 
 foreach ($m in $GeminiModels) {
-    Log "gemini $m"
-    & $py -m eval.run --provider gemini --model $m 2>&1 | Out-File -Append -Encoding utf8 $log
+    RunEval "gemini" $m
 }
 
 # Make sure Ollama is up.
@@ -56,7 +67,8 @@ if ($OllamaModels.Count -eq 0) {
 }
 foreach ($m in $OllamaModels) {
     if ($m -match "embed") { continue }
-    Log "ollama $m"
-    & $py -m eval.run --provider ollama --model $m 2>&1 | Out-File -Append -Encoding utf8 $log
+    RunEval "ollama" $m
 }
+Log "compare (no profile vs profile)"
+& $py -m eval.compare --out "eval\reports\compare-$date.md" 2>&1 | Out-File -Append -Encoding utf8 $log
 Log "done"

@@ -5,6 +5,13 @@ Correction eval harness (roadmap 1.3a).
     python -m eval.run --provider gemini --model gemini-2.5-flash
     python -m eval.run --provider rule            # baseline, no model
     python -m eval.run --provider gemini --sleep 6   # slower, for free-tier limits
+    python -m eval.run --provider gemini --model gemini-2.5-flash --profile roman
+
+--profile <name> loads eval/profiles/<name>.json (a LearnerProfile) and runs every
+case as that learner: the prompts then include the profile context and the
+transfer-map hints (roadmap 1.2 + 1.5), as in the app after onboarding. Without
+it the prompts are the legacy ones (no profile). The report and its file name
+say which profile was used (docs/feedback/2026-11-11).
 
 Runs every case in eval/cases/*.jsonl through LLMService.free_talk (same
 prompts and normaliser as the app), scores the structured correction
@@ -38,6 +45,7 @@ from eval.scoring import aggregate, score_case
 
 ROOT = Path(__file__).resolve().parent
 CASES_DIR = ROOT / "cases"
+PROFILES_DIR = ROOT / "profiles"
 REPORTS_DIR = ROOT / "reports"
 PROGRESS = {"mistakes": [], "vocabulary": [], "completed_scenarios": []}
 EVAL_RETRY_DELAYS = [5.0, 15.0, 30.0]   # waits before retries 2..4 on 429/503
@@ -83,7 +91,26 @@ def make_provider(name: str, model: Optional[str]) -> LLMProvider:
     raise ValueError(f"unknown provider {name!r}")
 
 
-def settings_for(case: Dict[str, Any]) -> Dict[str, Any]:
+def load_profile(name_or_path: str) -> Dict[str, Any]:
+    """Profile fixture → app settings (validated like the onboarding form).
+    Accepts a name from eval/profiles/ or a path to a JSON file."""
+    from core.profile import LearnerProfile
+    path = Path(name_or_path)
+    if not path.suffix:
+        path = PROFILES_DIR / f"{name_or_path}.json"
+    if not path.is_file():
+        names = sorted(p.stem for p in PROFILES_DIR.glob("*.json"))
+        raise FileNotFoundError(f"profile {name_or_path!r} not found (available: {', '.join(names) or 'none'})")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    settings = LearnerProfile(**data).to_settings()
+    settings["profile_name"] = path.stem
+    return settings
+
+
+def settings_for(case: Dict[str, Any], profile: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    target = case.get("target", "es").split("-")[0]
+    if profile and profile.get("target_language") == target:
+        return profile
     return {"target_language": case.get("target", "es").split("-")[0],
             "native_language": case.get("l1", "ru"), "level": case.get("level", "A2"),
             "interests": []}
@@ -96,7 +123,8 @@ def _scrub(text: str) -> str:
 
 def run(cases: List[Dict[str, Any]], provider: LLMProvider, *, retry_delay: float = 1.5,
         retry_delays: Optional[List[float]] = None, sleep: float = 0.0,
-        sleeper=time.sleep, clock=time.perf_counter, progress=None) -> Dict[str, Any]:
+        sleeper=time.sleep, clock=time.perf_counter, progress=None,
+        profile: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     svc = LLMService(provider=provider)
     svc.retry_delay = retry_delay
     svc.retry_delays = retry_delays
@@ -115,7 +143,7 @@ def run(cases: List[Dict[str, Any]], provider: LLMProvider, *, retry_delay: floa
         start = clock()
         error = None
         try:
-            out = svc.free_talk(settings=settings_for(case), progress=PROGRESS,
+            out = svc.free_talk(settings=settings_for(case, profile), progress=PROGRESS,
                                 history=[], message=case["original"])
         except Exception as e:  # keep going: one bad case must not kill the run
             out, error = {"correction": None, "source": "error"}, _scrub(f"{type(e).__name__}: {e}")
@@ -140,6 +168,9 @@ def run(cases: List[Dict[str, Any]], provider: LLMProvider, *, retry_delay: floa
                          f"{len(cases) - len(rows)} (retry another day or with fewer cases)")
     summary = aggregate(rows, latencies)
     summary["quota_stopped"] = quota_stop
+    if profile:
+        target = profile.get("target_language")
+        summary["profile_cases"] = sum(1 for c in cases if c.get("target", "es").split("-")[0] == target)
     return {"summary": summary, "cases": rows}
 
 
@@ -150,7 +181,12 @@ def _pct(x: Optional[float]) -> str:
 def to_markdown(report: Dict[str, Any]) -> str:
     s, meta = report["summary"], report["meta"]
     lines = [
-        f"# Eval {meta['date']} — {meta['provider']} / {meta['model'] or '-'}",
+        f"# Eval {meta['date']} — {meta['provider']} / {meta['model'] or '-'}"
+        + (f" — profile {meta['profile']}" if meta.get("profile") else ""),
+        "",
+        (f"Profile: **{meta['profile']}** (prompts include the profile context and transfer hints; "
+         f"{s.get('profile_cases', s['cases'])}/{s['cases']} cases match its target language)."
+         if meta.get("profile") else "Profile: none (legacy prompts, no profile context or transfer hints)."),
         "",
         f"Cases: {s['cases']}, answered: {s['answered']} ({s['error_cases']} with errors, "
         f"{s['clean_cases']} correct). Provider failures: {s['provider_failures']} "
@@ -197,7 +233,8 @@ def _slug(text: str) -> str:
 
 
 def report_stem(meta: Dict[str, Any]) -> str:
-    return f"{meta['date']}-{_slug(meta['provider'])}-{_slug(meta['model'] or 'none')}"
+    stem = f"{meta['date']}-{_slug(meta['provider'])}-{_slug(meta['model'] or 'none')}"
+    return f"{stem}-{_slug(meta['profile'])}" if meta.get("profile") else stem
 
 
 def write_report(report: Dict[str, Any], out_dir: Path) -> Path:
@@ -229,8 +266,18 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--out", type=Path, default=REPORTS_DIR)
     ap.add_argument("--sleep", type=float, default=None,
                     help="seconds between cases (default: 4 for gemini, 0 otherwise)")
+    ap.add_argument("--profile", help="learner profile from eval/profiles/ (e.g. roman) or a JSON path; "
+                                      "default: no profile (legacy prompts)")
     args = ap.parse_args(argv)
     _utf8_stdio()
+
+    profile = None
+    if args.profile:
+        try:
+            profile = load_profile(args.profile)
+        except Exception as e:
+            print(f"bad profile: {e}", file=sys.stderr)
+            return 2
 
     try:
         from dotenv import load_dotenv
@@ -251,9 +298,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     sleep = args.sleep if args.sleep is not None else DEFAULT_SLEEP_S.get(args.provider, 0.0)
     report = run(cases, provider, sleep=sleep,
                  retry_delays=EVAL_RETRY_DELAYS if args.provider != "rule" else None,
-                 progress=lambda line: print(line, file=sys.stderr, flush=True))
+                 progress=lambda line: print(line, file=sys.stderr, flush=True), profile=profile)
     report["meta"] = {"date": dt.date.today().isoformat(), "provider": args.provider,
                       "model": getattr(provider, "model_name", None), "sleep_s": sleep,
+                      "profile": profile["profile_name"] if profile else None,
                       "case_files": sorted({p.name for p in (args.cases or CASES_DIR.glob('*.jsonl'))})}
     path = write_report(report, args.out)
     print(to_markdown(report))
