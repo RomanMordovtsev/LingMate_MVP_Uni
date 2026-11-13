@@ -4,6 +4,16 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-13 — 1.6 Error log as learner corpus (scheduled run)
+- Branch `agent/error-log` → PR into `agent/dev`. No open PRs, no comments; PR #13 merged. docs/feedback: nothing new (2026-11-11 handled in #13).
+- Storage: new `error_log` table (`user_id`, `error_category`, `created_at`, JSON payload; index on user+category), `SCHEMA_VERSION` 2 — additive, v1 databases get the table on start; `JsonStore` gets `error_log.json`; JSON→SQLite migration copies it. `add_error` / `get_errors` on both stores (parity test). One-time backfill: mistake lines written since 1.3 (`orig → corr — expl [category]`) are parsed into the log; pre-1.3 free text is skipped; `mistakes` untouched.
+- `main.py`: chat + lesson log the full structured correction (category, cf_type, transfer source, message, mode, scenario) — not fallback replies. `GET /api/progress/{user}/errors?window_days=7`.
+- `core/error_log.py` (pure): per-category counts, trend (last window vs previous: up/down/flat/new), transfer sources, examples; **persistent** (sla §5): ≥3 distinct days, span ≥7 days, seen in the last 14 days — or the same original→corrected form on ≥2 days; **possibly avoided** (sla §4): A2/B1 structures (perfecto, indefinido, imperfecto, clitics, future, subjuntivo, condicional) with no surface marker in the learner's messages; only after ≥30 messages and only up to the learner's next stage (morphosyntax §10). Markers err towards "used" (false alarms are worse than misses).
+- UI: card «Над чем поработать» under the dashboard: top categories with count + trend, a friendly "повторяется — потренируем отдельно" line, ≤3 possibly avoided structures (engagement §3: no guilt).
+- Notion: 5 new entries 13.11 (Kinder labels, backpack repair, la percha, fíjate, se me ha olvidado) → `docs/learner/roman-spanish.md`; no utterances of Roman's own → no eval cases (the *me olvidé el paraguas* error on the page is a candidate synthetic case).
+- Tests: 147 → 161. Playwright: seeded DB (5 errors over 12 days + 32 messages), 2 messages from `es_roman.jsonl` via the rule fallback, card rendered, no console errors.
+- Open: thresholds (3 days / 7 days / 30 messages) are a first guess — Roman's judgement after a couple of weeks of real use.
+
 ## 2026-11-12 — docs/feedback/2026-11-11: eval with a learner profile (scheduled run)
 - Branch `agent/eval-profile` → PR into `agent/dev`. No open PRs, no comments; PR #12 merged. Feedback 2026-11-11 (§1–3) is the task of this run, before 1.6.
 - **§1** `eval.run --profile <name|path>`: `eval/profiles/roman.json` (ru L1, en C1, es-ES A2, relocated, Vitoria-Gasteiz, no Italian) validated as `LearnerProfile` → settings with `onboarding_completed`, so prompts get `profile_context` + `prompt_hints` and corrections get `transfer_note`, exactly as in the app. Cases in another target language keep their own settings. Report: header line «Profile: roman / none», `meta.profile`, file name `…-<model>-roman.json` (no-profile file unchanged, both kept). Unknown profile → exit 2 listing the available ones.

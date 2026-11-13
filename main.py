@@ -10,6 +10,7 @@ from core.profile import LearnerProfile, profile_from_settings
 from core.scenarios import SCENARIOS
 from core.llm_service import LLMService
 from core.feedback import correction_to_text
+from core.error_log import make_entry, summarize
 
 from dotenv import load_dotenv
 
@@ -49,6 +50,17 @@ def clean_correction(correction: dict | str | None) -> list[str]:
         return []
 
     return [text]
+
+
+def log_error(user_id: str, result: dict, *, mode: str, message: str,
+              settings: dict | None, scenario_id: str | None = None) -> None:
+    """Roadmap 1.6: keep the full structured correction (not the fallback's) in the error log."""
+    if result.get("source") == "fallback":
+        return
+    entry = make_entry(result.get("correction"), mode=mode, message=message, scenario_id=scenario_id,
+                       target_language=(settings or {}).get("target_language"))
+    if entry:
+        store.add_error(user_id, entry)
 
 
 def clean_vocab(vocab: list | None) -> list[str]:
@@ -158,6 +170,7 @@ def chat(req: ChatRequest):
         "vocabulary": clean_vocab(result.get("vocab", []))
     }
     store.save_progress_note(req.user_id, progress_note)
+    log_error(req.user_id, result, mode="free_talk", message=req.message, settings=settings)
 
     return result
 
@@ -209,6 +222,8 @@ def lesson_message(req: LessonMessageRequest):
         "completed_scenarios": [lesson["scenario_id"]] if result.get("should_finish") else []
     }
     store.save_progress_note(req.user_id, progress_note)
+    log_error(req.user_id, result, mode="lesson", message=req.message, settings=settings,
+              scenario_id=lesson.get("scenario_id"))
 
     return result
 
@@ -221,6 +236,19 @@ def progress(user_id: str):
         "progress": store.get_progress(user_id),
         "history": store.get_history(user_id, limit=20)
     }
+
+@app.get("/api/progress/{user_id}/errors")
+def progress_errors(user_id: str, window_days: int = 7):
+    """Learner corpus (roadmap 1.6): counts per category, trend, persistent and possibly avoided structures."""
+    settings = store.get_settings(user_id) or {}
+    learner_messages = [m["message"] for m in store.get_history(user_id, limit=500) if m.get("sender") == "user"]
+    window_days = min(max(window_days, 1), 90)
+    return {
+        "user_id": user_id,
+        **summarize(store.get_errors(user_id), window_days=window_days, learner_messages=learner_messages,
+                    target_language=settings.get("target_language", "es"), level=settings.get("level")),
+    }
+
 
 @app.get("/api/test-llm")
 def test_llm():

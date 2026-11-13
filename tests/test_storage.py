@@ -13,7 +13,7 @@ def json_dir(tmp_path, monkeypatch):
     """Point JsonStore's module-level paths at a temp dir."""
     d = tmp_path / "data"
     d.mkdir()
-    for name in ["SETTINGS_PATH", "HISTORY_PATH", "PROGRESS_PATH", "LESSONS_PATH"]:
+    for name in ["SETTINGS_PATH", "HISTORY_PATH", "PROGRESS_PATH", "LESSONS_PATH", "ERRORS_PATH"]:
         monkeypatch.setattr(storage, name, d / getattr(storage, name).name)
     monkeypatch.setattr(storage, "DATA_DIR", d)
     return d
@@ -78,7 +78,7 @@ def test_migration_copies_everything_and_keeps_json(json_dir, tmp_path):
     counts = migrate_json_to_sqlite(sq, json_dir)
 
     assert counts == {"users": 1, "messages": 16, "mistakes": 1, "vocabulary": 3,
-                      "completed_scenarios": 2, "active_lessons": 1}
+                      "completed_scenarios": 2, "active_lessons": 1, "errors": 0}
     assert _snapshot(sq) == _snapshot(js)
     # timestamps preserved
     assert sq.get_history("ana")[0]["timestamp"] == js.get_history("ana")[0]["timestamp"]

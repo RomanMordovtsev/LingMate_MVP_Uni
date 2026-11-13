@@ -11,10 +11,11 @@ SETTINGS_PATH = DATA_DIR / "user_settings.json"
 HISTORY_PATH = DATA_DIR / "chat_history.json"
 PROGRESS_PATH = DATA_DIR / "progress.json"
 LESSONS_PATH = DATA_DIR / "active_lessons.json"
+ERRORS_PATH = DATA_DIR / "error_log.json"
 
 class JsonStore:
     def __init__(self) -> None:
-        for path in [SETTINGS_PATH, HISTORY_PATH, PROGRESS_PATH, LESSONS_PATH]:
+        for path in [SETTINGS_PATH, HISTORY_PATH, PROGRESS_PATH, LESSONS_PATH, ERRORS_PATH]:
             if not path.exists():
                 path.write_text("{}", encoding="utf-8")
 
@@ -69,6 +70,15 @@ class JsonStore:
     def get_active_lesson(self, user_id: str) -> Optional[Dict[str, Any]]:
         return self._load(LESSONS_PATH).get(user_id)
 
+    # --- error log (roadmap 1.6) -------------------------------------------
+    def add_error(self, user_id: str, entry: Dict[str, Any], created_at: Optional[str] = None) -> None:
+        data = self._load(ERRORS_PATH)
+        data.setdefault(user_id, []).append({**entry, "created_at": created_at or datetime.now().isoformat(timespec="seconds")})
+        self._save(ERRORS_PATH, data)
+
+    def get_errors(self, user_id: str) -> List[Dict[str, Any]]:
+        return self._load(ERRORS_PATH).get(user_id, [])
+
 
 # ---------------------------------------------------------------------------
 # SQLite storage (roadmap 1.1). Same public interface as JsonStore.
@@ -117,13 +127,21 @@ CREATE TABLE IF NOT EXISTS completed_scenarios (
     completed_at TEXT NOT NULL,
     PRIMARY KEY (user_id, scenario_id)
 );
+CREATE TABLE IF NOT EXISTS error_log (   -- roadmap 1.6: one row per structured correction
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    error_category TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    payload TEXT NOT NULL                -- JSON: the entry from core.error_log.make_entry
+);
+CREATE INDEX IF NOT EXISTS idx_error_log_user ON error_log(user_id, error_category, id);
 CREATE TABLE IF NOT EXISTS active_lessons (
     user_id TEXT PRIMARY KEY,
     lesson TEXT NOT NULL,                -- JSON object
     updated_at TEXT NOT NULL
 );
 """
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2  # 2: error_log table (additive; v1 databases get it on start)
 
 
 def _now() -> str:
@@ -143,6 +161,26 @@ class SqliteStore:
             conn.executescript(SCHEMA)
             if conn.execute("SELECT COUNT(*) FROM schema_version").fetchone()[0] == 0:
                 conn.execute("INSERT INTO schema_version (version) VALUES (?)", (SCHEMA_VERSION,))
+            else:
+                conn.execute("UPDATE schema_version SET version = ? WHERE version < ?",
+                             (SCHEMA_VERSION, SCHEMA_VERSION))
+        self._backfill_error_log()
+
+    def _backfill_error_log(self) -> None:
+        """Once: copy structured mistake lines (written since 1.3) into the error log. Mistakes stay."""
+        from core.error_log import entry_from_mistake_line
+        with self._conn() as conn:
+            if conn.execute("SELECT 1 FROM error_log LIMIT 1").fetchone():
+                return
+            rows = conn.execute("SELECT user_id, payload, created_at FROM mistakes ORDER BY id").fetchall()
+            batch = []
+            for user_id, payload, created_at in rows:
+                entry = entry_from_mistake_line(json.loads(payload))
+                if entry:
+                    batch.append((user_id, entry["error_category"], created_at,
+                                  json.dumps(entry, ensure_ascii=False)))
+            conn.executemany(
+                "INSERT INTO error_log (user_id, error_category, created_at, payload) VALUES (?, ?, ?, ?)", batch)
 
     @contextmanager
     def _conn(self):
@@ -156,7 +194,7 @@ class SqliteStore:
     def is_empty(self) -> bool:
         with self._conn() as conn:
             tables = ["user_settings", "messages", "mistakes", "vocabulary",
-                      "completed_scenarios", "active_lessons"]
+                      "completed_scenarios", "active_lessons", "error_log"]
             return all(conn.execute(f"SELECT 1 FROM {t} LIMIT 1").fetchone() is None for t in tables)
 
     # --- settings -----------------------------------------------------------
@@ -232,6 +270,20 @@ class SqliteStore:
             row = conn.execute("SELECT lesson FROM active_lessons WHERE user_id = ?", (user_id,)).fetchone()
         return json.loads(row[0]) if row else None
 
+    # --- error log (roadmap 1.6) -------------------------------------------
+    def add_error(self, user_id: str, entry: Dict[str, Any], created_at: Optional[str] = None) -> None:
+        with self._conn() as conn:
+            conn.execute(
+                "INSERT INTO error_log (user_id, error_category, created_at, payload) VALUES (?, ?, ?, ?)",
+                (user_id, entry["error_category"], created_at or _now(), json.dumps(entry, ensure_ascii=False)),
+            )
+
+    def get_errors(self, user_id: str) -> List[Dict[str, Any]]:
+        with self._conn() as conn:
+            rows = conn.execute(
+                "SELECT payload, created_at FROM error_log WHERE user_id = ? ORDER BY id", (user_id,)).fetchall()
+        return [{**json.loads(p), "created_at": ts} for p, ts in rows]
+
 
 # ---------------------------------------------------------------------------
 # JSON → SQLite migration (non-destructive: JSON files are only read)
@@ -248,7 +300,7 @@ def migrate_json_to_sqlite(store: SqliteStore, data_dir: Optional[Path] = None) 
     """Copy all JsonStore data into `store`. Returns counts per table. JSON files are left untouched."""
     d = Path(data_dir) if data_dir else DATA_DIR
     counts = {"users": 0, "messages": 0, "mistakes": 0, "vocabulary": 0,
-              "completed_scenarios": 0, "active_lessons": 0}
+              "completed_scenarios": 0, "active_lessons": 0, "errors": 0}
 
     for user_id, settings in _read_json(d / SETTINGS_PATH.name).items():
         store.save_settings(user_id, settings)
@@ -270,6 +322,13 @@ def migrate_json_to_sqlite(store: SqliteStore, data_dir: Optional[Path] = None) 
     for user_id, lesson in _read_json(d / LESSONS_PATH.name).items():
         store.save_active_lesson(user_id, lesson)
         counts["active_lessons"] += 1
+
+    for user_id, entries in _read_json(d / ERRORS_PATH.name).items():
+        for e in entries or []:
+            if isinstance(e, dict) and e.get("error_category"):
+                e = dict(e)
+                store.add_error(user_id, e, created_at=e.pop("created_at", None))
+                counts["errors"] += 1
 
     return counts
 

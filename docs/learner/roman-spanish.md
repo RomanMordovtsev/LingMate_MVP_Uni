@@ -25,10 +25,38 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | everyday household / service vocabulary gaps (heating, postcards, meals, milk types) | lexical / chunk | 05.11, 06.11, 07.11 |
 | gender of nouns not ending in -o/-a (`la postal`, `-ción`) | gender | 06.11 |
 | confusing similar-sounding words (`abrigo / abogado / aguacate`; RU «авокадо» ≈ *abogado*) | lexical, interlingual false friend RU | 12.11 |
+| RU verb doesn't map 1:1: «отдал в ремонт» ≠ *di* → **dejar**; traer/llevar by deixis | lexical / chunk | backpack 13.11 |
+| "accidental" se-construction: **se me ha olvidado**, se me ha caído/roto | clitic / chunk | olvidar 13.11 |
+| reading labels / written Spanish of everyday life (packaging, signs) | lexical, reading | Kinder 13.11, fíjate 13.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 13.11.2026 — Storage phrases on packaging (Kinder)
+- Reading situation (no utterance → no eval case). Label chunks: **Conservar en lugar fresco y seco** (*fresco* = cool, not "fresh"), **Consumir preferentemente antes del…** (best before) vs **Fecha de caducidad / Consumir antes del…** (use by), *caducado*; **Conservar en el frigorífico / la nevera**; **Una vez abierto, consumir en X días**; *a temperatura ambiente*; *Sin gluten*, *Valores nutricionales*, *Ingredientes*.
+- Ingredients: leche entera / desnatada en polvo; manteca de cacao, pasta de cacao; mantequilla vs **manteca** (fat: de palma, de cerdo; in Argentina *manteca* = butter); relleno; azúcar.
+- Uses: SRS (3.1); reading input for a supermarket / everyday-life unit (C.1); *fresco* = cool is a candidate lexical note (RU «свежий»).
+
+### 13.11.2026 — "Yesterday I left you a backpack to repair"
+- Service situation at a repair shop (no utterance recorded → no eval case). Chunks: **Ayer les dejé una mochila para arreglar.** / *Ayer traje una mochila a arreglar.* / **Vengo a recoger la mochila que dejé ayer.** / **¿Ya está lista?** / **¿Cuánto le debo?**
+- Verb choice: **dejar** (leave for repair / dry cleaning / cloakroom); **traer** (bring here; irregular preterite *traje*) vs **llevar** (take there: *Ayer llevé la mochila a arreglar*); RU «отдал» as *di* (dar) sounds like a gift.
+- Grammar: *les* (the shop, ustedes) / *le* (usted) / *te*; *para arreglar* ≈ *a arreglar* (a with motion verbs). Vocabulary: arreglar/reparar, coser, la cremallera, la correa / el asa, recoger, el resguardo.
+- Uses: scenario seed for the relocation pack (4.3: repair shop / dry cleaner); transfer note candidate RU «отдать» → *dejar*.
+
+### 13.11.2026 — «La percha» (hanger)
+- Vocabulary (no eval case): **la percha** (clothes hanger), **el perchero** (coat stand / hooks), el gancho; LatAm *gancho / colgador*. Chunks: *Cuelga el abrigo en el perchero.* / *¿Tienes una percha?*; colgar (o→ue); el armario, el cajón; tender la ropa, el tendedero, la pinza.
+- Mnemonic: **-ero** = place/holder for many X (percha → perchero, llave → llavero, azúcar → azucarero).
+
+### 13.11.2026 — What does «fíjate» mean
+- Comprehension question (no eval case). **fijarse (en)** = notice / pay attention: *Fíjate en el acento*; *¡Fíjate!* (surprise); **Fíjate que…** (discourse opener); *Fíjate si está abierto*; forms fíjate / fíjese / fijaos / fíjense; *no te fijes*; *me he fijado en que…*. Without -se: *fijar una fecha*.
+- Accent appears when the pronoun is attached (fíjate, abrígate, siéntate) — a spelling_accent rule for imperatives + clitics.
+
+### 13.11.2026 — «Я забыл» (I forgot)
+- Production gap (no utterance → no eval case of his own). Three constructions: **Se me ha olvidado / Se me olvidó** (most natural, accidental), **Me he olvidado de algo**, **He olvidado algo**. *Se me han olvidado las llaves* (verb agrees with the thing). Same pattern: *se me ha caído / roto / perdido*.
+- Typical error (from the page, not Roman's own utterance): *me olvidé el paraguas* → *me olvidé **del** paraguas* (preposition) — candidate synthetic eval case.
+- In Spain recent events → pretérito perfecto (*se me ha olvidado*); *se me olvidó* for earlier / LatAm.
+- Uses: chunk for SRS; grammar point "se accidental" for the A2→B1 curriculum (C.1).
 
 ### 12.11.2026 — Mixing up abrigo / abogado / aguacate
 - Problem (vocabulary, no utterance recorded → no eval case): often confuses similar words.
