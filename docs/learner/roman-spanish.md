@@ -24,10 +24,18 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | spelling under EN influence: `possible` → `posible` | spelling_accent, transfer EN | compliment 2026-10 |
 | everyday household / service vocabulary gaps (heating, postcards, meals, milk types) | lexical / chunk | 05.11, 06.11, 07.11 |
 | gender of nouns not ending in -o/-a (`la postal`, `-ción`) | gender | 06.11 |
+| confusing similar-sounding words (`abrigo / abogado / aguacate`; RU «авокадо» ≈ *abogado*) | lexical, interlingual false friend RU | 12.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 12.11.2026 — Mixing up abrigo / abogado / aguacate
+- Problem (vocabulary, no utterance recorded → no eval case): often confuses similar words.
+- **el abrigo** = coat (← *abrigar* "to keep warm": *¡Abrígate!*, *Esta chaqueta abriga mucho.*); **el abogado / la abogada** = lawyer (← Lat. *advocatus*, same root as RU «адвокат»: v→b, c→g; *abogar por*); **el aguacate** = avocado (← Nahuatl *ahuacatl*; trap: RU «авокадо» sounds like *abogado*).
+- Rule of thumb: food → *aguacate*, court → *abogado*. Linking sentence: *El abogado lleva un abrigo y come aguacate.*
+- Other a- neighbours: abrir / abrigo / abril; abuelo / aburrido.
+- Uses: SRS (3.1) with pictures, not translations (the Notion page suggests Anki cards with images); candidate RU→ES false-friend rule (*авокадо* ≠ *abogado*) for the transfer map.
 
 ### 07.11.2026 — Виды молока (kinds of milk)
 - Question (vocabulary, no utterance → no eval case of his own; correct café orders added as clean cases in `es_synthetic.jsonl`). Directly feeds roadmap 4.1 café follow-up chunks (feedback 2026-11-05 §6).

@@ -11,7 +11,20 @@ python -m eval.run --provider ollama --model qwen2.5:7b-instruct    # local Olla
 python -m eval.run --provider gemini --model gemini-2.5-flash       # GEMINI_API_KEY in .env
 python -m eval.run --provider ollama --model llama3.1:8b --id roman-2026-10-queue   # one case
 python -m eval.run --provider gemini --model gemini-2.5-flash --sleep 8   # more pause for free-tier limits
+python -m eval.run --provider ollama --model qwen2.5:7b-instruct --profile roman   # as an onboarded learner
+python -m eval.compare                    # table: no profile → with profile, latest date
 ```
+
+## Profiles
+`--profile <name>` loads `profiles/<name>.json` (validated as a `LearnerProfile`, like the
+onboarding form) and runs every case of the same target language as that learner: the
+prompts get the profile context (1.2) and the transfer-map hints (1.5), and corrections get
+`transfer_note`, exactly as in the app. Without `--profile` the prompts are the legacy ones.
+The report header says which profile was used and the file name ends with it
+(`…-gemini-2.5-flash-roman.json`), so both runs of a night are kept.
+`profiles/roman.json`: L1 ru, en C1, target es-ES A2, relocated, Vitoria-Gasteiz (no Italian).
+Caveat: the hints were written from Roman's real errors (e.g. *línea*), so gains on the
+`roman-*` cases are partly taught to the test; look at the synthetic cases.
 
 Rate limits: `--sleep` seconds between cases (default 4 for gemini, 0 otherwise); on
 429/503 the runner retries after 5, 15 and 30 s. Model names keep their dots in file names

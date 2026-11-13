@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-12 — docs/feedback/2026-11-11: eval with a learner profile (scheduled run)
+- Branch `agent/eval-profile` → PR into `agent/dev`. No open PRs, no comments; PR #12 merged. Feedback 2026-11-11 (§1–3) is the task of this run, before 1.6.
+- **§1** `eval.run --profile <name|path>`: `eval/profiles/roman.json` (ru L1, en C1, es-ES A2, relocated, Vitoria-Gasteiz, no Italian) validated as `LearnerProfile` → settings with `onboarding_completed`, so prompts get `profile_context` + `prompt_hints` and corrections get `transfer_note`, exactly as in the app. Cases in another target language keep their own settings. Report: header line «Profile: roman / none», `meta.profile`, file name `…-<model>-roman.json` (no-profile file unchanged, both kept). Unknown profile → exit 2 listing the available ones.
+- **§2** `scripts/nightly_eval.ps1`: `-Profiles @("", "roman")` — every model runs without and with the profile; at the end `eval.compare` writes `eval/reports/compare-<date>.md`. Not run on Windows here (no PowerShell in the cloud) — needs Roman's next nightly.
+- **§3** `eval/compare.py`: pairs reports of one date by provider/model, table without → with (detection, category recall, text match, false positives, transfer source, `lexical` + `register` recall, answered) with ↑/↓ direction. Caveat in the table: the `en` hints name *línea*, so `roman-*` cases are partly taught to the test.
+- Notion: new entry 12.11 «abrigo / abogado / aguacate» → `docs/learner/roman-spanish.md` (vocabulary, no utterance → no eval case; SRS with pictures, candidate RU false-friend rule).
+- docs/feedback: 2026-11-11 handled (this PR). 1.5 marked `[x]`.
+- Tests: 138 → 147. No UI changes → no Playwright pass; CLI run by hand with `--provider rule` with/without profile + `eval.compare`.
+
 ## 2026-11-11 — 1.5 Transfer maps (scheduled run)
 - Branch `agent/transfer-maps` → PR into `agent/dev`. No open PRs, no comments; PR #11 merged. Notion: no new entries since 07.11. docs/feedback: nothing new. Roman's C.8 hosting decisions (commit 5065a78) read; not started this run (roadmap order: 1.5 first).
 - `core/pedagogy/l1_maps/`: `TransferRule` (category, RU title, source/target example, note per L1, prompt hint, markers on accent-folded text, kind `negative` | `bridge`). Maps: `ru_es` (articles, ser/estar, gender -ma and mismatches, aspect, subjunctive, clitics, pensar en, meal verbs + bridge ты/вы → tú/usted), `en_es` (línea/cola, embarazada, actualmente, realizar, librería, double consonants, esforzarse por, depender de, pensar en, to be, calques — from Roman's real errors), `it_es` (burro, salire + bridges stare, articles, congiuntivo, imperfetto, clitics). Another pair = one module.

@@ -1,0 +1,16 @@
+{
+  "user_id": "eval-roman",
+  "target_language": "es",
+  "target_variant": "es-ES",
+  "level": "A2",
+  "languages": [
+    {"code": "ru", "level": "L1"},
+    {"code": "en", "level": "C1"}
+  ],
+  "goal": "relocated",
+  "country": "España",
+  "city": "Vitoria-Gasteiz",
+  "interests": [],
+  "feedback_timing": "immediate",
+  "ideal_self": ""
+}
