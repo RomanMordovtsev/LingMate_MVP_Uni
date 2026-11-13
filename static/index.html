@@ -552,6 +552,15 @@
     </div>
   </div>
 
+  <!-- Error log as learner corpus (roadmap 1.6): categories, trend, persistent, possibly avoided. -->
+  <div class="dashboard-box" id="errorsCard" style="margin-top:18px;">
+    <h3>Над чем поработать</h3>
+    <div class="muted" id="errorsEmpty">Пока нет исправлений — пиши Юдзи, и здесь появится картина твоих ошибок.</div>
+    <div class="chips" id="errorsChips"></div>
+    <div class="muted" id="errorsPersistent" style="margin-top:10px;"></div>
+    <div class="muted" id="errorsAvoided" style="margin-top:6px;"></div>
+  </div>
+
   <div class="main-grid">
     <div class="card">
       <h2 class="section-title">Свободный разговор</h2>
@@ -1049,6 +1058,37 @@ async function sendLesson() {
   }
 }
 
+// Learner corpus (roadmap 1.6; morphosyntax §10, sla §4–5). Friendly wording, no guilt (engagement §3).
+const TREND_ICON = { up: '↑', down: '↓', flat: '→', new: 'новое' };
+async function loadErrors(userId) {
+  try {
+    const data = await api('/api/progress/' + encodeURIComponent(userId) + '/errors');
+    const chips = document.getElementById('errorsChips');
+    chips.innerHTML = '';
+    document.getElementById('errorsEmpty').style.display = data.total ? 'none' : '';
+    (data.categories || []).slice(0, 6).forEach(c => {
+      const span = document.createElement('span');
+      span.className = 'chip';
+      span.textContent = (ERROR_CATEGORY_RU[c.category] || c.category) + ' · ' + c.count + ' ' + (TREND_ICON[c.trend] || '');
+      span.title = 'За ' + data.window_days + ' дн.: ' + c.current_window + ', неделей раньше: ' + c.previous_window
+        + (c.examples.length ? '\nНапример: ' + c.examples.map(e => e.original + ' → ' + e.corrected).join('; ') : '');
+      chips.appendChild(span);
+    });
+    const pers = (data.persistent || []).map(p => {
+      const name = ERROR_CATEGORY_RU[p.category] || p.category;
+      const form = p.recurrent_forms[0];
+      return form ? name + ' (' + form.original + ' → ' + form.corrected + ')' : name;
+    });
+    document.getElementById('errorsPersistent').textContent = pers.length
+      ? 'Повторяется уже не первый день — потренируем отдельно: ' + pers.join(', ') : '';
+    const av = (data.avoided && data.avoided.items) || [];
+    document.getElementById('errorsAvoided').textContent = av.length
+      ? 'Ты пока, кажется, не используешь: ' + av.slice(0, 3).map(a => a.label).join(', ') + '. Попробуй вставить в разговор!' : '';
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 async function loadProgress() {
   try {
     const userId = document.getElementById('userId').value;
@@ -1090,6 +1130,7 @@ async function loadProgress() {
         scenarioChips.appendChild(span);
       });
     }
+    loadErrors(userId);
   } catch (err) {
     document.getElementById('progressDump').textContent = 'Прогресса пока нет. Сохрани настройки и начни практику.';
     document.getElementById('dashboardLevel').textContent = document.getElementById('level').value || '-';
