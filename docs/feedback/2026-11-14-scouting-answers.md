@@ -1,0 +1,6 @@
+# Roman, 14.11.2026 — answers to PR #15 (model scouting)
+
+1. **gemini-2.5-flash → replaced by `gemini-3.1-flash-lite`** in `scripts/nightly_eval.ps1` (done on agent/dev, commit with this file). If that model id does not exist on the free tier, the Monday log will show it — then pick the closest free flash-lite id.
+2. **LanguageTool: yes, try it** as a non-LLM spelling/accent/agreement pre-check (pipeline idea from scouting). Order: first the **public LanguageTool HTTP API** (free, no install; respect its rate/size limits; send only the learner's sentence) behind a small provider interface; a **local LanguageTool server** on Roman's laptop is also OK (Roman doesn't mind installing Java), and later on the host if memory allows (Render free 512 MB is probably too small). Evaluate it in `eval.run` as its own "provider" and combined with an LLM, especially on `spelling_accent` / `agreement` / `gender`.
+3. **aya-expanse:8b: add for comparison only** (CC-BY-NC, fine for Roman's personal/study use). Mark it in `eval/model_candidates.txt` as `# NC licence — comparison only, not for production`. If it wins, ask Roman before using it in the product.
+4. Done by Claude on Roman's laptop 14.11: Ollama is already the latest (0.40.16, no update needed); `qwen2.5:7b-instruct` removed (4.7 GB freed). Models live in `D:\ollama-models`.

@@ -4,7 +4,7 @@
 # Output: eval/reports/*.json + *.md, and eval/reports/nightly-<date>.log.
 
 param(
-    [string[]]$GeminiModels = @("gemini-flash-lite-latest", "gemini-2.5-flash"),
+    [string[]]$GeminiModels = @("gemini-flash-lite-latest", "gemini-3.1-flash-lite"),
     [string[]]$OllamaModels = @(),  # empty = every model from `ollama list`
     # Each model runs once per profile: "" = no profile (legacy prompts), "roman" =
     # eval/profiles/roman.json (profile context + transfer hints), so the report shows
