@@ -1,3 +1,10 @@
 # Ollama models evaluated every Monday night (roadmap 5.7). One tag per line.
 # Maintained by the agent; Roman's laptop: CPU only, 16 GB RAM -> keep each model <= ~6 GB.
-qwen2.5:7b-instruct  # baseline 08.11: 7% detection, 18 s
+# Scouting 2026-11-14: docs/models/scouting-2026-11-14.md
+gemma4:e2b           # chat; 4.6 GB, Apache 2.0
+gemma4:e4b-it-qat    # error analysis; 6.1 GB, Apache 2.0
+qwen3.5:4b-q4_K_M    # chat; 3.3 GB, Apache 2.0; thinking off via OLLAMA_THINK=auto
+ministral-3:3b       # chat; 3.0 GB, Apache 2.0
+granite4.1:3b        # fast chat; 2.1 GB, Apache 2.0
+ministral-3:8b       # error analysis; 6.0 GB, Apache 2.0
+# dropped 2026-11-14: qwen2.5:7b-instruct (09.11: 14% detection, 14.5 s) -> `ollama rm qwen2.5:7b-instruct`

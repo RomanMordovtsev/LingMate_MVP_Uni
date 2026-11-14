@@ -28,10 +28,20 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | RU verb doesn't map 1:1: «отдал в ремонт» ≠ *di* → **dejar**; traer/llevar by deixis | lexical / chunk | backpack 13.11 |
 | "accidental" se-construction: **se me ha olvidado**, se me ha caído/roto | clitic / chunk | olvidar 13.11 |
 | reading labels / written Spanish of everyday life (packaging, signs) | lexical, reading | Kinder 13.11, fíjate 13.11 |
+| gender with numbers / implied nouns (*a la cero* → *al cero* / *a la baja*) | gender / lexical | lift 14.11 |
+| RU-style verb choice where Spain prefers *poner/quitar* (heating, lights) | lexical / chunk | heating 06.11 (+14.11) |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 14.11.2026 — In the lift: «¿Abajo?»
+- Said: **Sí, a la cero.** (understood, but odd: *cero* is masculine; the ground floor is *la (planta) baja*) → eval case `roman-2026-11-14-lift`.
+- Better: **Sí, a la baja.** (most natural) / **Sí, al cero.** (the button) / **Sí, gracias.** (just going down).
+- Gender of floors: ordinals imply *planta* → feminine (*a la primera, a la segunda*); with *piso* → masculine (*al tercero*); cardinals for the button → masculine (*al cero, al tres*).
+- Lift chunks: **¿Subes? / ¿Bajas?**, **¿A qué piso vas?**, *Al tercero, por favor.*, **¿Me aguantas la puerta?**
+- Culture: Spanish floor numbering ≠ Russian: planta baja (0) = RU 1st floor, primera = RU 2nd; *entresuelo*, *sótano / garaje (-1)*; *piso* = floor and flat, *planta* = floor only.
+- Uses: scenario seed (4.3: building / neighbours), intercultural note (4.9), gender note for numbers (morphosyntax §7).
 
 ### 13.11.2026 — Storage phrases on packaging (Kinder)
 - Reading situation (no utterance → no eval case). Label chunks: **Conservar en lugar fresco y seco** (*fresco* = cool, not "fresh"), **Consumir preferentemente antes del…** (best before) vs **Fecha de caducidad / Consumir antes del…** (use by), *caducado*; **Conservar en el frigorífico / la nevera**; **Una vez abierto, consumir en X días**; *a temperatura ambiente*; *Sin gluten*, *Valores nutricionales*, *Ingredientes*.
@@ -75,6 +85,7 @@ Note: many of Roman's errors come from **English** (C1), not Russian — the tra
 - Question (vocabulary, no utterance → no eval case). Relevant to renting in Vitoria (4.3 landlord scenario).
 - **la calefacción** (central / individual), el radiador, la caldera, el termostato, la estufa, el aire acondicionado; **encender / apagar**, **subir / bajar la calefacción**.
 - Chunks: ¿Podemos encender la calefacción? / La calefacción no funciona. / El radiador de mi habitación está frío. / **¿La calefacción está incluida en el alquiler?** / Hace frío en casa.
+- Added 14.11: in Spain everyday speech uses **poner / quitar la calefacción** (*¿Pones la calefacción?*, *¿Has puesto la calefacción?*, *¿Te importa si pongo la calefacción?*, *¿Está puesta?*); *encender* (e→ie: enciendo).
 - Form: -ción nouns are feminine, stress on the last syllable; plural loses the accent (calefacciones).
 
 ### 06.11.2026 — «Открытка» (postcard)
