@@ -26,6 +26,17 @@ RULES = (
                            r"\b(el|un|este|ese)\s+(coche|arbol|dolor|viaje|garaje)\b"),
     ),
     TransferRule(
+        "ru_es.gender_numbers_floors", _S, _T, "gender", "Род числа и этажа",
+        "на нулевой / на первый (этаж)", "al cero (botón) / a la baja, a la primera (planta)",
+        {"ru": "Числа как названия — мужского рода: el cero, al tres (про кнопку). С порядковыми "
+               "подразумевается planta → женский род: a la primera, a la baja. И счёт другой: "
+               "planta baja = русский 1-й этаж, primera = 2-й.",
+         "en": "Numbers used as nouns are masculine (al cero, al tres); ordinals imply planta → "
+               "a la primera; planta baja is the ground floor (RU 1st floor)."},
+        original_markers=(r"\ba la (cero|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\b",),
+        corrected_markers=(r"\b(planta baja|a la baja|al (cero|uno|dos|tres|cuatro|cinco))\b",),
+    ),
+    TransferRule(
         "ru_es.pensar_en", _S, _T, "preposition", "думать о → pensar en",
         "Я думаю о тебе", "Pienso en ti",
         {"ru": "«Думать о ком-то» — pensar en (не de/sobre): Pienso en ti. "

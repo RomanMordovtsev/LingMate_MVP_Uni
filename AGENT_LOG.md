@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-14 — 5.7 Model scouting (scheduled run, Saturday of even ISO week 46)
+- Branch `agent/model-scouting-2026-11-14` → PR into `agent/dev` «Модели: кандидаты на 14.11». No open PRs, no comments; PR #14 merged → 1.6 marked `[x]`. docs/feedback: nothing new.
+- `docs/models/scouting-2026-11-14.md`: 09.11 reports reviewed (flash-lite 86% detection / 0.9 s is the reference; qwen2.5:7b 14% / 13 s → dropped; gemini-2.5-flash answered 6/34 on the free quota). Local candidates (≤ 6.1 GB, Apache 2.0): gemma4:e2b, gemma4:e4b-it-qat, qwen3.5:4b-q4_K_M, ministral-3:3b, granite4.1:3b, ministral-3:8b. Skipped: aya-expanse (CC-BY-NC), Salamandra (not in the Ollama library), over-size tags. Evidence: 2505.06004 (Gemma line best small GEC), 2609.10810 (minimal-edit + few-shot), La Leaderboard. Free no-card APIs for 5.8: Groq and GitHub Models look best; Gemini/Mistral free tiers use prompts for training. Hybrid designs (LanguageTool pre-check, local dialogue + cloud correction) written down, not built.
+- Tags/sizes came from the `registry.ollama.ai` mirror (ollama.com is not reachable from the cloud); not pulled here.
+- `core/llm/ollama_provider.py`: `OLLAMA_THINK` (auto → `think: false` for qwen3*/deepseek-r1/magistral, otherwise field not sent); exact tag match in `_ping` (family-only match made `gemma4:e2b` look installed when only `gemma4:e4b-it-qat` was).
+- Notion: new 14.11 «¿Abajo?» in the lift (*Sí, a la cero.*) → `docs/learner` + eval case `roman-2026-11-14-lift` (gender, lexical) + transfer rule `ru_es.gender_numbers_floors` (al cero / a la primera, planta baja = RU 1st floor); 06.11 heating entry got a 14.11 addition (*poner / quitar la calefacción*).
+- Tests: 161 → 177. No UI change → no Playwright pass.
+- Open: held-out set (5.7) before any prompt tuning; Roman's choice on gemini-2.5-flash in the nightly and on LanguageTool.
+
 ## 2026-11-13 — 1.6 Error log as learner corpus (scheduled run)
 - Branch `agent/error-log` → PR into `agent/dev`. No open PRs, no comments; PR #13 merged. docs/feedback: nothing new (2026-11-11 handled in #13).
 - Storage: new `error_log` table (`user_id`, `error_category`, `created_at`, JSON payload; index on user+category), `SCHEMA_VERSION` 2 — additive, v1 databases get the table on start; `JsonStore` gets `error_log.json`; JSON→SQLite migration copies it. `add_error` / `get_errors` on both stores (parity test). One-time backfill: mistake lines written since 1.3 (`orig → corr — expl [category]`) are parsed into the log; pre-1.3 free text is skipped; `mistakes` untouched.

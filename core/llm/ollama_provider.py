@@ -9,11 +9,13 @@ Ollama-провайдер: локально развёрнутая LLM (Llama 3.
 - OLLAMA_HOST    : URL сервера, по умолчанию http://localhost:11434
 - OLLAMA_MODEL   : имя модели, по умолчанию qwen2.5:7b-instruct
 - OLLAMA_TIMEOUT : таймаут одного запроса в секундах, по умолчанию 120
+- OLLAMA_THINK   : auto (по умолчанию: thinking выключен у qwen3*/deepseek-r1),
+                   false / true — всегда отправлять это значение
 """
 
 import json
 import os
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -23,6 +25,42 @@ from .base import LLMProvider
 # Маленькие открытые модели (7B-8B) хуже Gemini следуют JSON-схеме,
 # поэтому важно а) ставить format=json на стороне Ollama,
 # б) явно напоминать про ключи в самом промпте.
+# Модели с режимом «размышления» (thinking). У qwen3/qwen3.5 он включён
+# по умолчанию: ответ на CPU растягивается в разы, а для короткой
+# реплики и JSON-исправления рассуждения не нужны (scouting 2026-11-14).
+# Ollama принимает "think": false в /api/chat; моделям без thinking
+# параметр не шлём, чтобы старые версии Ollama не ругались.
+_THINKING_FAMILIES = ("qwen3", "qwen3.5", "qwen3.6", "deepseek-r1", "magistral")
+
+
+def _think_setting(model_name: str) -> Optional[bool]:
+    """Значение поля ``think`` для запроса или None (не отправлять).
+
+    ``OLLAMA_THINK``: ``auto`` (по умолчанию — выключить для известных
+    thinking-семейств), ``false`` / ``true`` — всегда отправлять это значение.
+    """
+    mode = os.getenv("OLLAMA_THINK", "auto").strip().lower()
+    if mode in ("0", "false", "off", "no"):
+        return False
+    if mode in ("1", "true", "on", "yes"):
+        return True
+    family = model_name.split(":")[0].lower()
+    return False if family in _THINKING_FAMILIES else None
+
+
+def _tag_matches(wanted: str, installed: str) -> bool:
+    """Точное сравнение тегов Ollama с учётом неявного ``:latest``.
+
+    Раньше сравнивали только семейство (до двоеточия), и при скачанной
+    ``gemma4:e4b-it-qat`` модель ``gemma4:e2b`` считалась доступной —
+    eval потом получал 404 на каждый кейс.
+    """
+    def norm(tag: str) -> str:
+        tag = tag.strip()
+        return tag if ":" in tag else f"{tag}:latest"
+    return norm(wanted) == norm(installed)
+
+
 _JSON_REMINDER = (
     "\n\nIMPORTANT: respond with a single valid JSON object only, "
     "no prose before or after, no markdown fences."
@@ -56,10 +94,8 @@ class OllamaProvider(LLMProvider):
                 # первом запросе, а не молчаливый fallback.
                 payload = response.json()
                 models = [m.get("name", "") for m in payload.get("models", [])]
-                # Имя модели в /api/tags может содержать тег ":latest",
-                # сравниваем по префиксу.
-                base = self.model_name.split(":")[0]
-                return any(m.split(":")[0] == base for m in models)
+                # Имя модели в /api/tags может содержать тег ":latest".
+                return any(_tag_matches(self.model_name, m) for m in models)
         except Exception:
             return False
 
@@ -92,6 +128,10 @@ class OllamaProvider(LLMProvider):
                 "num_ctx": 4096,
             },
         }
+
+        think = _think_setting(self.model_name)
+        if think is not None:
+            payload["think"] = think
 
         try:
             with httpx.Client(timeout=self.timeout) as client:
