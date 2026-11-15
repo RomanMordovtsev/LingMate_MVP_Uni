@@ -15,6 +15,6 @@ the Monday report. Only one variant: `-Profiles ""` or `-Profiles roman`.
 Note: gemini-2.5-flash free tier (20 requests/day) cannot finish even one run; the
 second run stops at once on the quota (no wasted retries).
 
-Scheduled: Windows Task Scheduler task "LingMate nightly eval", Monday 01:30.
+Scheduled: Windows Task Scheduler task "LingMate nightly eval", Sunday 19:00.
 A Claude scheduled task bound to Roman's computer then picks up the new reports
 and opens a PR into `agent/dev`.
