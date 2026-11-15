@@ -9,7 +9,11 @@ param(
     # Each model runs once per profile: "" = no profile (legacy prompts), "roman" =
     # eval/profiles/roman.json (profile context + transfer hints), so the report shows
     # whether the hints help (docs/feedback/2026-11-11).
-    [string[]]$Profiles = @("", "roman")
+    [string[]]$Profiles = @("", "roman"),
+    # LanguageTool (rule-based checker, docs/feedback/2026-11-14 §2): one run alone, then
+    # eval.hybrid combines it with every LLM report of the night (no extra model calls).
+    # Uses $env:LANGUAGETOOL_URL if set (local server), else the public API (~2 min).
+    [switch]$NoLanguageTool
 )
 
 $ErrorActionPreference = "Continue"
@@ -53,6 +57,11 @@ foreach ($m in $GeminiModels) {
     RunEval "gemini" $m
 }
 
+if (-not $NoLanguageTool) {
+    Log "languagetool $(if ($env:LANGUAGETOOL_URL) { $env:LANGUAGETOOL_URL } else { 'public API' })"
+    & $py -m eval.run --provider languagetool 2>&1 | Out-File -Append -Encoding utf8 $log
+}
+
 # Make sure Ollama is up.
 try { Invoke-RestMethod http://127.0.0.1:11434/api/tags -TimeoutSec 5 | Out-Null }
 catch { Log "starting ollama"; Start-Process ollama -ArgumentList "serve" -WindowStyle Hidden; Start-Sleep 15 }
@@ -82,4 +91,8 @@ foreach ($m in $OllamaModels) {
 }
 Log "compare (no profile vs profile)"
 & $py -m eval.compare --out "eval\reports\compare-$date.md" 2>&1 | Out-File -Append -Encoding utf8 $log
+if (-not $NoLanguageTool) {
+    Log "hybrid (LLM alone vs LLM + LanguageTool)"
+    & $py -m eval.hybrid --out "eval\reports\hybrid-$date.md" 2>&1 | Out-File -Append -Encoding utf8 $log
+}
 Log "done"

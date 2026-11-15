@@ -32,6 +32,11 @@ RULES = (
     _ff("libreria", "library", "the library", "librería", "la biblioteca",
         "Librería — книжный магазин. Библиотека — la biblioteca.",
         (r"\blibreria\b",), (r"\bbiblioteca\b",)),
+    _ff("comprometer", "engage", "engage the audience", "comprometer (a la audiencia)",
+        "implicar / involucrar al público",
+        "Comprometer — «обязать, скомпрометировать», не «вовлечь». Вовлечь аудиторию — implicar / "
+        "involucrar al público, captar su atención. Живая аудитория — el público (la audiencia — ТВ, радио).",
+        (r"\bcomprometer\w*\b",), (r"\b(implic|involucr|capt)\w*\b",)),
     TransferRule(
         "en_es.double_consonant", _S, _T, "spelling_accent", "Двойные согласные из английского",
         "possible, professor, communicate", "posible, profesor, comunicar",
