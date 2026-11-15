@@ -32,3 +32,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# nightly eval: local copies of already-committed reports
+eval/reports/_local_archive/

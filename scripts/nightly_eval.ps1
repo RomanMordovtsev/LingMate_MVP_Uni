@@ -32,7 +32,18 @@ function RunEval($provider, $model) {
 Log "start"
 git fetch origin 2>&1 | Out-Null
 git checkout agent/dev 2>&1 | Out-File -Append -Encoding utf8 $log
+# Reports from earlier runs are committed to agent/dev by the pickup PRs; the local
+# untracked copies would block `git pull` ("untracked files would be overwritten").
+# Move every untracked report that is not from today into a gitignored archive.
+$archive = "eval\reports\_local_archive"
+New-Item -ItemType Directory -Force -Path $archive | Out-Null
+git ls-files --others --exclude-standard eval/reports | ForEach-Object {
+    $name = Split-Path $_ -Leaf
+    if ($name -notmatch $date -and $name -ne "README.md") { Move-Item -Force $_ (Join-Path $archive $name) }
+}
 git pull --ff-only 2>&1 | Out-File -Append -Encoding utf8 $log
+if ($LASTEXITCODE -ne 0) { Log "ERROR: git pull failed - running OLD code; see lines above"; }
+Log ("code: " + (git log --oneline -1))
 
 $py = ".\.venv\Scripts\python.exe"
 if (-not (Test-Path $py)) { Log "no .venv found, stopping"; exit 1 }
