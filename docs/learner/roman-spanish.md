@@ -30,10 +30,26 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | reading labels / written Spanish of everyday life (packaging, signs) | lexical, reading | Kinder 13.11, fíjate 13.11 |
 | gender with numbers / implied nouns (*a la cero* → *al cero* / *a la baja*) | gender / lexical | lift 14.11 |
 | RU-style verb choice where Spain prefers *poner/quitar* (heating, lights) | lexical / chunk | heating 06.11 (+14.11) |
+| concessive "even if": *aunque* + subjuntivo vs indicativo; never *si* + present subjunctive | mood | even if 15.11 |
+| academic / presentation vocabulary from EN (*engage* ≠ *comprometer*; *público* vs *audiencia*) | lexical, transfer EN | engage 15.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 15.11.2026 — «Even» / «even if it's 0 degrees outside»
+- Question (no utterance of Roman's → synthetic eval case `syn-mood-3`: *incluso si haga* → *incluso si hace* / *aunque haga*).
+- **aunque + subjuntivo** = "even if" (hypothesis / doesn't matter): *Abro la ventana todos los días, aunque haga cero grados fuera.*; **aunque + indicativo** = "although" (fact): *Aunque hace frío, salgo.*; **incluso si + indicativo** (closer to EN); after *si* never present subjunctive.
+- Plain "even": **incluso / hasta**, negative **ni siquiera** (*Ni siquiera me saludó.*), "even more" **aún / todavía más**.
+- Temperature: **hace cero grados / estamos a cero grados**, **bajo cero** (*dos grados bajo cero*), **fuera** (Spain) / *afuera* (LatAm).
+- Uses: mood unit B1 (concessive clauses, C.1), SRS chunks, weather small talk.
+
+### 15.11.2026 — «Engage the audience» (presentations)
+- Question for class presentations (no utterance → synthetic eval case `syn-lexical-en-3`: *comprometer a la audiencia* → *implicar al público*).
+- By nuance: **captar la atención del público** (at the start), **mantener el interés**, **implicar / involucrar al público** (closest to *engage*), **hacer participar al público**, **conectar con el público**, colloquial **enganchar**.
+- **el público** = live audience; **la audiencia** = TV/radio/social-media viewers (also "audience" with a judge); in class *los oyentes / los compañeros*.
+- False friend: **comprometer** ≠ engage (= to commit / compromise) → candidate EN rule for `en_es`. Noun: *la implicación / la participación* (marketing: *el engagement*). *implicar → implique* (c→qu).
+- Uses: study/work scenario (university presentation, 4.3), EN→ES transfer map (1.5).
 
 ### 14.11.2026 — In the lift: «¿Abajo?»
 - Said: **Sí, a la cero.** (understood, but odd: *cero* is masculine; the ground floor is *la (planta) baja*) → eval case `roman-2026-11-14-lift`.

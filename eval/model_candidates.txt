@@ -1,4 +1,4 @@
-# Ollama models evaluated every Monday night (roadmap 5.7). One tag per line.
+# Ollama models evaluated every Sunday 19:00 (roadmap 5.7). One tag per line.
 # Maintained by the agent; Roman's laptop: CPU only, 16 GB RAM -> keep each model <= ~6 GB.
 # Scouting 2026-11-14: docs/models/scouting-2026-11-14.md
 gemma4:e2b           # chat; 4.6 GB, Apache 2.0
@@ -7,5 +7,6 @@ qwen3.5:4b-q4_K_M    # chat; 3.3 GB, Apache 2.0; thinking off via OLLAMA_THINK=a
 ministral-3:3b       # chat; 3.0 GB, Apache 2.0
 granite4.1:3b        # fast chat; 2.1 GB, Apache 2.0
 # ministral-3:8b       # error analysis; 6.0 GB, Apache 2.0
+aya-expanse:8b       # NC licence — comparison only, not for production (Roman 14.11); 5.1 GB, CC-BY-NC 4.0; 8B → expect ~60–100 s/answer, kept because Roman asked
 # dropped 2026-11-14: qwen2.5:7b-instruct (09.11: 14% detection, 14.5 s) -> `ollama rm qwen2.5:7b-instruct`
 # paused 2026-11-16: gemma4:e4b-it-qat and ministral-3:8b take 60–100 s per answer on Roman's CPU (15.11) and blew the 3 h task limit; re-enable only with a faster machine

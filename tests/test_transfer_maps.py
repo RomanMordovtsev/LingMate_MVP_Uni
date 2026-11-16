@@ -60,6 +60,7 @@ def test_repertoire_puts_l1_first_and_drops_target():
     ("Me gusta café", "Me gusta el café", "article", None, "ru_es.article"),
     ("Soy cansado", "Estoy cansado", "ser_estar", "en", "en_es.to_be"),
     ("Soy cansado", "Estoy cansado", "ser_estar", None, "ru_es.ser_estar"),
+    ("Para comprometer a la audiencia", "Para implicar al público", "lexical", "en", "en_es.comprometer"),  # Notion 15.11
 ])
 def test_contrast_rule_matching(original, corrected, category, source, expected):
     assert match_rule(_corr(original, corrected, category, source), ROMAN).id == expected
