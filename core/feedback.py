@@ -13,7 +13,7 @@ docs/research/morphosyntax.md §7 and the CF typology in §2 / sla.md §4.
 import difflib
 import re
 import unicodedata
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 ERROR_CATEGORIES = (
     "article", "gender", "agreement", "ser_estar", "tense_aspect", "mood",
@@ -110,6 +110,35 @@ def normalize_correction(raw: Any) -> Optional[Dict[str, Any]]:
         "transfer_source": source if is_transfer else None,
         "explanation": explanation,
     }
+
+
+def _spans(text: str, part: str) -> List[Tuple[int, int]]:
+    return [(m.start(), m.start() + len(part)) for m in re.finditer(re.escape(part), text)]
+
+
+def is_phantom_correction(correction: Optional[Dict[str, Any]], message: str) -> bool:
+    """True when the learner already wrote the corrected form (docs/feedback/2026-11-16 §5).
+
+    15.11: gemini-3.1-flash-lite "corrected" ``¡Que aproveche!`` by adding the ``¡`` that
+    was already there (original ``Que aproveche!`` / ``Que`` → ``¡Que``). Rule: the
+    ``corrected`` span occurs in the message and every occurrence of ``original`` lies
+    inside an occurrence of ``corrected`` (or ``original`` does not occur at all).
+    Exact match, whitespace collapsed: accents, ¿¡ and case are what corrections are about.
+    A real swap like ``la`` → ``el`` in "el chico y la chica" is kept because that ``la``
+    is not covered by an ``el``.
+    """
+    if not correction or not message:
+        return False
+    norm = lambda t: re.sub(r"\s+", " ", str(t or "")).strip()
+    msg, orig, corr = norm(message), norm(correction.get("original")), norm(correction.get("corrected"))
+    if not corr or corr == orig:
+        return False
+    covers = _spans(msg, corr)
+    if not covers:
+        return False
+    if not orig:
+        return msg == corr  # no span given: phantom only if the whole message is "corrected" to itself
+    return all(any(a <= s and e <= b for a, b in covers) for s, e in _spans(msg, orig))
 
 
 def correction_to_text(correction: Optional[Dict[str, Any]]) -> str:
