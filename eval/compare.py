@@ -58,7 +58,8 @@ def compare(reports: List[Dict[str, Any]]) -> str:
     groups: Dict[Tuple[str, str], Dict[str, Dict[str, Any]]] = {}
     for r in reports:
         m = r["meta"]
-        groups.setdefault((m["provider"], m.get("model") or "-"), {})[m.get("profile") or ""] = r
+        model = (m.get("model") or "-") + (f" + {m['precheck']}" if m.get("precheck") else "")
+        groups.setdefault((m["provider"], model), {})[m.get("profile") or ""] = r
     if not reports:
         return "No reports found.\n"
     date = reports[0]["meta"]["date"]

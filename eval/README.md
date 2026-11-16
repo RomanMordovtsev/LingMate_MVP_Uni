@@ -13,7 +13,22 @@ python -m eval.run --provider ollama --model llama3.1:8b --id roman-2026-10-queu
 python -m eval.run --provider gemini --model gemini-2.5-flash --sleep 8   # more pause for free-tier limits
 python -m eval.run --provider ollama --model qwen2.5:7b-instruct --profile roman   # as an onboarded learner
 python -m eval.compare                    # table: no profile → with profile, latest date
+python -m eval.run --provider languagetool                           # LanguageTool alone (no LLM)
+python -m eval.run --provider ollama --model gemma4:e2b --precheck languagetool   # LLM + LanguageTool live
+python -m eval.hybrid                     # table: LLM alone → LLM + LanguageTool, from saved reports
 ```
+
+## LanguageTool (docs/feedback/2026-11-14 §2)
+Rule-based checker, no quota. `LANGUAGETOOL_URL` picks the server: default the public API
+`https://api.languagetool.org/v2` (free, ~20 requests/min → the checker waits 3.5 s between calls;
+only the learner's sentence is sent), or a local server (`java -jar languagetool-server.jar --port 8081`,
+then `LANGUAGETOOL_URL=http://localhost:8081/v2`, no wait). LT matches become one correction in the
+same contract (`core/checkers/languagetool.py`): spelling/accents/¿¡ → `spelling_accent`, el↔la → `gender`,
+ser↔estar, article, preposition, clitic, other grammar → `agreement`; style/typography/colloquialisms
+are dropped so *porfa* is not flagged. Several matches: all fixes go into `corrected`, the category is
+the most important one. Hybrid policy **"fill"**: the LLM's correction wins, LT fills turns without one.
+`eval.hybrid` applies the same policy to the saved per-case corrections, so the nightly needs one LT run,
+not one per model. Report names: `…-languagetool-public.json`, live hybrid `…-<model>-lt.json`.
 
 ## Profiles
 `--profile <name>` loads `profiles/<name>.json` (validated as a `LearnerProfile`, like the
