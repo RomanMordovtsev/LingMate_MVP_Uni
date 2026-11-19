@@ -1,0 +1,50 @@
+id: es-a2-ayer-en-el-taller
+language: es
+variant: es-ES
+level: A2
+order: 3
+title_ru: "Вчера в мастерской: pretérito indefinido и dejar / traer / llevar"
+title_target: "Ayer dejé una mochila"
+can_do:
+  - ru: "Могу сдать вещь в ремонт и потом забрать её: объяснить, что я оставил её вчера, и спросить, готово ли."
+    cefr_scale: "Obtaining goods and services"
+    cefr_level: A2
+  - ru: "Могу коротко рассказать, что сделал вчера или в прошлые выходные."
+    cefr_scale: "Sustained monologue: describing experience"
+    cefr_level: A2
+pcic:
+  - inventory: gramatica
+    band: A1-A2
+    title: "Pretérito indefinido: verbos regulares e irregulares frecuentes (traer, dar, ir, hacer)"
+  - inventory: nociones_especificas
+    band: A1-A2
+    title: "Servicios: reparaciones, recoger un encargo"
+grammar:
+  - id: indefinido_ayer
+    label_ru: "dejé, traje, fui — законченное действие вчера"
+    tip_ru: "Ayer, el lunes pasado, en 2024 → pretérito indefinido: ayer dejé, ayer traje. Неправильные: traer → traje, trajiste, trajo; ir → fui."
+    examples: ["Ayer les dejé una mochila para arreglar.", "El sábado fui al mercado."]
+    error_categories: [tense_aspect]
+  - id: dejar_traer_llevar
+    label_ru: "dejar / traer / llevar"
+    tip_ru: "Dejar — оставить, сдать (в ремонт, в гардероб). Traer — принести сюда, где ты сейчас. Llevar — отнести туда. «Отдал в ремонт» — не di, а dejé."
+    examples: ["Vengo a recoger la mochila que dejé ayer.", "Ayer llevé la mochila a arreglar."]
+    error_categories: [lexical]
+chunks:
+  - {es: "Ayer les dejé una mochila para arreglar.", ru: "Вчера я оставил у вас рюкзак в ремонт."}
+  - {es: "Vengo a recoger la mochila que dejé ayer.", ru: "Я пришёл забрать рюкзак, который оставил вчера."}
+  - {es: "¿Ya está lista?", ru: "Уже готово?"}
+  - {es: "¿Cuánto le debo?", ru: "Сколько я вам должен?"}
+  - {es: "Aquí tiene el resguardo.", ru: "Вот квитанция."}
+vocabulary:
+  - {es: "arreglar / reparar", ru: "чинить"}
+  - {es: "coser", ru: "зашить"}
+  - {es: "la cremallera", ru: "молния"}
+  - {es: "recoger", ru: "забрать"}
+  - {es: "el resguardo", ru: "квитанция"}
+situations:
+  scenarios: []
+  learner: ["13.11.2026 — \"Yesterday I left you a backpack to repair\""]
+  seeds: ["taller de reparación / tintorería", "zapatero: arreglar unos zapatos"]
+culture_ru: "В мастерской или химчистке говорят «les dejé» (вам, всей мастерской) или «le dejé» (одному человеку на «вы»). Квитанцию (el resguardo) обычно просят показать, когда забираешь вещь."
+prerequisites: [es-a2-hoy-he-hecho]

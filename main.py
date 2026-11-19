@@ -11,6 +11,7 @@ from core.scenarios import SCENARIOS
 from core.llm_service import LLMService
 from core.feedback import correction_to_text
 from core.error_log import make_entry, summarize
+from core.curriculum import curriculum, get_unit, next_units
 
 from dotenv import load_dotenv
 
@@ -248,6 +249,24 @@ def progress_errors(user_id: str, window_days: int = 7):
         **summarize(store.get_errors(user_id), window_days=window_days, learner_messages=learner_messages,
                     target_language=settings.get("target_language", "es"), level=settings.get("level")),
     }
+
+
+@app.get("/api/curriculum/{language}")
+def curriculum_map(language: str, done: str = "", level: str | None = None):
+    """Curriculum map (roadmap C.1): units in course order + which ones are open next.
+    `done` = comma-separated unit ids (progress tracking comes with C.3/C.4)."""
+    units = curriculum(language)
+    done_ids = [d for d in done.split(",") if d]
+    return {"language": language, "units": [u.summary() for u in units],
+            "next": [u.id for u in next_units(units, done_ids, level=level)]}
+
+
+@app.get("/api/curriculum/{language}/units/{unit_id}")
+def curriculum_unit(language: str, unit_id: str):
+    unit = get_unit(language, unit_id)
+    if unit is None:
+        raise HTTPException(status_code=404, detail="Unit not found")
+    return unit.model_dump()
 
 
 @app.get("/api/test-llm")

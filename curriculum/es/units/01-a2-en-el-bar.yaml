@@ -1,0 +1,57 @@
+id: es-a2-en-el-bar
+language: es
+variant: es-ES
+level: A2
+order: 1
+title_ru: "В баре и кафе: заказать без заминки"
+title_target: "En el bar"
+can_do:
+  - ru: "Могу заказать напиток или еду в баре и уточнить детали: молоко, лёд, на месте или с собой."
+    cefr_scale: "Obtaining goods and services"
+    cefr_level: A2
+  - ru: "Могу выбрать «ты» или «вы» с барменом и официантом так, как это принято в Испании."
+    cefr_scale: "Sociolinguistic appropriateness"
+    cefr_level: A2
+pcic:
+  - inventory: funciones
+    band: A1-A2
+    section: "4.3"
+    title: "Pedir objetos"
+    verified: true
+  - inventory: gramatica
+    band: A1-A2
+    title: "Pronombres personales átonos de objeto indirecto (me, te, le)"
+  - inventory: nociones_especificas
+    band: A1-A2
+    title: "Alimentación: bebidas, comidas, en el bar y el restaurante"
+grammar:
+  - id: poner_pedir
+    label_ru: "¿Me pones…? — просьба в баре"
+    tip_ru: "В баре «poner» = «подать». Вопрос в настоящем времени — обычная вежливая просьба: ¿Me pones…? (tú), ¿Me pone…? (usted)."
+    examples: ["¿Me pones una Coca-Cola?", "Póngame un café con leche, por favor."]
+    error_categories: [lexical, clitic]
+  - id: tu_usted_servicio
+    label_ru: "tú или usted в сфере услуг"
+    tip_ru: "С молодым барменом в Испании нормально «tú»; с пожилыми и незнакомыми на улице — «usted» (perdone, ¿me deja…?)."
+    examples: ["¿Me pones un cortado?", "Perdone, ¿me trae la cuenta?"]
+    error_categories: [register]
+chunks:
+  - {es: "¿Me pones un café con leche?", ru: "Сделаешь мне кофе с молоком?"}
+  - {es: "Para mí, una Coca-Cola.", ru: "Мне колу (когда заказывает компания)."}
+  - {es: "Con hielo y limón, por favor.", ru: "Со льдом и лимоном, пожалуйста."}
+  - {es: "¿Para tomar aquí o para llevar?", ru: "На месте или с собой?"}
+  - {es: "¿Tenéis leche de avena?", ru: "У вас есть овсяное молоко?"}
+  - {es: "¿Me cobras, por favor?", ru: "Можно рассчитаться?"}
+vocabulary:
+  - {es: "la leche entera / semidesnatada / desnatada", ru: "цельное / полуобезжиренное / обезжиренное молоко"}
+  - {es: "la leche sin lactosa", ru: "безлактозное молоко"}
+  - {es: "el cortado", ru: "эспрессо с каплей молока"}
+  - {es: "la caña", ru: "маленькое разливное пиво"}
+  - {es: "el pintxo", ru: "пинчо (закуска в Стране Басков)"}
+  - {es: "la cuenta", ru: "счёт"}
+situations:
+  scenarios: [coffee_shop_es]
+  learner: ["31.10.2026 — Ordering a Coke", "07.11.2026 — Виды молока"]
+  seeds: ["bar de pintxos en Vitoria-Gasteiz"]
+culture_ru: "В Испании в баре заказывают коротко и сразу: «¿Me pones…?» — это не грубо. «Quiero…» не ошибка, но звучит прямолинейно. В Стране Басков пинчос часто берут сами со стойки и говорят бармену, сколько взяли."
+prerequisites: []

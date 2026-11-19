@@ -1,0 +1,53 @@
+id: es-a2-hoy-he-hecho
+language: es
+variant: es-ES
+level: A2
+order: 2
+title_ru: "Что случилось сегодня: pretérito perfecto"
+title_target: "¿Qué has hecho hoy?"
+can_do:
+  - ru: "Могу рассказать, что я сделал сегодня или на этой неделе, простыми связными фразами."
+    cefr_scale: "Sustained monologue: describing experience"
+    cefr_level: A2
+  - ru: "Могу объяснить, что что-то забыл, уронил или сломал случайно (se me ha olvidado)."
+    cefr_scale: "Overall oral interaction"
+    cefr_level: A2
+pcic:
+  - inventory: gramatica
+    band: A1-A2
+    title: "Pretérito perfecto de indicativo: acciones en un tiempo no terminado (hoy, esta semana)"
+  - inventory: gramatica
+    band: A1-A2
+    title: "Pronombres personales átonos: combinación se + me/te/le"
+  - inventory: nociones_generales
+    band: A1-A2
+    title: "Nociones temporales: hoy, esta mañana, esta semana, ya, todavía no"
+grammar:
+  - id: perfecto_hoy
+    label_ru: "he + participio для «сегодня» и «на этой неделе»"
+    tip_ru: "В Испании про то, что было сегодня, говорят через pretérito perfecto: hoy he ido, esta mañana he comido. Participio: -ar → -ado, -er/-ir → -ido."
+    examples: ["Hoy he ido a la universidad en bici.", "Esta semana he tenido tres clases."]
+    error_categories: [tense_aspect]
+  - id: se_me_accidental
+    label_ru: "«Случайно» через se me: se me ha olvidado"
+    tip_ru: "Забытая вещь — подлежащее, me — «у меня»: se me ha olvidado el paraguas, se me han olvidado las llaves (глагол во мн. ч.)."
+    examples: ["¡Ay, se me ha olvidado!", "Se me ha caído el móvil."]
+    error_categories: [clitic, agreement]
+chunks:
+  - {es: "¿Qué has hecho hoy?", ru: "Что ты сегодня делал?"}
+  - {es: "Hoy he tenido un día muy largo.", ru: "У меня сегодня был очень длинный день."}
+  - {es: "Todavía no he comido.", ru: "Я ещё не ел."}
+  - {es: "Se me ha olvidado el paraguas.", ru: "Я забыл зонт."}
+  - {es: "Se me han olvidado las llaves.", ru: "Я забыл ключи."}
+  - {es: "No te olvides de llamarme.", ru: "Не забудь мне позвонить."}
+vocabulary:
+  - {es: "olvidarse de algo", ru: "забыть о чём-то"}
+  - {es: "caerse / romperse / perderse", ru: "упасть / сломаться / потеряться"}
+  - {es: "ya / todavía no", ru: "уже / ещё не"}
+  - {es: "esta mañana / esta tarde", ru: "сегодня утром / днём"}
+situations:
+  scenarios: [small_talk_es]
+  learner: ["13.11.2026 — «Я забыл»"]
+  seeds: ["contarle a un compañero de clase qué has hecho hoy"]
+culture_ru: "В Испании pretérito perfecto звучит почти всегда, когда речь о сегодняшнем дне. В Латинской Америке в тех же фразах чаще pretérito indefinido (se me olvidó) — это тоже правильно, просто другой вариант."
+prerequisites: []
