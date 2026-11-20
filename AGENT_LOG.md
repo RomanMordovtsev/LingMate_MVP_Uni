@@ -14,6 +14,13 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 - Notion: 2 new entries 19.11 («allegedly» → presuntamente/supuestamente; «надеюсь» → espero que + subj.) → `docs/learner` + synthetic eval cases `syn-mood-4`, `syn-lexical-en-4` (37 → 39) + transfer rule `en_es.presumir` (presumir = to boast).
 - Tests: 202 → 222.
 - Open for Roman: unit order and choice (is this the right A2→B1 path?), PCIC grammar numbers.
+## 2026-11-16 — docs/feedback/2026-11-16 (eval night 15.11) fixes (scheduled run)
+- Branch `agent/eval-night-fixes` → PR into `agent/dev`. No open PRs, no comments; #16 and #17 merged. Feedback 2026-11-16 is the task of this run (before new features). Notion: no new entries since 15.11.
+- **§5** the 17% false positives of gemini-3.1-flash-lite (with and without profile) are one case, `syn-clean-aproveche`: the model "adds" the `¡` that `¡Que aproveche!` already has (original `Que aproveche!` / `Que` → `¡Que`). New `core.feedback.is_phantom_correction`: the `corrected` span is in the learner's message and every occurrence of `original` sits inside it → correction dropped in `LLMService._finish` (chat, lesson and eval). Replayed on all 163 saved corrections in `eval/reports/`: drops exactly these 2, no real detection lost; gold pairs of all eval cases are never flagged.
+- **§3** `scripts/pull_candidates.ps1`: downloads missing candidates (list read from `origin/agent/dev`), `Start-Process` (no NativeCommandError noise), output through `python -m eval.logfilter` (keeps status lines and one 100% line per layer) into `pull-<date>.log`. The nightly no longer pulls first: it evaluates installed candidates, logs `not installed yet`, and calls the pull script at the end (`-PullFirst` = old order).
+- **§1** `-MaxHours 9`: no new model run starts after the budget, compare/hybrid still written. **§4** archive moves only untracked reports that `origin/agent/dev` already has; `eval.run --date` + `compare/hybrid --date` keep one date per night.
+- Not run on Windows (no PowerShell in the cloud) — needs Roman's next Sunday run. §2 (pause slow models) was already done in #17.
+- Tests: 202 → 212. No UI change → no Playwright pass.
 
 ## 2026-11-15 — 5.7 LanguageTool pre-check + Roman's scouting answers (scheduled run)
 - Branch `agent/languagetool` → PR into `agent/dev`. No open PRs; PR #15 merged. docs/feedback/2026-11-14 handled: §1 and §4 already done by Roman/Claude on agent/dev; **§3** `aya-expanse:8b` added to `eval/model_candidates.txt` with «NC licence — comparison only, not for production»; **§2** LanguageTool (this PR).

@@ -15,7 +15,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 from .llm import LLMProvider, make_provider, make_provider_chain
-from .feedback import correction_contract, correction_diff, normalize_correction
+from .feedback import correction_contract, correction_diff, is_phantom_correction, normalize_correction
 from .pedagogy.l1_maps import prompt_hints, transfer_note
 from .profile import profile_context
 
@@ -260,7 +260,7 @@ class LLMService:
             result = self._fallback_free_talk(message, history, settings, progress)
             result["source"], result["model"] = "fallback", None
             return result
-        return self._finish(result, used_name, settings)
+        return self._finish(result, used_name, settings, message)
 
     def lesson_turn(
         self,
@@ -311,12 +311,15 @@ class LLMService:
             if _contains_any(message, user_closers) or _contains_any(result.get("roleplay_reply", ""), role_closers):
                 result["should_finish"] = True
 
-        return self._finish(result, used_name, settings)
+        return self._finish(result, used_name, settings, message)
 
     def _finish(self, result: Dict[str, Any], used_name: str,
-                settings: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+                settings: Optional[Dict[str, Any]] = None, message: str = "") -> Dict[str, Any]:
         """Normalise the structured correction and tag which provider/model answered."""
         correction = normalize_correction(result.get("correction"))
+        if is_phantom_correction(correction, message):
+            # The learner already wrote the corrected form (docs/feedback/2026-11-16 §5).
+            correction = None
         if correction:
             # Diff view for the UI (roadmap 1.4); empty when there is no pair.
             correction["diff"] = correction_diff(correction["original"], correction["corrected"])
