@@ -1,0 +1,55 @@
+id: es-a2-en-casa
+language: es
+variant: es-ES
+level: A2
+order: 4
+title_ru: "Дома: отопление, этажи, соседи"
+title_target: "En casa y en el edificio"
+can_do:
+  - ru: "Могу попросить включить или выключить отопление и сказать, что что-то в квартире не работает."
+    cefr_scale: "Goal-oriented co-operation"
+    cefr_level: A2
+  - ru: "Могу коротко ответить соседу в лифте или подъезде, в том числе про этажи."
+    cefr_scale: "Overall oral interaction"
+    cefr_level: A2
+pcic:
+  - inventory: nociones_especificas
+    band: A1-A2
+    title: "Vivienda: partes de la casa, instalaciones, el edificio"
+  - inventory: gramatica
+    band: A1-A2
+    title: "El sustantivo: género (sustantivos en -ción, en -l; numerales y ordinales)"
+  - inventory: saberes_socioculturales
+    band: A1-A2
+    title: "Vivienda en España: plantas y pisos"
+grammar:
+  - id: genero_no_o_a
+    label_ru: "Род слов не на -o/-a"
+    tip_ru: "Слова на -ción — женского рода (la calefacción), la postal тоже женская. С порядковыми числительными подразумевается planta: a la primera; с номером кнопки — мужской: al cero."
+    examples: ["La calefacción no funciona.", "Sí, a la baja.", "Al tercero, por favor."]
+    error_categories: [gender]
+  - id: poner_quitar
+    label_ru: "poner / quitar — включить / выключить"
+    tip_ru: "В быту в Испании технику «ставят» и «убирают»: ¿Pones la calefacción? ¿La quitas? Encender / apagar тоже правильно, но звучит чуть официальнее."
+    examples: ["¿Te importa si pongo la calefacción?", "¿Has puesto la calefacción?"]
+    error_categories: [lexical]
+chunks:
+  - {es: "¿Pones la calefacción?", ru: "Включишь отопление?"}
+  - {es: "La calefacción no funciona.", ru: "Отопление не работает."}
+  - {es: "El radiador de mi habitación está frío.", ru: "Батарея в моей комнате холодная."}
+  - {es: "¿Subes? / ¿Bajas?", ru: "Наверх? / Вниз?"}
+  - {es: "Sí, a la baja.", ru: "Да, на первый (на нулевой)."}
+  - {es: "¿Me aguantas la puerta?", ru: "Придержишь дверь?"}
+vocabulary:
+  - {es: "la calefacción", ru: "отопление"}
+  - {es: "el radiador", ru: "батарея"}
+  - {es: "la caldera", ru: "котёл"}
+  - {es: "la planta baja", ru: "первый (нулевой) этаж"}
+  - {es: "la percha / el perchero", ru: "плечики / вешалка в прихожей"}
+  - {es: "el alquiler", ru: "аренда"}
+situations:
+  scenarios: []
+  learner: ["06.11.2026 — «Отопление»", "14.11.2026 — In the lift", "13.11.2026 — «La percha»"]
+  seeds: ["hablar con el casero sobre la calefacción", "vecinos en el ascensor"]
+culture_ru: "Этажи в Испании считают с нуля: planta baja = русский 1-й этаж, primera = 2-й. Piso — и этаж, и квартира; planta — только этаж. Отопление бывает общее на дом (central) или своё в квартире (individual) — об этом спрашивают при аренде."
+prerequisites: [es-a2-en-el-bar]

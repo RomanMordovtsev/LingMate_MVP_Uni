@@ -1,0 +1,61 @@
+id: es-b1-buenos-deseos
+language: es
+variant: es-ES
+level: B1
+order: 5
+title_ru: "Пожелания и надежды: que + subjuntivo"
+title_target: "¡Que te vaya bien!"
+can_do:
+  - ru: "Могу пожелать приятного аппетита, удачи, выздоровления и ответить на пожелание."
+    cefr_scale: "Sociolinguistic appropriateness"
+    cefr_level: A2
+  - ru: "Могу сказать, на что я надеюсь и чего хочу от других: espero que…, quiero que…, ojalá…"
+    cefr_scale: "Informal discussion (with friends)"
+    cefr_level: B1
+pcic:
+  - inventory: funciones
+    band: A1-A2
+    section: "5.17"
+    title: "Formular buenos deseos: ¡Que aproveche! (A2, fórmula fija)"
+    verified: true
+  - inventory: funciones
+    band: B1-B2
+    section: "5.17"
+    title: "Formular buenos deseos: que + presente de subjuntivo (B1)"
+    verified: true
+  - inventory: funciones
+    band: B1-B2
+    section: "3.8"
+    title: "Expresar deseos: Quiero que + presente de subjuntivo (B1)"
+    verified: true
+  - inventory: gramatica
+    band: B1-B2
+    title: "Presente de subjuntivo: formas regulares e irregulares frecuentes (salga, vaya, tenga, haga)"
+grammar:
+  - id: que_subjuntivo_deseo
+    label_ru: "¡Que + subjuntivo! — пожелание"
+    tip_ru: "«Que» + presente de subjuntivo = «пусть…»: ¡Que aproveche!, ¡Que te mejores!, ¡Que descanses! Это то же, что «Espero que…», только короче."
+    examples: ["¡Que aproveche!", "¡Que te vaya bien!", "¡Que descanses!"]
+    error_categories: [mood]
+  - id: esperar_que
+    label_ru: "espero que + subjuntivo / espero + infinitivo"
+    tip_ru: "Надеюсь на другого — espero que + subjuntivo (espero que todo salga bien). Надеюсь на себя — espero + infinitivo (espero aprobar). После ojalá всегда subjuntivo."
+    examples: ["Espero que todo salga bien.", "Espero aprobar el examen.", "Ojalá haga sol mañana."]
+    error_categories: [mood]
+chunks:
+  - {es: "¡Que aproveche!", ru: "Приятного аппетита!"}
+  - {es: "Gracias, igualmente.", ru: "Спасибо, и вам/тебе."}
+  - {es: "¡Que te mejores!", ru: "Выздоравливай!"}
+  - {es: "Espero que todo salga bien.", ru: "Надеюсь, всё пройдёт хорошо."}
+  - {es: "Eso espero.", ru: "Надеюсь (на это)."}
+  - {es: "¡Ojalá!", ru: "Хоть бы! / Дай бог!"}
+vocabulary:
+  - {es: "aprovechar / el provecho", ru: "идти на пользу / польза"}
+  - {es: "mejorarse", ru: "поправиться"}
+  - {es: "esperar", ru: "надеяться; ждать"}
+situations:
+  scenarios: [small_talk_es]
+  learner: ["02.11.2026 — Wishing someone a good meal", "19.11.2026 — «Надеюсь, всё будет хорошо»"]
+  seeds: ["compañeros comiendo en la universidad", "antes de un examen o una entrevista"]
+culture_ru: "В Испании «¡Que aproveche!» говорят всем, кто ест, даже незнакомым в кафе или коллегам на работе. В Витории можно услышать баскское «On egin!» — его поймут и оценят. На A2 «¡Que aproveche!» учат как готовую фразу, а на B1 из неё вырастает правило que + subjuntivo."
+prerequisites: [es-a2-en-el-bar]

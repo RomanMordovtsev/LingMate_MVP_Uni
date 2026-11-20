@@ -4,6 +4,16 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-19 — C.1 Curriculum map, slice 1 (scheduled run)
+- Branch `agent/curriculum-a2` → PR into `agent/dev`. Open PR #18 (eval night fixes, Roman's session, no comments) — independent, not touched. docs/feedback: 2026-11-16 handled in #17/#18; nothing else new.
+- `core/curriculum.py`: pydantic `Unit` (id `es-a2-topic`, level, order, RU/ES titles, 1–3 can-do lines with CEFR CV 2020 scale + level, PCIC refs by inventory + band + item name, grammar points with one RU form tip + error categories from the 1.3 contract, 3–8 chunks, vocabulary, situations = existing scenario ids / headings in `docs/learner/` / seeds for 4.3, culture note, prerequisites). Cross checks: unique ids/orders, prerequisites earlier and not higher level. `next_units(done, level)` = open units up to the learner's next stage (morphosyntax §10); `units_for_category` links the error log (1.6) to units for C.4.
+- Content: 5 units A2→B1 built from Roman's Notion situations: *En el bar* (¿me pones…?, tú/usted), *¿Qué has hecho hoy?* (perfecto for today, se me ha olvidado), *Ayer dejé una mochila* (indefinido irregular, dejar/traer/llevar), *En casa* (gender -ción / floors, poner/quitar la calefacción), *¡Que te vaya bien!* (B1: que + subjuntivo, espero que, ojalá).
+- PCIC: grammar/nociones pages are blocked for automated reading (robots.txt); only *Funciones* (3.8, 4.3, 5.17) verified → section numbers only there (`verified: true`), others cited by name; `curriculum/es/SOURCES.md` says what is checked.
+- New dependency: PyYAML (small, pure-Python fallback; the roadmap asks for YAML units).
+- API: `GET /api/curriculum/{lang}?done=&level=`, `GET /api/curriculum/{lang}/units/{id}`. No UI yet → checked with uvicorn + curl, not Playwright.
+- Notion: 2 new entries 19.11 («allegedly» → presuntamente/supuestamente; «надеюсь» → espero que + subj.) → `docs/learner` + synthetic eval cases `syn-mood-4`, `syn-lexical-en-4` (37 → 39) + transfer rule `en_es.presumir` (presumir = to boast).
+- Tests: 202 → 222.
+- Open for Roman: unit order and choice (is this the right A2→B1 path?), PCIC grammar numbers.
 ## 2026-11-16 — docs/feedback/2026-11-16 (eval night 15.11) fixes (scheduled run)
 - Branch `agent/eval-night-fixes` → PR into `agent/dev`. No open PRs, no comments; #16 and #17 merged. Feedback 2026-11-16 is the task of this run (before new features). Notion: no new entries since 15.11.
 - **§5** the 17% false positives of gemini-3.1-flash-lite (with and without profile) are one case, `syn-clean-aproveche`: the model "adds" the `¡` that `¡Que aproveche!` already has (original `Que aproveche!` / `Que` → `¡Que`). New `core.feedback.is_phantom_correction`: the `corrected` span is in the learner's message and every occurrence of `original` sits inside it → correction dropped in `LLMService._finish` (chat, lesson and eval). Replayed on all 163 saved corrections in `eval/reports/`: drops exactly these 2, no real detection lost; gold pairs of all eval cases are never flagged.

@@ -37,6 +37,10 @@ RULES = (
         "Comprometer — «обязать, скомпрометировать», не «вовлечь». Вовлечь аудиторию — implicar / "
         "involucrar al público, captar su atención. Живая аудитория — el público (la audiencia — ТВ, радио).",
         (r"\bcomprometer\w*\b",), (r"\b(implic|involucr|capt)\w*\b",)),
+    _ff("presumir", "presume", "I presume / allegedly", "presumir", "suponer / supuestamente / presuntamente",
+        "Presumir в быту — «хвастаться» (presumir de coche). «Предполагать» — suponer; «якобы» — "
+        "supuestamente, presuntamente (новости), al parecer.",
+        (r"\bpresum\w*\b",), (r"\b(supon|supus|supuest|presunt|parec)\w*\b",)),
     TransferRule(
         "en_es.double_consonant", _S, _T, "spelling_accent", "Двойные согласные из английского",
         "possible, professor, communicate", "posible, profesor, comunicar",

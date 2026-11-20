@@ -32,10 +32,27 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | RU-style verb choice where Spain prefers *poner/quitar* (heating, lights) | lexical / chunk | heating 06.11 (+14.11) |
 | concessive "even if": *aunque* + subjuntivo vs indicativo; never *si* + present subjunctive | mood | even if 15.11 |
 | academic / presentation vocabulary from EN (*engage* ≠ *comprometer*; *público* vs *audiencia*) | lexical, transfer EN | engage 15.11 |
+| hoping / wishing: *espero que* + subjuntivo (*salga, vaya*), *ojalá*, *eso espero* | mood / chunk | espero 19.11 |
+| EN news/academic adverbs (*allegedly*) → *presuntamente / supuestamente / al parecer*; *presumir* = to boast, not *to presume* | lexical, transfer EN | allegedly 19.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 19.11.2026 — «Allegedly» → presuntamente / supuestamente
+- Question from English (no utterance → synthetic eval case `syn-lexical-en-4`: *presume que* → *supone que* / *al parecer*).
+- **presuntamente** (news, legal; exact *allegedly*): *El hombre presuntamente robó 5.000 euros.*; **supuestamente** (colloquial, doubtful *supposedly*); **al parecer / según parece** (*apparently*); **según fuentes / según informan** (*reportedly*).
+- Word family: *presunto/-a* (*el presunto autor, la presunta víctima*), *la presunción de inocencia*; *supuesto/-a*, **por supuesto** = of course.
+- False friend: **presumir** in everyday Spanish = **to boast** (*presumir de coche*, *presumido* = show-off), not EN *presume* → new rule `en_es.presumir`.
+- Stress: presuntaMENte, supuestaMENte (main stress on *-men-* + secondary on the adjective).
+- Uses: news / reading (content mode 4.6), EN→ES transfer map (1.5), SRS chunks.
+
+### 19.11.2026 — «Надеюсь, всё будет хорошо»
+- Question (no utterance → synthetic eval case `syn-mood-4`: *Espero que todo sale bien* → *salga*).
+- **Espero que todo salga bien.** (a concrete event: exam, interview), **Espero que todo vaya bien.** (general), **¡Ojalá (que todo salga bien)!**, **Eso espero.** (*I hope so*), **Espero que no.**
+- Grammar: **esperar que + subjuntivo** (other subject: *Espero que tengas un buen día.*); **esperar + infinitivo** (same subject: *Espero aprobar el examen.*); **ojalá (que) + subjuntivo** always; irregular *salir → salga, ir → vaya*.
+- Note: *esperar* = to hope and to wait (*Te espero en la puerta.*); after *que + subjuntivo* it almost always means "hope".
+- Uses: curriculum unit «Buenos deseos» (C.1, `es-a2-buenos-deseos` → B1 *que + subjuntivo*), SRS chunks.
 
 ### 15.11.2026 — «Even» / «even if it's 0 degrees outside»
 - Question (no utterance of Roman's → synthetic eval case `syn-mood-3`: *incluso si haga* → *incluso si hace* / *aunque haga*).
