@@ -325,6 +325,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                                       "default: no profile (legacy prompts)")
     ap.add_argument("--precheck", choices=["languagetool"],
                     help="run a non-LLM checker next to the LLM (its correction fills turns the LLM left uncorrected)")
+    ap.add_argument("--date", type=dt.date.fromisoformat,
+                    help="report date YYYY-MM-DD (default: today). The nightly script passes the "
+                         "night's start date so a run that crosses midnight keeps one date.")
     args = ap.parse_args(argv)
     if args.precheck and args.provider in ("languagetool", "rule"):
         print("--precheck needs an LLM provider (gemini or ollama)", file=sys.stderr)
@@ -367,7 +370,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                  retry_delays=EVAL_RETRY_DELAYS if args.provider != "rule" else None,
                  progress=lambda line: print(line, file=sys.stderr, flush=True), profile=profile,
                  precheck=precheck)
-    report["meta"] = {"date": dt.date.today().isoformat(), "provider": args.provider,
+    report["meta"] = {"date": (args.date or dt.date.today()).isoformat(), "provider": args.provider,
                       "model": getattr(provider, "model_name", None), "sleep_s": sleep,
                       "profile": profile["profile_name"] if profile else None,
                       "precheck": args.precheck,
