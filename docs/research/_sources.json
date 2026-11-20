@@ -1,0 +1,842 @@
+{
+ "root": "D:\\Downloads\\Обучение",
+ "note": "Files already distilled into docs/research (state 2026-11-20). Excluded on purpose: Idiomas/ (personal language study), anything under \"Claude outputs\", Roman's own assignments.",
+ "processed": [
+  {
+   "path": "Morphosyntax/Assignments/Assignment_1_The_Acquisition_of_Morphosyntax.docx",
+   "size": 23207
+  },
+  {
+   "path": "Morphosyntax/Assignments/Assignment_2_The_Acquisition_of_Morphosyntax.docx",
+   "size": 21246
+  },
+  {
+   "path": "Morphosyntax/Assignments/Assignment_3_The_Acquisition_of_Morphosyntax.docx",
+   "size": 19428
+  },
+  {
+   "path": "Morphosyntax/Assignments/Assignment_4_The_Acquisition_of_Morphosyntax.docx",
+   "size": 26175
+  },
+  {
+   "path": "Morphosyntax/Assignments/Assignment_5_The_Acquisition_of_Morphosyntax.docx",
+   "size": 25226
+  },
+  {
+   "path": "Morphosyntax/Handouts/UNIT 1.pdf",
+   "size": 235623
+  },
+  {
+   "path": "Morphosyntax/Handouts/UNIT 2.pdf",
+   "size": 187255
+  },
+  {
+   "path": "Morphosyntax/Handouts/Unit 3.pdf",
+   "size": 160905
+  },
+  {
+   "path": "Morphosyntax/Handouts/Unit-4.pdf",
+   "size": 330394
+  },
+  {
+   "path": "Morphosyntax/Handouts/Unit-5 -updated.pdf",
+   "size": 240900
+  },
+  {
+   "path": "Morphosyntax/Handouts/Unit-6.pdf",
+   "size": 223894
+  },
+  {
+   "path": "Morphosyntax/Presentation script Gender in L2 Norwegian.pdf",
+   "size": 212996
+  },
+  {
+   "path": "Morphosyntax/Presentation summary Berat ^0 Roman.docx",
+   "size": 18974
+  },
+  {
+   "path": "Morphosyntax/johannessen-et-al-2024-cross-linguistic-effects-in-grammatical-gender-assignment-and-predictive-processing-in-l1-greek.pdf",
+   "size": 1025270
+  },
+  {
+   "path": "Morphosyntax/Материалы/Approaches to SLA.pdf",
+   "size": 113480
+  },
+  {
+   "path": "Morphosyntax/Материалы/Assignment 1.pdf",
+   "size": 158973
+  },
+  {
+   "path": "Morphosyntax/Материалы/Assignment 2 (2).docx",
+   "size": 26249
+  },
+  {
+   "path": "Morphosyntax/Материалы/Assignment 3 (1).docx",
+   "size": 22529
+  },
+  {
+   "path": "Morphosyntax/Материалы/Assignment 4 (1).docx",
+   "size": 27547
+  },
+  {
+   "path": "Morphosyntax/Материалы/Assignment 5 (1).docx",
+   "size": 23603
+  },
+  {
+   "path": "Morphosyntax/Материалы/Azkarai  García Mayo (2015).pdf",
+   "size": 795520
+  },
+  {
+   "path": "Morphosyntax/Материалы/Basterrechea  García Mayo (2013).pdf",
+   "size": 259121
+  },
+  {
+   "path": "Morphosyntax/Материалы/Calzada  García Mayo 2021.pdf",
+   "size": 1124437
+  },
+  {
+   "path": "Morphosyntax/Материалы/Calzada  García Mayo 2023.pdf",
+   "size": 1773661
+  },
+  {
+   "path": "Morphosyntax/Материалы/Chrabaszcz  Jiang 2014.pdf",
+   "size": 655773
+  },
+  {
+   "path": "Morphosyntax/Материалы/Course program 26-27.pdf",
+   "size": 230248
+  },
+  {
+   "path": "Morphosyntax/Материалы/Delgado-Garza and García Mayo.pdf",
+   "size": 3108589
+  },
+  {
+   "path": "Morphosyntax/Материалы/FonFinteraction.pdf",
+   "size": 3364211
+  },
+  {
+   "path": "Morphosyntax/Материалы/Foreigner talk.pdf",
+   "size": 432468
+  },
+  {
+   "path": "Morphosyntax/Материалы/Garcia Mayo  Villarreal Olaizola 2011 SLR.pdf",
+   "size": 339002
+  },
+  {
+   "path": "Morphosyntax/Материалы/Garcia Mayo and Lázaro Ibarrola.pdf",
+   "size": 1500287
+  },
+  {
+   "path": "Morphosyntax/Материалы/Gass  Mackey 2020 Input, output and interaction.pdf",
+   "size": 4310164
+  },
+  {
+   "path": "Morphosyntax/Материалы/General questions about VanPatten et al. (1).docx",
+   "size": 14238
+  },
+  {
+   "path": "Morphosyntax/Материалы/Granget  Delais-Russarie.pdf",
+   "size": 1674120
+  },
+  {
+   "path": "Morphosyntax/Материалы/Hidalgo and García Mayo (2021) (1).pdf",
+   "size": 543747
+  },
+  {
+   "path": "Morphosyntax/Материалы/Hidalgo and García Mayo (2021).pdf",
+   "size": 543747
+  },
+  {
+   "path": "Morphosyntax/Материалы/How to review a paper.pdf",
+   "size": 89734
+  },
+  {
+   "path": "Morphosyntax/Материалы/INTRODUCTION.pdf",
+   "size": 967183
+  },
+  {
+   "path": "Morphosyntax/Материалы/Interaction and the negotiation of meaning.pdf",
+   "size": 18159
+  },
+  {
+   "path": "Morphosyntax/Материалы/Ionin et al.pdf",
+   "size": 507735
+  },
+  {
+   "path": "Morphosyntax/Материалы/JUST_FOR_YOUR_INFORMATION_but_good_to_know.pdf",
+   "size": 23088
+  },
+  {
+   "path": "Morphosyntax/Материалы/Johannessen et al.pdf",
+   "size": 1025270
+  },
+  {
+   "path": "Morphosyntax/Материалы/Koban Koc.pdf",
+   "size": 234896
+  },
+  {
+   "path": "Morphosyntax/Материалы/Kwon 2005.pdf",
+   "size": 310050
+  },
+  {
+   "path": "Morphosyntax/Материалы/Lightbown and Spada.pdf",
+   "size": 337617
+  },
+  {
+   "path": "Morphosyntax/Материалы/Loewen and Sato 2018.pdf",
+   "size": 335737
+  },
+  {
+   "path": "Morphosyntax/Материалы/Luquin  García Mayo 2023.pdf",
+   "size": 2422139
+  },
+  {
+   "path": "Morphosyntax/Материалы/MA LAMS - Thesis Guidelines con APA 7.pdf",
+   "size": 201546
+  },
+  {
+   "path": "Morphosyntax/Материалы/Myles08.pdf",
+   "size": 87087
+  },
+  {
+   "path": "Morphosyntax/Материалы/Nassaji and Kartchava CF (1).pdf",
+   "size": 1499923
+  },
+  {
+   "path": "Morphosyntax/Материалы/Nassaji and Kartchava CF.pdf",
+   "size": 1499923
+  },
+  {
+   "path": "Morphosyntax/Материалы/On Patty (Lardiere) (3).docx",
+   "size": 15920
+  },
+  {
+   "path": "Morphosyntax/Материалы/PPTconversational interaction.pdf",
+   "size": 4548093
+  },
+  {
+   "path": "Morphosyntax/Материалы/Peers critical review of oral presentation (1).docx",
+   "size": 27056
+  },
+  {
+   "path": "Morphosyntax/Материалы/Presentation phrasebook-1.pdf",
+   "size": 111648
+  },
+  {
+   "path": "Morphosyntax/Материалы/Questions García Mayo Villarreal Olaizola (3).docx",
+   "size": 13793
+  },
+  {
+   "path": "Morphosyntax/Материалы/Questions on White (2020).docx",
+   "size": 18860
+  },
+  {
+   "path": "Morphosyntax/Материалы/Questions on compulsory readings (1).docx",
+   "size": 22574
+  },
+  {
+   "path": "Morphosyntax/Материалы/Rubric.pdf",
+   "size": 10829
+  },
+  {
+   "path": "Morphosyntax/Материалы/Shehadeh 2024 TBLT paper in System.pdf",
+   "size": 396272
+  },
+  {
+   "path": "Morphosyntax/Материалы/Son and Lee.pdf",
+   "size": 259953
+  },
+  {
+   "path": "Morphosyntax/Материалы/Stages.pdf",
+   "size": 295080
+  },
+  {
+   "path": "Morphosyntax/Материалы/Storch_Aldosari2010.pdf",
+   "size": 1055986
+  },
+  {
+   "path": "Morphosyntax/Материалы/Suppliance of L2 functional morphology.pdf",
+   "size": 839443
+  },
+  {
+   "path": "Morphosyntax/Материалы/TESOL Quarterly - 2012 - ELLIS - Preemptive Focus on Form in the ESL Classroom.pdf",
+   "size": 131461
+  },
+  {
+   "path": "Morphosyntax/Материалы/Tasks Unit 6 (1).docx",
+   "size": 30930
+  },
+  {
+   "path": "Morphosyntax/Материалы/The sla of english grammatical morphology - ORIGINAL ALL SLIDES.pdf",
+   "size": 758777
+  },
+  {
+   "path": "Morphosyntax/Материалы/UNIT 2 (1).pdf",
+   "size": 2717989
+  },
+  {
+   "path": "Morphosyntax/Материалы/UNIT 2.pdf",
+   "size": 187255
+  },
+  {
+   "path": "Morphosyntax/Материалы/UNIT-1.pdf",
+   "size": 235623
+  },
+  {
+   "path": "Morphosyntax/Материалы/UNIT3.pptx.pdf",
+   "size": 1894870
+  },
+  {
+   "path": "Morphosyntax/Материалы/Unit 3.pdf",
+   "size": 160905
+  },
+  {
+   "path": "Morphosyntax/Материалы/Unit-4.pdf",
+   "size": 330394
+  },
+  {
+   "path": "Morphosyntax/Материалы/Unit-5 -updated.pdf",
+   "size": 240900
+  },
+  {
+   "path": "Morphosyntax/Материалы/Unit-6.pdf",
+   "size": 223894
+  },
+  {
+   "path": "Morphosyntax/Материалы/VanPatten et al.pdf",
+   "size": 1926609
+  },
+  {
+   "path": "Morphosyntax/Материалы/Wanna+contraction+facts.pdf",
+   "size": 141324
+  },
+  {
+   "path": "Morphosyntax/Материалы/White 2020 UG and L2 acquisition.pdf",
+   "size": 2621105
+  },
+  {
+   "path": "Morphosyntax/Материалы/Yuan.pdf",
+   "size": 6136104
+  },
+  {
+   "path": "Morphosyntax/Материалы/Zhang et al.pdf",
+   "size": 802311
+  },
+  {
+   "path": "Morphosyntax/Материалы/mackeygass_macdonough2000.pdf",
+   "size": 196230
+  },
+  {
+   "path": "Multilingual Education/Материалы/01 Introduction to multilingualism.pptx",
+   "size": 761774
+  },
+  {
+   "path": "Multilingual Education/Материалы/02 Multilingualism in Society (1).pptx",
+   "size": 2166852
+  },
+  {
+   "path": "Multilingual Education/Материалы/02 Multilingualism in Society.pptx",
+   "size": 10732937
+  },
+  {
+   "path": "Multilingual Education/Материалы/02 Raud and Orehhova (2022).pdf",
+   "size": 1247582
+  },
+  {
+   "path": "Multilingual Education/Материалы/03 Heggerness (2021).pdf",
+   "size": 492160
+  },
+  {
+   "path": "Multilingual Education/Материалы/03 Multilingual Education.pptx",
+   "size": 1506538
+  },
+  {
+   "path": "Multilingual Education/Материалы/09 Puebla, Fievet, Tsopanidi and Clahsen (2022).pdf",
+   "size": 551315
+  },
+  {
+   "path": "Multilingual Education/Материалы/1-Krulatz  Christison.pdf",
+   "size": 172974
+  },
+  {
+   "path": "Multilingual Education/Материалы/2-García Bermejo (2021).pdf",
+   "size": 1932126
+  },
+  {
+   "path": "Multilingual Education/Материалы/3-Lising (2024).pdf",
+   "size": 273145
+  },
+  {
+   "path": "Multilingual Education/Материалы/4-Hult (2023).pdf",
+   "size": 253675
+  },
+  {
+   "path": "Multilingual Education/Материалы/Aldekoa, Manterola  Idiazabal 2020.pdf",
+   "size": 1098199
+  },
+  {
+   "path": "Multilingual Education/Материалы/Azkarai and García Mayo (2017).pdf",
+   "size": 100827
+  },
+  {
+   "path": "Multilingual Education/Материалы/Azkarai and Imaz Agirre, 2016.pdf",
+   "size": 268363
+  },
+  {
+   "path": "Multilingual Education/Материалы/Brown and Bradford 2017.pdf",
+   "size": 295778
+  },
+  {
+   "path": "Multilingual Education/Материалы/CEFR-Companion Volume with new descriptors - 2018.docx.pdf",
+   "size": 3672061
+  },
+  {
+   "path": "Multilingual Education/Материалы/CEallaigh  Dhonnabhain (2015) Reawakening the Irish language through the Irish education system.pdf",
+   "size": 871495
+  },
+  {
+   "path": "Multilingual Education/Материалы/Carbonara (2023) The effects of multilingual pedagogies on language awareness A.pdf",
+   "size": 8190520
+  },
+  {
+   "path": "Multilingual Education/Материалы/Cenoz (2008).pdf",
+   "size": 289951
+  },
+  {
+   "path": "Multilingual Education/Материалы/Cenoz and Gorter, 2013.pdf",
+   "size": 70344
+  },
+  {
+   "path": "Multilingual Education/Материалы/Continua of Multilingual Education in the Basque Country (suggestion).docx",
+   "size": 30291
+  },
+  {
+   "path": "Multilingual Education/Материалы/Creese  Blackledge (2010) - Translanguaging in the bilingual classroom_a pedagogy for learning and teaching.pdf",
+   "size": 143442
+  },
+  {
+   "path": "Multilingual Education/Материалы/Duñabeitia, Hernández, Antón, Macizo, Estévez, Fuentes and Carreiras (2014).pdf",
+   "size": 610607
+  },
+  {
+   "path": "Multilingual Education/Материалы/EJ1176955.pdf",
+   "size": 166337
+  },
+  {
+   "path": "Multilingual Education/Материалы/Elorza and Muñoa (2008).pdf",
+   "size": 1052334
+  },
+  {
+   "path": "Multilingual Education/Материалы/GAUR GUIDE_26-27_LAMS_MultiEd.pdf",
+   "size": 75255
+  },
+  {
+   "path": "Multilingual Education/Материалы/Galante et al (2023)_Digital plurilingual pedagogies in foreign language - copia.pdf",
+   "size": 3642416
+  },
+  {
+   "path": "Multilingual Education/Материалы/Garcia and Sylvan (2011).pdf",
+   "size": 298366
+  },
+  {
+   "path": "Multilingual Education/Материалы/Gartziarena  Villabona (2022) - Teachers beliefs on multilingualism.pdf",
+   "size": 1231028
+  },
+  {
+   "path": "Multilingual Education/Материалы/Genesee  Lindholm-Leary (2013).pdf",
+   "size": 210730
+  },
+  {
+   "path": "Multilingual Education/Материалы/Gillespie (2020) - CALL.pdf",
+   "size": 1558580
+  },
+  {
+   "path": "Multilingual Education/Материалы/Gorter, Cenoz  van der Worp (2021) - Global and Local Forces in Multilingual Landscapes.pdf",
+   "size": 3060665
+  },
+  {
+   "path": "Multilingual Education/Материалы/Hackett et al (2025) The effectiveness of Collaborative Online International Learning (COIL) on intercultural competence development in higher education.pdf",
+   "size": 1448787
+  },
+  {
+   "path": "Multilingual Education/Материалы/Haukas, Storto  Tiurikova (2022) - School students beliefs about the benefits of multilingualism.pdf",
+   "size": 2212492
+  },
+  {
+   "path": "Multilingual Education/Материалы/Housen (2012).pptx",
+   "size": 82804
+  },
+  {
+   "path": "Multilingual Education/Материалы/Huang, T., Loerts, H., and R. Steinkrauss (2020) The impact of second and third language learning on language aptitude and working memory. International Journal of Bilingual Education.pdf",
+   "size": 1833192
+  },
+  {
+   "path": "Multilingual Education/Материалы/Isabelli-García et al. (2018).pdf",
+   "size": 498213
+  },
+  {
+   "path": "Multilingual Education/Материалы/Karpava (2024) - Multilingual linguistic landscape of Cyprus.pdf",
+   "size": 5929639
+  },
+  {
+   "path": "Multilingual Education/Материалы/Lasagabaster and Sierra 2010 copia.pdf",
+   "size": 152072
+  },
+  {
+   "path": "Multilingual Education/Материалы/Llanes  Cots (2020).pdf",
+   "size": 1722392
+  },
+  {
+   "path": "Multilingual Education/Материалы/Lucido et al (2024) Affirming Culture and Cultural Identity in the BilingualESL Classrooms.pdf",
+   "size": 115215
+  },
+  {
+   "path": "Multilingual Education/Материалы/Mahboob  Cruz (2013) English and mother tongue based multilingual education_Language attitues in the Philippines.pdf",
+   "size": 424787
+  },
+  {
+   "path": "Multilingual Education/Материалы/May (2013).pdf",
+   "size": 309207
+  },
+  {
+   "path": "Multilingual Education/Материалы/Muñoz  Llanes (2014) - Study abroad and changes in degree of foreign accent in children and adults.pdf",
+   "size": 509325
+  },
+  {
+   "path": "Multilingual Education/Материалы/New perspectives on multilingualism and L2 acquisition an introduction.pdf",
+   "size": 350395
+  },
+  {
+   "path": "Multilingual Education/Материалы/Nikula, Dalton-Puffer, Llinares (2013).pdf",
+   "size": 265329
+  },
+  {
+   "path": "Multilingual Education/Материалы/Noprival, Alfian, Kaslan  Ginanto (2024) Strategies employed in learning English and other foreign languages a case study of Indonesian polyglots.pdf",
+   "size": 1213957
+  },
+  {
+   "path": "Multilingual Education/Материалы/Pegrum (2025) from-revolution-to-evolution-what-generative-ai-really-means-for-language-learning.pdf",
+   "size": 1423928
+  },
+  {
+   "path": "Multilingual Education/Материалы/Preece  Marshall (2020) - Plurilingualism  teaching and learning  and Anglophone higher education  an introduction Anglophone universities and linguistic diversity.pdf",
+   "size": 948578
+  },
+  {
+   "path": "Multilingual Education/Материалы/Rodríguez Izquierdo  Darmody (2019).pdf",
+   "size": 589078
+  },
+  {
+   "path": "Multilingual Education/Материалы/Serrano (2012).pdf",
+   "size": 254632
+  },
+  {
+   "path": "Multilingual Education/Материалы/Sharma, Katsos  Gibson (2022) Associations between bilingualism and attention-deficit.pdf",
+   "size": 575871
+  },
+  {
+   "path": "Multilingual Education/Материалы/StudentGuide_26-27_LAMS_MultiEd.pdf",
+   "size": 2565909
+  },
+  {
+   "path": "Multilingual Education/Материалы/Thompson  Khawaja (2016) - Foreign language anxiety in Turkey.pdf",
+   "size": 254542
+  },
+  {
+   "path": "Multilingual Education/Материалы/Treffers-Dallers 2025.pdf",
+   "size": 309174
+  },
+  {
+   "path": "Multilingual Education/Материалы/Wang  Kirkpatrick (2013) - Trilingual education in Hong Kong primary schools_a case study.pdf",
+   "size": 203554
+  },
+  {
+   "path": "Multilingual Education/Материалы/Weidl et al (2023) LILIEMA a sustainable educational.pdf",
+   "size": 2502625
+  },
+  {
+   "path": "Multilingual Education/Материалы/What is plurilingualism.pdf",
+   "size": 144009
+  },
+  {
+   "path": "Multilingual Education/Материалы/Yilmaz (2021).pdf",
+   "size": 1769158
+  },
+  {
+   "path": "Multilingual Education/Материалы/Ziegler (2013) - Multilingualism and the language education landscape challenges for teacher training in Europe.pdf",
+   "size": 1014580
+  },
+  {
+   "path": "Multilingual Education/Материалы/critical_review_of_research_relating_to_the_learning_use_and_effects_of_additional_and_multiple_languages_in_later_life.pdf",
+   "size": 513108
+  },
+  {
+   "path": "Multilingual Education/Материалы/multilingualism_in_older_age_a_research_agenda_from_the_cognitive_perspective.pdf",
+   "size": 228796
+  },
+  {
+   "path": "Multilingual Education/Материалы/van der Worp, Cenoz and Gorter, 2017.pdf",
+   "size": 554872
+  },
+  {
+   "path": "Phonetics/LE_listening_C1_Innovation_in_business.TextGrid",
+   "size": 2454
+  },
+  {
+   "path": "Phonetics/LE_listening_C1_Innovation_in_business.mp3",
+   "size": 7482935
+  },
+  {
+   "path": "Phonetics/Материалы/Amengual_2016d.pdf",
+   "size": 841731
+  },
+  {
+   "path": "Phonetics/Материалы/BestTyler2007Chapter.pdf",
+   "size": 5762602
+  },
+  {
+   "path": "Phonetics/Материалы/Flege_in_Meyer_2003.pdf",
+   "size": 604314
+  },
+  {
+   "path": "Phonetics/Материалы/Flege_in_Strange_1995_small.pdf",
+   "size": 6855668
+  },
+  {
+   "path": "Phonetics/Материалы/Introduction.pdf",
+   "size": 2569707
+  },
+  {
+   "path": "Phonetics/Материалы/Oh_et_al_2011.pdf",
+   "size": 647576
+  },
+  {
+   "path": "Phonetics/Материалы/The Acquisition of Phonetics - course syllabus.docx",
+   "size": 17565
+  },
+  {
+   "path": "Phonetics/Материалы/The acquisition of phonetics.pdf",
+   "size": 895724
+  },
+  {
+   "path": "Phonetics/Материалы/a-course-in-phonetics-sixth-edition only chapter 1-4 and 8.pdf",
+   "size": 7961934
+  },
+  {
+   "path": "Research Methods/Материалы/BASICS OF APA STYLE 7th edition.pdf",
+   "size": 92467
+  },
+  {
+   "path": "Research Methods/Материалы/Materials and activities sent by Emilio (university library) 26-27-20261101.zip",
+   "size": 1878099
+  },
+  {
+   "path": "Research Methods/Материалы/RESEARCH PAPER INSTRUCTIONS 26-27.pdf",
+   "size": 201217
+  },
+  {
+   "path": "Research Methods/Материалы/Steps to create your personal account in the Library catalog-1.pdf",
+   "size": 770215
+  },
+  {
+   "path": "Research Methods/Материалы/Syllabus 26-27.pdf",
+   "size": 326392
+  },
+  {
+   "path": "Research Methods/Материалы/UNIT 2 RM handout.pdf",
+   "size": 476760
+  },
+  {
+   "path": "Research Methods/Материалы/UNIT 3 RM handout 2026.pdf",
+   "size": 265636
+  },
+  {
+   "path": "Research Methods/Материалы/UNIT 4 RM  handout 2026.pdf",
+   "size": 178718
+  },
+  {
+   "path": "Research Methods/Материалы/Unit 1.pdf",
+   "size": 92818
+  },
+  {
+   "path": "Research Methods/Материалы/unit 2 extra copies RMinSLA.pdf",
+   "size": 13083543
+  },
+  {
+   "path": "Research Methods/Материалы/unit 4 extra copies RMinSLA.pdf",
+   "size": 2700582
+  },
+  {
+   "path": "SLA/Mordovtsev_SLA_Error_Analysis_Essay.docx",
+   "size": 30702
+  },
+  {
+   "path": "SLA/Материалы/Behaviorism (3).pdf",
+   "size": 82879
+  },
+  {
+   "path": "SLA/Материалы/Crosslinguistic influences. Ortega (2009).pdf",
+   "size": 1183257
+  },
+  {
+   "path": "SLA/Материалы/Developmental sequence. Hands on activity (2).pdf",
+   "size": 241682
+  },
+  {
+   "path": "SLA/Материалы/Developmental sequences (3).pdf",
+   "size": 246050
+  },
+  {
+   "path": "SLA/Материалы/Fossilization.pdf",
+   "size": 1203859
+  },
+  {
+   "path": "SLA/Материалы/How languages are learned_- ss (3).ppt",
+   "size": 560640
+  },
+  {
+   "path": "SLA/Материалы/Individual differences_ - ss (3).ppt",
+   "size": 328192
+  },
+  {
+   "path": "SLA/Материалы/Lightbown, Spada.pdf",
+   "size": 9454882
+  },
+  {
+   "path": "SLA/Материалы/Oral presentations List of articles-20261101.zip",
+   "size": 8087697
+  },
+  {
+   "path": "SLA/Материалы/Ortega.pdf",
+   "size": 1739217
+  },
+  {
+   "path": "SLA/Материалы/SLA individual assignment 2026 (3).docx",
+   "size": 468116
+  },
+  {
+   "path": "SLA/Материалы/Syllabus. Updated 2026-27 (6).doc",
+   "size": 100864
+  },
+  {
+   "path": "SLA/Материалы/The age factor in L2 acquisition_ -ss (3).ppt",
+   "size": 256000
+  },
+  {
+   "path": "Syllabus Design/Homework_Syllabus_Design_Mordovtsev.docx",
+   "size": 18868
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27 Course guide (abridged).pdf",
+   "size": 92212
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27 Final present template.pptx",
+   "size": 420887
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27 Guidelines for CLIL end-of-course presentation.pdf",
+   "size": 244674
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27 PPT  Larsen-Freeman for egela.pdf",
+   "size": 209378
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27 Structural_TBLT.pdf",
+   "size": 542509
+  },
+  {
+   "path": "Syllabus Design/Материалы/2026-27Guidelines for end-of-course presentation.pdf",
+   "size": 230042
+  },
+  {
+   "path": "Syllabus Design/Материалы/Additional references.pdf",
+   "size": 217665
+  },
+  {
+   "path": "Syllabus Design/Материалы/Baque 2023 Decree Post-secondary education.pdf",
+   "size": 12889507
+  },
+  {
+   "path": "Syllabus Design/Материалы/Basque 2023 Decree pre-primary education.pdf",
+   "size": 699066
+  },
+  {
+   "path": "Syllabus Design/Материалы/Basque Decree 2023.pdf",
+   "size": 10240612
+  },
+  {
+   "path": "Syllabus Design/Материалы/Bloom.pdf",
+   "size": 54009
+  },
+  {
+   "path": "Syllabus Design/Материалы/CEFR-Companion-Volume 2020.pdf",
+   "size": 1784761
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP 2 2026-27 Classroom research.pdf",
+   "size": 593290
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP 2 2026-27 Unit 2 Curriculum and syllabus design.pdf",
+   "size": 333610
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP1 2026-27 INTRODUCTION TO SYLLABUS DESIGN AND LANGUAGE TEACHING.pdf",
+   "size": 1425033
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP3 2026-27 Instructional unit  CEFR.pdf",
+   "size": 703348
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP5 2026-2027 CLIL PPT egela.pdf",
+   "size": 359084
+  },
+  {
+   "path": "Syllabus Design/Материалы/CP5 2026-27 PBL PPT egela.pdf",
+   "size": 523872
+  },
+  {
+   "path": "Syllabus Design/Материалы/EAQUALS_British_Council_Core_Curriculum_April2011.pdf",
+   "size": 814995
+  },
+  {
+   "path": "Syllabus Design/Материалы/Ellis  Shintani (2014).pdf",
+   "size": 1937896
+  },
+  {
+   "path": "Syllabus Design/Материалы/Harmer (2015).pdf",
+   "size": 1349480
+  },
+  {
+   "path": "Syllabus Design/Материалы/Loewen 2025 Focus on form.pdf",
+   "size": 3772218
+  },
+  {
+   "path": "Syllabus Design/Материалы/Loewen 2025 Interaction in the L2 classroom.pdf",
+   "size": 2912297
+  },
+  {
+   "path": "Syllabus Design/Материалы/Lyster (2017).pdf",
+   "size": 482577
+  },
+  {
+   "path": "Syllabus Design/Материалы/MA Course syllabus 2026-2027.pdf",
+   "size": 324865
+  },
+  {
+   "path": "Syllabus Design/Материалы/Stoller (2002).pdf",
+   "size": 354471
+  },
+  {
+   "path": "Syllabus Design/Материалы/Unit 2_Homew assignment (2).docx",
+   "size": 16992
+  },
+  {
+   "path": "Syllabus Design/Материалы/Van den Branden (2016).pdf",
+   "size": 3989992
+  }
+ ]
+}
