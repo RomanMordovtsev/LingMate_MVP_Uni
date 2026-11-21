@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from core.models import UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest
+from core.models import UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest, PlacementRequest
 from core.storage import make_store
 from core.profile import LearnerProfile, profile_from_settings
 from core.scenarios import SCENARIOS
@@ -12,6 +12,7 @@ from core.llm_service import LLMService
 from core.feedback import correction_to_text
 from core.error_log import make_entry, summarize
 from core.curriculum import curriculum, get_unit, next_units
+from core import placement as placement_test
 
 from dotenv import load_dotenv
 
@@ -267,6 +268,53 @@ def curriculum_unit(language: str, unit_id: str):
     if unit is None:
         raise HTTPException(status_code=404, detail="Unit not found")
     return unit.model_dump()
+
+
+def _placement_bank(language: str):
+    b = placement_test.bank(language)
+    if b is None:
+        raise HTTPException(status_code=404, detail="No placement test for this language")
+    return b
+
+
+@app.post("/api/placement/{language}/next")
+def placement_next(language: str, req: PlacementRequest):
+    """Placement (roadmap C.2): next receptive item, or the settled level + production prompts.
+    Stateless: the client sends all answers so far; the answer key stays on the server."""
+    b = _placement_bank(language)
+    answers = [a.model_dump() for a in req.answers]
+    start = (store.get_settings(req.user_id) or {}).get("level")
+    res = placement_test.step(b, answers, start_level=start)
+    if res["done"]:
+        res["production_prompts"] = placement_test.diagnose(
+            b, answers, list(curriculum(language)), start_level=start)["production_prompts"]
+    return res
+
+
+@app.post("/api/placement/{language}/finish")
+def placement_finish(language: str, req: PlacementRequest):
+    """Level, gaps and starting unit; stored under settings["placement"] (additive).
+    The profile level changes only when the learner asks for it (`apply_level`)."""
+    b = _placement_bank(language)
+    answers = [a.model_dump() for a in req.answers]
+    settings = store.get_settings(req.user_id) or {"user_id": req.user_id, "target_language": language}
+    try:
+        result = placement_test.diagnose(b, answers, list(curriculum(language)),
+                                         start_level=settings.get("level"))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    rec = placement_test.record(result, answers, [p.model_dump() for p in req.production],
+                                profile_level=settings.get("level"))
+    settings["placement"] = rec
+    if req.apply_level:
+        settings["level"] = result["level"]
+    store.save_settings(req.user_id, settings)
+    return {**result, "applied_level": req.apply_level, "taken_at": rec["taken_at"]}
+
+
+@app.get("/api/placement/{user_id}")
+def placement_get(user_id: str):
+    return {"placement": (store.get_settings(user_id) or {}).get("placement")}
 
 
 @app.get("/api/test-llm")

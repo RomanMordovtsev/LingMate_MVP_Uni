@@ -561,6 +561,26 @@
     <div class="muted" id="errorsAvoided" style="margin-top:6px;"></div>
   </div>
 
+  <!-- Placement + diagnosis (roadmap C.2): adaptive receptive test, gaps, starting unit. -->
+  <div class="dashboard-box" id="placementCard" style="margin-top:18px;">
+    <h3>Тест уровня</h3>
+    <div class="muted" id="placementIntro">Короткий тест (5–10 минут): вопросы подстраиваются под твои ответы. Результат покажет уровень, пробелы и с какого урока программы начать. Ошибаться можно и нужно — это не экзамен.</div>
+    <div id="placementResult" class="muted" style="margin-top:10px;"></div>
+    <button class="primary" id="placementStartBtn" style="width:auto;margin-top:10px;" onclick="startPlacement()">Пройти тест уровня</button>
+    <div id="placementQuestion" style="display:none;margin-top:12px;">
+      <div class="muted" id="placementCounter"></div>
+      <div id="placementStem" style="font-size:1.1em;margin:8px 0;"></div>
+      <div class="muted" id="placementHint"></div>
+      <div class="choice-row" id="placementOptions" style="margin-top:8px;"></div>
+    </div>
+    <div id="placementProduction" style="display:none;margin-top:12px;">
+      <div class="muted">Последний шаг: ответь своими словами (можно коротко). Эти ответы сохранятся — Юдзи разберёт их с тобой позже.</div>
+      <div id="placementPrompts"></div>
+      <label style="display:block;margin-top:8px;"><input type="checkbox" id="placementApply" style="width:auto;"> Поставить найденный уровень в профиль</label>
+      <button class="primary" style="width:auto;margin-top:8px;" onclick="finishPlacement()">Показать результат</button>
+    </div>
+  </div>
+
   <div class="main-grid">
     <div class="card">
       <h2 class="section-title">Свободный разговор</h2>
@@ -1089,6 +1109,102 @@ async function loadErrors(userId) {
   }
 }
 
+// --- Placement test (roadmap C.2) -------------------------------------------
+let PLACEMENT = { answers: [], prompts: [], level: null };
+
+function placementLang() {
+  return document.getElementById('targetLanguage').value || 'es';
+}
+
+function renderPlacementResult(r) {
+  const box = document.getElementById('placementResult');
+  if (!r) { box.textContent = ''; return; }
+  const gaps = (r.gaps || []).slice(0, 6).map(g => g.topic_ru + ' (' + g.correct + ')');
+  const lines = [
+    'Уровень по тесту: ' + (r.beginner ? 'A1 — начинаем с основ' : r.level)
+      + (r.taken_at ? ' · ' + r.taken_at.slice(0, 10) : ''),
+    r.start_unit_title ? 'Начать с урока: «' + r.start_unit_title + '»' + (r.start_reason === 'gap' ? ' — здесь нашёлся пробел' : '') : '',
+    gaps.length ? 'Стоит подтянуть: ' + gaps.join('; ') : 'Пробелов на твоём уровне тест не нашёл — проверим в разговоре.',
+    (r.suggested_known || []).length ? 'Похоже, уже знаешь (повторим быстро): ' + r.suggested_known.length + ' ур.' : '',
+  ].filter(Boolean);
+  box.innerHTML = '';
+  lines.forEach(t => { const d = document.createElement('div'); d.textContent = t; box.appendChild(d); });
+  document.getElementById('placementStartBtn').textContent = 'Пройти тест ещё раз';
+}
+
+async function loadPlacement(userId) {
+  try {
+    const data = await api('/api/placement/' + encodeURIComponent(userId));
+    renderPlacementResult(data.placement);
+  } catch (err) { console.error(err); }
+}
+
+async function startPlacement() {
+  PLACEMENT = { answers: [], prompts: [], level: null };
+  document.getElementById('placementProduction').style.display = 'none';
+  document.getElementById('placementStartBtn').style.display = 'none';
+  await nextPlacement();
+}
+
+async function nextPlacement() {
+  const userId = document.getElementById('userId').value;
+  let r;
+  try {
+    r = await api('/api/placement/' + placementLang() + '/next', 'POST', { user_id: userId, answers: PLACEMENT.answers });
+  } catch (err) {
+    document.getElementById('placementResult').textContent = 'Для этого языка теста пока нет.';
+    document.getElementById('placementStartBtn').style.display = '';
+    return;
+  }
+  const q = document.getElementById('placementQuestion');
+  if (r.done) {
+    q.style.display = 'none';
+    PLACEMENT.prompts = r.production_prompts || [];
+    PLACEMENT.level = r.level;
+    const box = document.getElementById('placementPrompts');
+    box.innerHTML = '';
+    PLACEMENT.prompts.forEach(p => {
+      const label = document.createElement('div');
+      label.style.marginTop = '8px';
+      label.textContent = p.prompt_ru + ' — ' + p.prompt_es;
+      const ta = document.createElement('textarea');
+      ta.id = 'placementText_' + p.id;
+      ta.rows = 2;
+      box.appendChild(label); box.appendChild(ta);
+    });
+    document.getElementById('placementApply').nextSibling.textContent = ' Поставить уровень ' + r.level + ' в профиль';
+    document.getElementById('placementProduction').style.display = '';
+    return;
+  }
+  q.style.display = '';
+  document.getElementById('placementCounter').textContent = 'Вопрос ' + (r.answered + 1);
+  document.getElementById('placementStem').textContent = r.item.stem;
+  document.getElementById('placementHint').textContent =
+    (r.item.kind === 'meaning' ? 'Что это значит? ' : 'Выбери вариант. ') + (r.item.hint_ru ? '(' + r.item.hint_ru + ')' : '');
+  const opts = document.getElementById('placementOptions');
+  opts.innerHTML = '';
+  r.item.options.concat(['Не знаю']).forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = o;
+    b.onclick = () => { PLACEMENT.answers.push({ item_id: r.item.id, choice: o === 'Не знаю' ? null : o }); nextPlacement(); };
+    opts.appendChild(b);
+  });
+}
+
+async function finishPlacement() {
+  const userId = document.getElementById('userId').value;
+  const production = PLACEMENT.prompts.map(p => ({
+    prompt_id: p.id, text: (document.getElementById('placementText_' + p.id) || {}).value || '' }));
+  const r = await api('/api/placement/' + placementLang() + '/finish', 'POST', {
+    user_id: userId, answers: PLACEMENT.answers, production,
+    apply_level: document.getElementById('placementApply').checked });
+  document.getElementById('placementProduction').style.display = 'none';
+  document.getElementById('placementStartBtn').style.display = '';
+  renderPlacementResult(r);
+  if (r.applied_level) document.getElementById('dashboardLevel').textContent = r.level;
+}
+
 async function loadProgress() {
   try {
     const userId = document.getElementById('userId').value;
@@ -1131,6 +1247,7 @@ async function loadProgress() {
       });
     }
     loadErrors(userId);
+    loadPlacement(userId);
   } catch (err) {
     document.getElementById('progressDump').textContent = 'Прогресса пока нет. Сохрани настройки и начни практику.';
     document.getElementById('dashboardLevel').textContent = document.getElementById('level').value || '-';

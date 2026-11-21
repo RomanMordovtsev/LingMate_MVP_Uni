@@ -19,3 +19,17 @@ class LessonStartRequest(BaseModel):
 class LessonMessageRequest(BaseModel):
     user_id: str
     message: str
+
+class PlacementAnswer(BaseModel):
+    item_id: str
+    choice: Optional[str] = None
+
+class PlacementProduction(BaseModel):
+    prompt_id: str
+    text: str = ""
+
+class PlacementRequest(BaseModel):
+    user_id: str
+    answers: List[PlacementAnswer] = []
+    production: List[PlacementProduction] = []
+    apply_level: bool = False   # finish only: write the placed level into the profile

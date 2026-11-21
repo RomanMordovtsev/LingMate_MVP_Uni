@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-21 — C.2 Placement + diagnosis, slice 1 (scheduled run)
+- Branch `agent/placement` → PR into `agent/dev`. No open PRs, no comments; #18, #19 merged. docs/feedback: nothing new after 2026-11-16. Notion: no new entries since 19.11. Saturday of odd ISO week 47 → ordinary day. Roman's 20.11 note: C.2 before more units, never assume a level.
+- `curriculum/es/placement.yaml`: 29 receptive items (A1 6, A2 9, B1 7, B2 7; gap-fill + "what does it mean"), 12 built from `docs/learner` (se me han olvidado, traje/dejé in the repair shop, ¿me pones…?, Perdone with an older woman, la calefacción, quitar la calefacción, que te vaya bien, espero que haga, aunque llueva, presuntamente, implicar al público); each item → error category (1.3 contract) and, when a unit exists, its grammar point. 4 production prompts A1–B2.
+- `core/placement.py` (pure): staircase 4 items/level, +2 when 2/4, pass ≥ 3/4 (or ≥ 4/6) → up, fail → down, stop between passed and failed level; start = profile level (only a starting point). Diagnosis: gaps up to the next stage (morphosyntax §10), suggested-known units (below the placed level or all their grammar answered right; receptive ≠ production, sla §6 → only suggested), start unit = first open unit with a gap at/below the placed level, else the next open unit. Stored in `settings.placement` with answers and production texts; `apply_level` is explicit.
+- API: `POST /api/placement/{lang}/next` (stateless, answer key never sent), `/finish`, `GET /api/placement/{user}`. UI: card «Тест уровня» (options + «Не знаю», production textareas, checkbox «Поставить уровень в профиль»).
+- Tests: 232 → 264 (staircase finds every level from every start, beginner, borderline block, gap → unit 2, API keeps the profile level unless asked).
+- Playwright: A2-like learner who misses *se me han olvidado* → 8 questions, A2, start «Что случилось сегодня», no console errors; phone width checked.
+- Open for Roman: item wording/level placement (his judgement), the production answers are stored but not scored yet (needs LLM → next slice).
+
 ## 2026-11-19 — C.1 Curriculum map, slice 1 (scheduled run)
 - Branch `agent/curriculum-a2` → PR into `agent/dev`. Open PR #18 (eval night fixes, Roman's session, no comments) — independent, not touched. docs/feedback: 2026-11-16 handled in #17/#18; nothing else new.
 - `core/curriculum.py`: pydantic `Unit` (id `es-a2-topic`, level, order, RU/ES titles, 1–3 can-do lines with CEFR CV 2020 scale + level, PCIC refs by inventory + band + item name, grammar points with one RU form tip + error categories from the 1.3 contract, 3–8 chunks, vocabulary, situations = existing scenario ids / headings in `docs/learner/` / seeds for 4.3, culture note, prerequisites). Cross checks: unique ids/orders, prerequisites earlier and not higher level. `next_units(done, level)` = open units up to the learner's next stage (morphosyntax §10); `units_for_category` links the error log (1.6) to units for C.4.
