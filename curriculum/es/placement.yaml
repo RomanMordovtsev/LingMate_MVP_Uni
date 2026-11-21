@@ -1,0 +1,115 @@
+# Placement test es-ES (roadmap C.2, slice 1). Shape and validation: core/placement.py.
+# Receptive items, auto-checked without an LLM (quota strategy). One item = one form or chunk;
+# `grammar` links it to a grammar point id in units/*.yaml (gaps → starting unit), `category`
+# to the error categories of the 1.3 contract (gaps → error log / feedback policy).
+# Levels follow the PCIC bands as used in units/*.yaml; items marked `from_learner` come from
+# Roman's real situations in docs/learner/roman-spanish.md.
+language: es
+variant: es-ES
+items:
+  # --- A1 -----------------------------------------------------------------
+  - {id: a1-ser-presentarse, level: A1, category: ser_estar, topic_ru: "ser: кто я, откуда",
+     stem: "Hola, ___ Roman y soy de Rusia.", options: ["estoy", "soy", "es", "tengo"], answer: "soy"}
+  - {id: a1-articulo-genero, level: A1, category: gender, topic_ru: "род и артикль (un / una)",
+     stem: "Vivo en ___ ciudad pequeña.", options: ["un", "una", "uno", "unos"], answer: "una"}
+  - {id: a1-presente-nosotros, level: A1, category: agreement, topic_ru: "настоящее время: окончания",
+     stem: "Nosotros ___ en la universidad.", options: ["estudian", "estudio", "estudiamos", "estudias"],
+     answer: "estudiamos"}
+  - {id: a1-gustar, level: A1, category: agreement, topic_ru: "gustar: me gusta / me gustan",
+     stem: "A mí me ___ mucho los pintxos.", options: ["gusta", "gustan", "gusto", "gustas"], answer: "gustan"}
+  - {id: a1-estar-lugar, level: A1, category: ser_estar, topic_ru: "estar: где что находится",
+     stem: "Perdona, ¿dónde ___ la estación de autobuses?", options: ["es", "hay", "está", "tiene"],
+     answer: "está"}
+  - {id: a1-cuanto-cuesta, level: A1, category: lexical, topic_ru: "базовые вопросы: цена", kind: meaning,
+     stem: "¿Cuánto cuesta?", options: ["Сколько времени?", "Сколько это стоит?", "Где это?", "Когда открывается?"],
+     answer: "Сколько это стоит?"}
+
+  # --- A2 -----------------------------------------------------------------
+  - {id: a2-perfecto-todavia, level: A2, category: tense_aspect, grammar: perfecto_hoy,
+     topic_ru: "pretérito perfecto: сегодня / ещё не", hint_ru: "в Испании",
+     stem: "Son las tres y todavía no ___ nada.", options: ["comía", "he comido", "comeré", "comido"],
+     answer: "he comido"}
+  - {id: a2-se-me-llaves, level: A2, category: agreement, grammar: se_me_accidental, from_learner: true,
+     topic_ru: "se me ha olvidado / se me han olvidado",
+     stem: "¡Ay! Se me ___ las llaves en casa.", options: ["ha olvidado", "he olvidado", "han olvidado", "olvidan"],
+     answer: "han olvidado"}
+  - {id: a2-indefinido-traje, level: A2, category: tense_aspect, grammar: indefinido_ayer, from_learner: true,
+     topic_ru: "pretérito indefinido: неправильные (traje)",
+     stem: "Ayer ___ una mochila a arreglar. ¿Ya está lista?", options: ["traí", "traje", "traía", "he traído"],
+     answer: "traje"}
+  - {id: a2-dejar-taller, level: A2, category: lexical, grammar: dejar_traer_llevar, from_learner: true,
+     topic_ru: "dejar / traer / llevar", hint_ru: "в мастерской: «я оставил рюкзак у вас»",
+     stem: "Vengo a recoger la mochila que ___ ayer.", options: ["di", "dejé", "llevé", "puse"], answer: "dejé"}
+  - {id: a2-me-pones, level: A2, category: lexical, grammar: poner_pedir, from_learner: true,
+     topic_ru: "в баре: ¿me pones…?",
+     stem: "En el bar: «¿Me ___ una Coca-Cola, por favor?»", options: ["pides", "pones", "compras", "tomas"],
+     answer: "pones"}
+  - {id: a2-usted-autobus, level: A2, category: register, grammar: tu_usted_servicio, from_learner: true,
+     topic_ru: "tú / usted с незнакомыми", hint_ru: "пожилой женщине в автобусе",
+     stem: "___, ¿me deja pasar? Mi asiento es el de la ventanilla.",
+     options: ["Perdona", "Perdone", "Perdonad", "Perdonas"], answer: "Perdone"}
+  - {id: a2-la-calefaccion, level: A2, category: gender, grammar: genero_no_o_a, from_learner: true,
+     topic_ru: "род слов на -ción", stem: "Hace frío. ¿Pones ___ calefacción?", options: ["el", "lo", "la", "los"],
+     answer: "la"}
+  - {id: a2-quitar-calefaccion, level: A2, category: lexical, grammar: poner_quitar, from_learner: true,
+     topic_ru: "poner / quitar (включить / выключить)", stem: "Ya no hace frío. ¿___ la calefacción, por favor?",
+     options: ["Sacas", "Quitas", "Cierras", "Tiras"], answer: "Quitas"}
+  - {id: a2-lo-tengo, level: A2, category: clitic, topic_ru: "местоимения lo / la (прямое дополнение)",
+     stem: "—¿Tienes el billete? —Sí, ya ___ tengo.", options: ["le", "lo", "la", "se"], answer: "lo"}
+
+  # --- B1 -----------------------------------------------------------------
+  - {id: b1-que-te-vaya, level: B1, category: mood, grammar: que_subjuntivo_deseo, from_learner: true,
+     topic_ru: "пожелания: que + subjuntivo", stem: "¡Adiós! ¡Que te ___ bien!", options: ["va", "irá", "vaya", "ir"],
+     answer: "vaya"}
+  - {id: b1-espero-que, level: B1, category: mood, grammar: esperar_que, from_learner: true,
+     topic_ru: "espero que + subjuntivo", stem: "Espero que mañana ___ sol.", options: ["hace", "haga", "hará", "hacer"],
+     answer: "haga"}
+  - {id: b1-espero-infinitivo, level: B1, category: mood, grammar: esperar_que,
+     topic_ru: "espero + инфинитив (тот же субъект)",
+     stem: "Estudio mucho porque espero ___ el examen.", options: ["que apruebo", "aprobar", "aprobando", "de aprobar"],
+     answer: "aprobar"}
+  - {id: b1-mientras-imperfecto, level: B1, category: tense_aspect, topic_ru: "imperfecto vs indefinido (фон и событие)",
+     stem: "Mientras ___ la cena, sonó el teléfono.", options: ["preparé", "he preparado", "preparaba", "prepararé"],
+     answer: "preparaba"}
+  - {id: b1-ser-evento, level: B1, category: ser_estar, topic_ru: "ser для событий (где проходит)",
+     stem: "La fiesta ___ en casa de Ana, en el centro.", options: ["está", "es", "hay", "tiene"], answer: "es"}
+  - {id: b1-se-lo, level: B1, category: clitic, topic_ru: "два местоимения: se lo",
+     stem: "—¿Le has dado el libro a Ana? —Sí, ya ___ he dado.", options: ["le lo", "se lo", "lo le", "se le"],
+     answer: "se lo"}
+  - {id: b1-gracias-por, level: B1, category: preposition, topic_ru: "por / para",
+     stem: "Muchas gracias ___ tu ayuda.", options: ["para", "de", "por", "a"], answer: "por"}
+
+  # --- B2 -----------------------------------------------------------------
+  - {id: b2-aunque-llueva, level: B2, category: mood, from_learner: true, topic_ru: "aunque + subjuntivo («даже если»)",
+     hint_ru: "«даже если пойдёт дождь»",
+     stem: "Mañana voy a clase en bici aunque ___.", options: ["llueve", "lloverá", "llover", "llueva"], answer: "llueva"}
+  - {id: b2-si-tuviera, level: B2, category: mood, topic_ru: "si + imperfecto de subjuntivo",
+     stem: "Si ___ más tiempo, estudiaría euskera.", options: ["tuviera", "tendría", "tenga", "tengo"], answer: "tuviera"}
+  - {id: b2-busco-piso-que, level: B2, category: mood, topic_ru: "subjuntivo в относительных (любой, какой-нибудь)",
+     hint_ru: "любую квартиру, лишь бы с отоплением",
+     stem: "Busco un piso que ___ calefacción central.", options: ["tiene", "tenga", "tendrá", "tener"], answer: "tenga"}
+  - {id: b2-cuando-llegue, level: B2, category: mood, topic_ru: "cuando + subjuntivo (будущее)",
+     stem: "Te llamo cuando ___ a casa.", options: ["llego", "llegaré", "llegue", "llegara"], answer: "llegue"}
+  - {id: b2-habia-salido, level: B2, category: tense_aspect, topic_ru: "pluscuamperfecto (уже ушёл раньше)",
+     stem: "Cuando llegué a la estación, el tren ya ___.", options: ["salió", "había salido", "ha salido", "salía"],
+     answer: "había salido"}
+  - {id: b2-presuntamente, level: B2, category: lexical, from_learner: true, kind: meaning,
+     topic_ru: "presuntamente / supuestamente", stem: "El hombre presuntamente robó 5.000 euros.",
+     options: ["Мужчина хвастался, что украл 5000 евро.", "Мужчина якобы украл 5000 евро.",
+               "Мужчина точно украл 5000 евро.", "Мужчина хотел украсть 5000 евро."],
+     answer: "Мужчина якобы украл 5000 евро."}
+  - {id: b2-implicar-publico, level: B2, category: lexical, from_learner: true, topic_ru: "implicar al público (≠ comprometer)",
+     stem: "Para ___ al público, empezaré la presentación con una pregunta.",
+     options: ["comprometer", "implicar", "asistir", "atender"], answer: "implicar"}
+
+# Production prompts: free answers, stored for the tutor (scored later with an LLM / in C.4,
+# sla §6: measure free production, not only quizzes). Shown for the placed level and the next one.
+production:
+  - {id: p-a1-presentate, level: A1, prompt_ru: "Расскажи о себе в 2–3 предложениях: кто ты, где живёшь, что любишь.",
+     prompt_es: "Preséntate: ¿quién eres, dónde vives, qué te gusta?", targets: [ser_estar, agreement]}
+  - {id: p-a2-hoy, level: A2, prompt_ru: "Что ты сделал сегодня? 2–3 предложения.",
+     prompt_es: "¿Qué has hecho hoy?", targets: [perfecto_hoy]}
+  - {id: p-b1-deseos, level: B1, prompt_ru: "У друга завтра собеседование. Пожелай ему удачи и скажи, на что надеешься.",
+     prompt_es: "Tu amigo tiene una entrevista mañana. Deséale suerte.", targets: [que_subjuntivo_deseo, esperar_que]}
+  - {id: p-b2-opinion, level: B2, prompt_ru: "Стоит ли жить в маленьком городе, а не в столице? Аргументируй (aunque, si…).",
+     prompt_es: "¿Es mejor vivir en una ciudad pequeña que en una capital? ¿Por qué?", targets: [mood]}
