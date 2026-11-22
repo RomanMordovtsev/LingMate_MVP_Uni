@@ -1,0 +1,1160 @@
+{
+  "summary": {
+    "cases": 39,
+    "answered": 39,
+    "provider_failures": 0,
+    "error_cases": 33,
+    "clean_cases": 6,
+    "detection_rate": 0.424,
+    "category_recall": 0.091,
+    "category_precision": 0.214,
+    "text_match_rate": 0.121,
+    "false_positive_rate": 0.167,
+    "transfer_accuracy": 0.0,
+    "transfer_flagged_rate": 0.125,
+    "transfer_source_filled": 1.0,
+    "per_category": {
+      "agreement": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "precision": 0.5,
+        "recall": 0.667
+      },
+      "article": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "clitic": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "gender": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "precision": null,
+        "recall": 0.0
+      },
+      "lexical": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 8,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "mood": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 4,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "preposition": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.333,
+        "recall": 0.25
+      },
+      "register": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.0
+      },
+      "ser_estar": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "spelling_accent": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "tense_aspect": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "word_order": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "latency_s": {
+      "mean": 14.147,
+      "median": 12.726,
+      "max": 32.08
+    },
+    "quota_stopped": null
+  },
+  "cases": [
+    {
+      "id": "roman-2026-10-31-bus",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "register",
+        "lexical"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 32.08,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "puedo",
+        "corrected": "puedes",
+        "error_category": "agreement",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В испанском языке творительный падеж 'a' требует согласования с субъектом (вы → tú, мн. ч. → vosotros/ustedes).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "pued"
+          },
+          {
+            "op": "del",
+            "text": "o"
+          },
+          {
+            "op": "ins",
+            "text": "es"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "roman-2026-10-queue",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 12.249,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "roman-2026-10-compliment",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition",
+        "spelling_accent"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 17.106,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "possible",
+        "corrected": "más",
+        "error_category": "lexical",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "En español, 'más' se usa para comparar (ej: *esfuerzo más* intenso; no *possible*).",
+        "diff": [
+          {
+            "op": "del",
+            "text": "possible"
+          },
+          {
+            "op": "ins",
+            "text": "más"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "roman-2026-11-14-lift",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender",
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 13.741,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-article-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "article",
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 9.088,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-article-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "article"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": false,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 19.027,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "Busco piso cerca de universidad.",
+        "corrected": "Busco piso **cerca de** la universidad.",
+        "error_category": "preposition",
+        "cf_type": "elicitation",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В русском языке обычно не употребляют артикль перед географическими названиями, но в испанском для обозначения места чаще используется **preposición + artículo** (la, el).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Busco piso "
+          },
+          {
+            "op": "ins",
+            "text": "**"
+          },
+          {
+            "op": "equal",
+            "text": "cerca de"
+          },
+          {
+            "op": "ins",
+            "text": "** la"
+          },
+          {
+            "op": "equal",
+            "text": " universidad."
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-gender-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 11.056,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-gender-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.888,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-agreement-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 20.535,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "Mis compañeros de piso son muy simpático.",
+        "corrected": "Mis compañeros de piso son muy simpáticos.",
+        "error_category": "agreement",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В русском языке мужчины и женщины в множественном числе оканчиваются на **-ы** (друзья, товарищи), а в испанском **-es** (amigos, compañeros).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Mis compañeros de piso son muy simpático"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          },
+          {
+            "op": "equal",
+            "text": "."
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-agreement-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement",
+        "article"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 18.703,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "interesante",
+        "corrected": "interesantes",
+        "error_category": "agreement",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "Испанский артикль *el/la* требует согласования с существительным (*clase*), так что правильно: *las clases son interesantes.*",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "interesante"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-serestar-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": "spelling_accent",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 20.045,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "cansado",
+        "corrected": "cansado",
+        "error_category": "spelling_accent",
+        "cf_type": "clarification",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "Это правильная форма, но в разговорном español часто говорят *cansado/a* с ударением на **-ado**, например: *Soy un poco cansada por las clases.*",
+        "diff": [],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-serestar-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 17.148,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "en el centro",
+        "corrected": "en el corazón",
+        "error_category": "preposition",
+        "cf_type": "clarification",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "En español, *el centro* se usa para lugares, pero *en el corazón* se usa más para el punto exacto de un sitio (como un campus).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "en el "
+          },
+          {
+            "op": "del",
+            "text": "centro"
+          },
+          {
+            "op": "ins",
+            "text": "corazón"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-tense-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 12.685,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-tense-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 10.359,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 9.739,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 11.947,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-prep-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 20.385,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "pasta",
+        "corrected": "pasta **al** carbonara/pasta con *salsa* de tomate",
+        "error_category": "word_order",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "En español, el complemento directo (*lo que comes*) va **después** del verbo (*cenar*).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "pasta"
+          },
+          {
+            "op": "ins",
+            "text": " **al** carbonara/pasta con *salsa* de tomate"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-prep-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 12.664,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "de",
+        "corrected": "a",
+        "error_category": "preposition",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В русском языку 'a' указывает направление, а 'de' — происхождение, а здесь нужно обозначить переход.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "de"
+          },
+          {
+            "op": "ins",
+            "text": "a"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clitic-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "clitic",
+        "word_order"
+      ],
+      "predicted_category": "spelling_accent",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 19.735,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "ayer",
+        "corrected": "ayer",
+        "error_category": "spelling_accent",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "У вас отсутствует акцент: 'ayer' с правильным ударением на 'a' (á), а не на 'ye' (i)",
+        "diff": [],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clitic-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "clitic"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 10.252,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-order-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "word_order"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 11.896,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-order-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "word_order",
+        "agreement"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 15.47,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "un muy bueno profesor",
+        "corrected": "un *buen* profesor",
+        "error_category": null,
+        "cf_type": "metalinguistic",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В русском языке прилагательное ставится после существительного, например: 'хороший учитель'",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "un "
+          },
+          {
+            "op": "del",
+            "text": "muy"
+          },
+          {
+            "op": "ins",
+            "text": "*"
+          },
+          {
+            "op": "del",
+            "text": " "
+          },
+          {
+            "op": "ins",
+            "text": "buen"
+          },
+          {
+            "op": "del",
+            "text": "bueno"
+          },
+          {
+            "op": "ins",
+            "text": "*"
+          },
+          {
+            "op": "equal",
+            "text": " profesor"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-lexical-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical",
+        "preposition"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 10.412,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "mood",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 19.793,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "embarazado",
+        "corrected": "te sientes culpable",
+        "error_category": "mood",
+        "cf_type": "elicitation",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "El verbo *embarazar* significa 'engañar' o 'provocar un embarazo', pero aquí usas la idea de 'arrepentimiento' o 'culpa' (más natural: *sentirse culpable*).",
+        "diff": [
+          {
+            "op": "del",
+            "text": "embarazado"
+          },
+          {
+            "op": "ins",
+            "text": "te sientes culpable"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.subjunctive",
+            "source": "ru",
+            "kind": "negative",
+            "title": "«чтобы + прошедшее» → que + subjuntivo",
+            "source_example": "Хочу, чтобы ты пришёл. Надеюсь, что ты придёшь.",
+            "target_example": "Quiero que vengas. Espero que vengas.",
+            "note": "Где в русском «чтобы» или пожелание, в испанском que + subjuntivo: Quiero que vengas, ¡Que aproveche! После esperar que, para que, cuando (о будущем) — тоже subjuntivo."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-lexical-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 8.005,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-accent-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 11.624,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-accent-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 13.091,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-register-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.445,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-register-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.913,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-porfa",
+      "expected_correction": false,
+      "detected": true,
+      "gold_categories": [],
+      "predicted_category": "spelling_accent",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": true,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 15.569,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "porfa",
+        "corrected": "por favor",
+        "error_category": "spelling_accent",
+        "cf_type": "clarification",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Это не акцент, а просто ошибка со значением — «пожалуйста».",
+        "diff": [
+          {
+            "op": "del",
+            "text": "porfa"
+          },
+          {
+            "op": "ins",
+            "text": "por favor"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clean-mepones",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 14.747,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-cola",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 11.448,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-calefaccion",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 9.298,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-aproveche",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.152,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-avena",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.726,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 8.201,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-en-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 10.306,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-4",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": false,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "latency_s": 16.202,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "sale",
+        "corrected": "vaya",
+        "error_category": "word_order",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "В русском языке 'выйти' означает 'уйти', а здесь нужен глагол движения, который переводится как 'идти'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "sale"
+          },
+          {
+            "op": "ins",
+            "text": "vaya"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-lexical-en-4",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 13.987,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "no",
+        "corrected": "hay",
+        "error_category": "agreement",
+        "cf_type": "recast",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В русском языке перед неопределенным местоимением или глаголом «hay» должно стоять «no» для отрицания, но правильно сказать «no hay»",
+        "diff": [
+          {
+            "op": "del",
+            "text": "no"
+          },
+          {
+            "op": "ins",
+            "text": "hay"
+          }
+        ],
+        "transfer_note": null
+      }
+    }
+  ],
+  "meta": {
+    "date": "2026-11-22",
+    "provider": "ollama",
+    "model": "ministral-3:3b",
+    "sleep_s": 0.0,
+    "profile": null,
+    "precheck": null,
+    "case_files": [
+      "es_roman.jsonl",
+      "es_synthetic.jsonl"
+    ]
+  }
+}
