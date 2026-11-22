@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-22 — Research import: new course materials (scheduled run)
+- Branch `agent/research-2026-11-22` → PR into `agent/dev`. 34 new files (Pragmatics 18, Research Methods 11, Semantic Analysis 3, Multilingual Education 1, Morphosyntax 1); 11 Pragmatics PDFs and the RM Unit 6 extra copies were scans → OCR (tesseract eng+spa).
+- New `docs/research/pragmatics.md`, `docs/research/semantic-analysis.md`; `research-methods.md` §7–13 (Units 5–6), `multilingual-education.md` §8 (CLIL), `morphosyntax.md` further reading.
+- ROADMAP: Pedagogy list + new 3.6 (vocabulary as chunks), 4.10 (speech-act lessons + pragmatic feedback), 5.9 (written CAF trends + feature-switch log).
+- Skipped: Roman's own TBLT unit (Travel_TBLT_B1_Unit_Design.docx, Travelling_in_English_TBLT.pptx) → `excluded` in `_sources.json`.
+- Notion «Чтения»: 34 cards; new options Курс = Pragmatics, Semantic Analysis; Темы = Pragmatics, Speech acts, Politeness, Culture, Vocabulary, Phraseology.
+- Open for Roman: RU→ES pragmatic transfer points in pragmatics §6 are hypotheses to check.
+
 ## 2026-11-21 — C.2 Placement + diagnosis, slice 1 (scheduled run)
 - Branch `agent/placement` → PR into `agent/dev`. No open PRs, no comments; #18, #19 merged. docs/feedback: nothing new after 2026-11-16. Notion: no new entries since 19.11. Saturday of odd ISO week 47 → ordinary day. Roman's 20.11 note: C.2 before more units, never assume a level.
 - `curriculum/es/placement.yaml`: 29 receptive items (A1 6, A2 9, B1 7, B2 7; gap-fill + "what does it mean"), 12 built from `docs/learner` (se me han olvidado, traje/dejé in the repair shop, ¿me pones…?, Perdone with an older woman, la calefacción, quitar la calefacción, que te vaya bien, espero que haga, aunque llueva, presuntamente, implicar al público); each item → error category (1.3 contract) and, when a unit exists, its grammar point. 4 production prompts A1–B2.
