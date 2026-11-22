@@ -1,7 +1,9 @@
 """Placement + diagnosis (roadmap C.2): item bank, adaptive staircase, gaps → start unit, API.
 No network, no LLM."""
 import os
+import re
 import tempfile
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -36,7 +38,64 @@ def test_bank_valid_and_linked_to_units():
     linked = {i.grammar for i in BANK.items if i.grammar}
     assert linked == grammar_ids          # every unit grammar point is diagnosable
     assert {p.level for p in BANK.production} == set(TEST_LEVELS)
-    assert sum(i.from_learner for i in BANK.items) >= 8   # Roman's real situations
+
+
+# --- generic entry test (docs/feedback/2026-11-21) -------------------------------------
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _norm(text):
+    return " ".join(re.sub(r"[^\w\s]", " ", text.lower()).split())
+
+
+def _filled(item):
+    return item.stem.replace("___", item.answer) if item.kind == "gap" else item.stem
+
+
+def test_no_item_comes_from_docs_learner():
+    learner = _norm((ROOT / "docs/learner/roman-spanish.md").read_text(encoding="utf-8")
+                    + (ROOT / "eval/cases/es_roman.jsonl").read_text(encoding="utf-8"))
+    raw = (ROOT / "curriculum/es/placement.yaml").read_text(encoding="utf-8")
+    assert "from_learner" not in raw and "docs/learner" not in raw.split("items:")[1]
+    for item in BANK.items:
+        words = _norm(_filled(item)).split()
+        shared = [" ".join(words[k:k + 4]) for k in range(len(words) - 3)
+                  if " " + " ".join(words[k:k + 4]) + " " in " " + learner + " "]
+        assert not shared, (item.id, shared)       # no 4-word chunk of Roman's situations
+        assert "docs/learner" not in item.source and "roman" not in item.source.lower(), item.id
+        # neutral contexts: nothing personal or tied to one city
+        assert not re.search(r"roman|vitoria|gasteiz|pintxo|euskera|rusia", _filled(item).lower()), item.id
+
+
+def test_items_cite_a_descriptor_at_their_level():
+    for item in BANK.items:
+        assert item.source.startswith(("PCIC ", "CEFR ")), item.id
+        if item.source.startswith("PCIC"):
+            assert item.source.split()[1] == item.level, item.id
+
+
+def test_bank_is_balanced_and_l1_neutral():
+    for lvl in TEST_LEVELS:
+        items = [i for i in BANK.items if i.level == lvl]
+        assert len(items) >= BLOCK + EXTRA, lvl
+        assert len({i.category for i in items}) >= 3, lvl
+    assert len({i.category for i in BANK.items}) >= 8
+    cyrillic = re.compile("[а-яё]", re.I)
+    for item in BANK.items:     # answering never needs the learner's L1
+        assert not cyrillic.search(item.stem) and not any(cyrillic.search(o) for o in item.options), item.id
+
+
+def test_stale_learner_flag_rejected_and_levels_provisional():
+    raw = BANK.model_dump()
+    raw["items"][0]["from_learner"] = True
+    with pytest.raises(ValueError):
+        PlacementBank.model_validate(raw)
+    raw = BANK.model_dump()
+    raw["items"][0]["source"] = "docs/learner/roman-spanish.md"
+    with pytest.raises(ValueError):
+        PlacementBank.model_validate(raw)
+    assert BANK.calibration == "provisional"
 
 
 def test_public_item_hides_answer():
@@ -83,13 +142,14 @@ def test_score_drops_unknown_and_repeats():
 
 
 def test_unit_start_is_first_open_unit_with_gap():
-    # A2 learner who failed the se me han olvidado item → starts at unit 2, not unit 1.
-    _, answers = run("A2", "A2", wrong={"a2-se-me-llaves"})
+    # A2 learner who failed the se le ha roto item → starts at unit 2, not unit 1.
+    _, answers = run("A2", "A2", wrong={"a2-se-le-roto"})
     res = diagnose(BANK, answers, UNITS, "A2")
     assert res["level"] == "A2"
     assert res["start_unit"] == "es-a2-hoy-he-hecho" and res["start_reason"] == "gap"
-    gap = next(g for g in res["gaps"] if g["item_id"] == "a2-se-me-llaves")
-    assert gap["correct"] == "han olvidado" and gap["category"] == "agreement"
+    gap = next(g for g in res["gaps"] if g["item_id"] == "a2-se-le-roto")
+    assert gap["correct"] == "ha roto" and gap["category"] == "agreement"
+    assert res["provisional"] is True
     assert "es-a2-hoy-he-hecho" not in res["suggested_known"]
     assert {p["level"] for p in res["production_prompts"]} == {"A2", "B1"}
 
@@ -151,3 +211,20 @@ def test_api_errors(client):
     assert client.post("/api/placement/xx/next", json={"user_id": "u"}).status_code == 404
     assert client.post("/api/placement/es/finish", json={"user_id": "u", "answers": []}).status_code == 400
     assert client.get("/api/placement/nobody").json() == {"placement": None}
+
+
+@pytest.mark.parametrize("position", [0, 1, 2, 3])
+def test_clicking_one_button_position_does_not_pass_levels(position):
+    """Answer keys sat mostly at option 2 in the YAML; the shown order is shuffled per item."""
+    for start in TEST_LEVELS:
+        answers = []
+        for _ in range(40):
+            res = step(BANK, answers, start)
+            if res["done"]:
+                break
+            opts = res["item"]["options"]
+            answers.append({"item_id": res["item"]["id"], "choice": opts[min(position, len(opts) - 1)]})
+        assert res["done"] and res["beginner"], (position, start, res)
+    item = BANK.items[0]
+    assert sorted(item.public()["options"]) == sorted(item.options)
+    assert item.public()["options"] == item.public()["options"]      # stable between requests

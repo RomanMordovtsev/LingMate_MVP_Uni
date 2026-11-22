@@ -1123,6 +1123,7 @@ function renderPlacementResult(r) {
   const lines = [
     'Уровень по тесту: ' + (r.beginner ? 'A1 — начинаем с основ' : r.level)
       + (r.taken_at ? ' · ' + r.taken_at.slice(0, 10) : ''),
+    r.provisional ? 'Оценка предварительная: тест ещё калибруется, уточним уровень по твоим ответам в уроках.' : '',
     r.start_unit_title ? 'Начать с урока: «' + r.start_unit_title + '»' + (r.start_reason === 'gap' ? ' — здесь нашёлся пробел' : '') : '',
     gaps.length ? 'Стоит подтянуть: ' + gaps.join('; ') : 'Пробелов на твоём уровне тест не нашёл — проверим в разговоре.',
     (r.suggested_known || []).length ? 'Похоже, уже знаешь (повторим быстро): ' + r.suggested_known.length + ' ур.' : '',
