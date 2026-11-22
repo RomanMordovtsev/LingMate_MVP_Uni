@@ -58,5 +58,8 @@ Use these principles when designing LingMate features. Cite the source in PR des
 - Foreigner talk (Unit 5 materials): native speakers simplify for non-natives (shorter, slower, frequent vocabulary) without ungrammaticality.
 - **Design rule:** bot replies are calibrated to CEFR level but always grammatical.
 
+## Further reading (class presentation list, Oct 2026)
+- Titles relevant to LingMate, not yet read in full: Lightbown & Spada (2000) on learners' awareness of L1 influence; Delgado-Garza & García Mayo (2025) on metalinguistic explanations and metalinguistic awareness; Zhang, Rebuschat & Monaghan (2026) on age and instruction in learning vocabulary and grammar; Ionin et al. (2023) on word order and information structure in L2/heritage Russian.
+
 ## Course caution
 The course forbids AI in assessed work. LingMate is a learning tool for Roman's own Spanish, never a homework generator.

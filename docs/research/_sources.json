@@ -1,6 +1,6 @@
 {
  "root": "D:\\Downloads\\Обучение",
- "note": "Files already distilled into docs/research (state 2026-11-20). Excluded on purpose: Idiomas/ (personal language study), anything under \"Claude outputs\", Roman's own assignments.",
+ "note": "Files already distilled into docs/research (state 2026-11-22). Excluded on purpose: Idiomas/ (personal language study), anything under \"Claude outputs\", Roman's own assignments.",
  "processed": [
   {
    "path": "Morphosyntax/Assignments/Assignment_1_The_Acquisition_of_Morphosyntax.docx",
@@ -207,6 +207,10 @@
    "size": 1499923
   },
   {
+   "path": "Morphosyntax/Материалы/ORAL PRESENTATIONS.docx",
+   "size": 24783
+  },
+  {
    "path": "Morphosyntax/Материалы/On Patty (Lardiere) (3).docx",
    "size": 15920
   },
@@ -349,6 +353,10 @@
   {
    "path": "Multilingual Education/Материалы/03 Multilingual Education.pptx",
    "size": 1506538
+  },
+  {
+   "path": "Multilingual Education/Материалы/04 Foreign language learning.pptx",
+   "size": 1535864
   },
   {
    "path": "Multilingual Education/Материалы/09 Puebla, Fievet, Tsopanidi and Clahsen (2022).pdf",
@@ -623,8 +631,92 @@
    "size": 7961934
   },
   {
+   "path": "Pragmatics/Материалы/Apologies.pdf",
+   "size": 3793590
+  },
+  {
+   "path": "Pragmatics/Материалы/Compliments.pdf",
+   "size": 9545654
+  },
+  {
+   "path": "Pragmatics/Материалы/Course Outline 2026-27.pdf",
+   "size": 271038
+  },
+  {
+   "path": "Pragmatics/Материалы/Disagreement.pdf",
+   "size": 725538
+  },
+  {
+   "path": "Pragmatics/Материалы/Evaluation criteria lesson planning.docx",
+   "size": 22043
+  },
+  {
+   "path": "Pragmatics/Материалы/Exercises Culture.pdf",
+   "size": 63627
+  },
+  {
+   "path": "Pragmatics/Материалы/Exercises Politeness.pdf",
+   "size": 131260
+  },
+  {
+   "path": "Pragmatics/Материалы/Exercises Pragmatics.pdf",
+   "size": 128665
+  },
+  {
+   "path": "Pragmatics/Материалы/Exercises Speech Acts.pdf",
+   "size": 135642
+  },
+  {
+   "path": "Pragmatics/Материалы/Politeness Theory.pdf",
+   "size": 425948
+  },
+  {
+   "path": "Pragmatics/Материалы/Questions about culture.pdf",
+   "size": 477918
+  },
+  {
+   "path": "Pragmatics/Материалы/Refusals.pdf",
+   "size": 3768233
+  },
+  {
+   "path": "Pragmatics/Материалы/Requests.pdf",
+   "size": 821167
+  },
+  {
+   "path": "Pragmatics/Материалы/Speech Act Theory.pdf",
+   "size": 1995112
+  },
+  {
+   "path": "Pragmatics/Материалы/Suggestions.pdf",
+   "size": 794248
+  },
+  {
+   "path": "Pragmatics/Материалы/Teaching Advice Giving in English.pdf",
+   "size": 201423
+  },
+  {
+   "path": "Pragmatics/Материалы/The teaching of pragmatics.pdf",
+   "size": 201604
+  },
+  {
+   "path": "Pragmatics/Материалы/What is Pragmatics.pdf",
+   "size": 1913045
+  },
+  {
+   "path": "Research Methods/Материалы/Answer key for EXERCISE 5 Unit 4.docx",
+   "size": 14613
+  },
+  {
+   "path": "Research Methods/Материалы/Answer key for exercise 2 Unit 6.pdf",
+   "size": 43931
+  },
+  {
    "path": "Research Methods/Материалы/BASICS OF APA STYLE 7th edition.pdf",
    "size": 92467
+  },
+  {
+   "path": "Research Methods/Материалы/Designs.pptx",
+   "size": 138281
   },
   {
    "path": "Research Methods/Материалы/Materials and activities sent by Emilio (university library) 26-27-20261101.zip",
@@ -635,12 +727,24 @@
    "size": 201217
   },
   {
+   "path": "Research Methods/Материалы/Reliability.pptx",
+   "size": 49254
+  },
+  {
+   "path": "Research Methods/Материалы/Statistical Analyses.pptx",
+   "size": 38446
+  },
+  {
    "path": "Research Methods/Материалы/Steps to create your personal account in the Library catalog-1.pdf",
    "size": 770215
   },
   {
    "path": "Research Methods/Материалы/Syllabus 26-27.pdf",
    "size": 326392
+  },
+  {
+   "path": "Research Methods/Материалы/Take-home message for bibliographic resources.pdf",
+   "size": 32991
   },
   {
    "path": "Research Methods/Материалы/UNIT 2 RM handout.pdf",
@@ -655,8 +759,24 @@
    "size": 178718
   },
   {
+   "path": "Research Methods/Материалы/UNIT 6 RM handout 2026.pdf",
+   "size": 221034
+  },
+  {
    "path": "Research Methods/Материалы/Unit 1.pdf",
    "size": 92818
+  },
+  {
+   "path": "Research Methods/Материалы/Unit 5. Part I.pdf",
+   "size": 843635
+  },
+  {
+   "path": "Research Methods/Материалы/Unit 5. Part II.pdf",
+   "size": 225552
+  },
+  {
+   "path": "Research Methods/Материалы/Validity.pptx",
+   "size": 44876
   },
   {
    "path": "Research Methods/Материалы/unit 2 extra copies RMinSLA.pdf",
@@ -665,6 +785,10 @@
   {
    "path": "Research Methods/Материалы/unit 4 extra copies RMinSLA.pdf",
    "size": 2700582
+  },
+  {
+   "path": "Research Methods/Материалы/unit 6 extra copies RMinSLA.pdf",
+   "size": 5510296
   },
   {
    "path": "SLA/Mordovtsev_SLA_Error_Analysis_Essay.docx",
@@ -721,6 +845,18 @@
   {
    "path": "SLA/Материалы/The age factor in L2 acquisition_ -ss (3).ppt",
    "size": 256000
+  },
+  {
+   "path": "Semantic Analysis/Материалы/CourseGuide_SADL_26-27.pdf",
+   "size": 73780
+  },
+  {
+   "path": "Semantic Analysis/Материалы/Ellis_2026 [Whats in a word].pdf",
+   "size": 1608899
+  },
+  {
+   "path": "Semantic Analysis/Материалы/SemADL_Student Guide_26-27.pdf",
+   "size": 769983
   },
   {
    "path": "Syllabus Design/Homework_Syllabus_Design_Mordovtsev.docx",
@@ -837,6 +973,18 @@
   {
    "path": "Syllabus Design/Материалы/Van den Branden (2016).pdf",
    "size": 3989992
+  }
+ ],
+ "excluded": [
+  {
+   "path": "Syllabus Design/Travel_TBLT_B1_Unit_Design.docx",
+   "size": 45252,
+   "reason": "Roman's own group project (Mordovtsev & Li)"
+  },
+  {
+   "path": "Syllabus Design/Материалы/Travelling_in_English_TBLT.pptx",
+   "size": 482695,
+   "reason": "Roman's own group project (Mordovtsev & Li)"
   }
  ]
 }
