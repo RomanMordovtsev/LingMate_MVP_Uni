@@ -12,6 +12,13 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 - Notion: new 22.11 «overhaul» → `docs/learner` + synthetic case `syn-lexical-ru-overhaul` (RU calque *reparación capital* → *reforma integral*).
 - Tests: 264 → 273. Playwright: fresh DB, es, 14 questions → B1 with provisional note; "always 2nd option" → A1 beginner; no console errors.
 - Open for Roman: item wording and level placement (his and a teacher's judgement); calibration needs real users.
+## 2026-11-22 — Research import: new course materials (scheduled run)
+- Branch `agent/research-2026-11-22` → PR into `agent/dev`. 34 new files (Pragmatics 18, Research Methods 11, Semantic Analysis 3, Multilingual Education 1, Morphosyntax 1); 11 Pragmatics PDFs and the RM Unit 6 extra copies were scans → OCR (tesseract eng+spa).
+- New `docs/research/pragmatics.md`, `docs/research/semantic-analysis.md`; `research-methods.md` §7–13 (Units 5–6), `multilingual-education.md` §8 (CLIL), `morphosyntax.md` further reading.
+- ROADMAP: Pedagogy list + new 3.6 (vocabulary as chunks), 4.10 (speech-act lessons + pragmatic feedback), 5.9 (written CAF trends + feature-switch log).
+- Skipped: Roman's own TBLT unit (Travel_TBLT_B1_Unit_Design.docx, Travelling_in_English_TBLT.pptx) → `excluded` in `_sources.json`.
+- Notion «Чтения»: 34 cards; new options Курс = Pragmatics, Semantic Analysis; Темы = Pragmatics, Speech acts, Politeness, Culture, Vocabulary, Phraseology.
+- Open for Roman: RU→ES pragmatic transfer points in pragmatics §6 are hypotheses to check.
 
 ## 2026-11-21 — C.2 Placement + diagnosis, slice 1 (scheduled run)
 - Branch `agent/placement` → PR into `agent/dev`. No open PRs, no comments; #18, #19 merged. docs/feedback: nothing new after 2026-11-16. Notion: no new entries since 19.11. Saturday of odd ISO week 47 → ordinary day. Roman's 20.11 note: C.2 before more units, never assume a level.

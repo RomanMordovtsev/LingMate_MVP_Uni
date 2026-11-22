@@ -33,3 +33,8 @@ Course by Agurtzane Azkarai. Distilled from course slides and ~60 readings (see 
 - Older learners (Puebla et al. 2022; later-life reviews): value clear usefulness, simple UI, technical confidence, social support.
 - Workplace multilingualism (van der Worp et al. 2017): work-goal users need emails, calls, meetings.
 - **Design rule:** goal-driven scenario packs (relocation, work, travel, hobby); accessibility settings (font size, slower TTS); no pressure mechanics for users who opt out.
+
+### 8. More exposure is not automatically better input (FL classroom, CLIL, study abroad)
+- Muñoz (2008): mainstream FL classes give little exposure (2–4 short sessions a week) and the language is not used among peers or outside class. CLIL adds meaningful input, time and negotiation (Coyle 2007; Dalton-Puffer 2011; García Mayo & Lázaro Ibarrola 2015), but Bruton (2011) warns: if the content is unfamiliar or not wanted, language development will not happen; content and language must be balanced and match learners' needs.
+- **Design rule:** content mode (4.6) uses topics the learner already knows and cares about (from the profile's interests), and every content session has one explicit language goal. Study-abroad style exposure is supported with tasks, not assumed (see §3).
+
