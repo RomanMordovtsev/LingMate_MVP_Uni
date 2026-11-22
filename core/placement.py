@@ -7,6 +7,8 @@ known gaps and the starting unit of the curriculum (C.1).
   (2/4); pass → one level up, fail → one level down; stop when a passed level sits under a
   failed one (or at the ends). The start is the profile level — only a starting point:
   the placement result, not the self-report, decides (Roman 2026-11-20: "never assume a level").
+- Generic: items come from level descriptors (PCIC, CEFR CV 2020), not from one learner
+  (docs/feedback/2026-11-21); their levels stay provisional until calibrated.
 - Diagnosis: every wrong answer names a topic, an error category (1.3 contract) and, when
   linked, a grammar point of a unit → the start is the first open unit with a gap
   (syllabus-design §1: start from the learner's needs; morphosyntax §10: teach up to the next stage).
@@ -17,13 +19,15 @@ Template-based: another language = another `placement.yaml` with the same shape.
 """
 from __future__ import annotations
 
+import hashlib
+import random
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
 from typing import Dict, Iterable, List, Literal, Optional
 
 import yaml
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from core.curriculum import CURRICULUM_DIR, LEVELS, Unit, next_units
 from core.feedback import ERROR_CATEGORIES
@@ -32,9 +36,15 @@ TEST_LEVELS = ("A1", "A2", "B1", "B2")
 BLOCK = 4            # items per level before a decision
 EXTRA = 2            # extra items when the block is borderline
 RECHECK_AFTER_UNITS = 3   # re-check every few units (C.2); used by C.4
+SHUFFLE_SALT = "lingmate-placement-v1"
 
 
 class Item(BaseModel):
+    """One receptive item of the GENERIC entry test (docs/feedback/2026-11-21): written from a
+    level descriptor (`source`), never from one learner's situations — those go to personal
+    diagnostics (error log 1.6, mastery C.4, SRS 3.1)."""
+    model_config = ConfigDict(extra="forbid")
+
     id: str = Field(pattern=r"^[a-c][12]-[a-z0-9-]+$")
     level: Literal["A1", "A2", "B1", "B2"]
     category: str
@@ -45,7 +55,8 @@ class Item(BaseModel):
     kind: Literal["gap", "meaning"] = "gap"
     grammar: Optional[str] = None       # grammar point id in curriculum/<lang>/units/*.yaml
     hint_ru: str = ""
-    from_learner: bool = False          # built from docs/learner (Roman's real situations)
+    # Descriptor the item tests: "PCIC <band> <inventory>: <item>" and/or "CEFR CV 2020 <scale>".
+    source: str = Field(pattern=r"^(PCIC|CEFR) ", min_length=12)
 
     @field_validator("category")
     @classmethod
@@ -64,10 +75,18 @@ class Item(BaseModel):
             raise ValueError(f"{self.id}: id prefix does not match level {self.level}")
         return self
 
+    def shown_options(self) -> List[str]:
+        """Options in a stable per-item shuffled order: the key position in the YAML must not
+        leak (always clicking the 2nd button would otherwise "pass" levels)."""
+        seed = int(hashlib.sha256(f"{SHUFFLE_SALT}:{self.id}".encode()).hexdigest(), 16)
+        opts = list(self.options)
+        random.Random(seed).shuffle(opts)
+        return opts
+
     def public(self) -> dict:
         """What the client sees: no answer key."""
         return {"id": self.id, "level": self.level, "kind": self.kind, "stem": self.stem,
-                "options": self.options, "hint_ru": self.hint_ru}
+                "options": self.shown_options(), "hint_ru": self.hint_ru}
 
 
 class ProductionPrompt(BaseModel):
@@ -81,6 +100,8 @@ class ProductionPrompt(BaseModel):
 class PlacementBank(BaseModel):
     language: str
     variant: str
+    # Item levels are provisional until calibrated on answers of many learners (5.4/5.5).
+    calibration: Literal["provisional", "calibrated"] = "provisional"
     items: List[Item]
     production: List[ProductionPrompt] = []
 
@@ -228,7 +249,8 @@ def diagnose(b: PlacementBank, answers: Iterable[dict], units: List[Unit],
             "start_unit": start.id if start else None,
             "start_unit_title": start.title_ru if start else None,
             "start_reason": ("gap" if with_gap else "next") if start else None,
-            "production_prompts": prompts, "recheck_after_units": RECHECK_AFTER_UNITS}
+            "production_prompts": prompts, "recheck_after_units": RECHECK_AFTER_UNITS,
+            "provisional": b.calibration == "provisional"}
 
 
 def record(result: dict, answers: Iterable[dict], production: Iterable[dict],

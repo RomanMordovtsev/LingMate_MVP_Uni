@@ -33,11 +33,18 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | concessive "even if": *aunque* + subjuntivo vs indicativo; never *si* + present subjunctive | mood | even if 15.11 |
 | academic / presentation vocabulary from EN (*engage* ≠ *comprometer*; *público* vs *audiencia*) | lexical, transfer EN | engage 15.11 |
 | hoping / wishing: *espero que* + subjuntivo (*salga, vaya*), *ojalá*, *eso espero* | mood / chunk | espero 19.11 |
+| EN/RU "overhaul / капитальный ремонт" → *reforma integral* (flat, system), *revisión a fondo* (car); *la reforma* = flat renovation in Spain | lexical, transfer EN/RU | overhaul 22.11 |
 | EN news/academic adverbs (*allegedly*) → *presuntamente / supuestamente / al parecer*; *presumir* = to boast, not *to presume* | lexical, transfer EN | allegedly 19.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 22.11.2026 — «Overhaul» → reforma integral / revisión a fondo
+- Question from English (no utterance → synthetic eval case `syn-lexical-ru-overhaul`: RU calque *reparación capital* «капитальный ремонт» → *reforma integral*).
+- By context: system / laws → **una reforma integral / a fondo**, *reformar a fondo*, *reestructurar*; car / engine → **una revisión general / a fondo** (*rectificar / reconstruir el motor*); website / product → *renovar por completo, rehacer, remodelar*; CV / text → *rehacer, darle un buen repaso*. Colloquial *un lavado de cara* = a cosmetic revamp, not an overhaul.
+- Spain: **la reforma** = also renovating a flat: *Estamos de reformas.*, *una reforma integral del piso*; rental ads *reformado* / *a reformar*. **revisar** = check / service a car (*llevar el coche a revisar*) — without *a fondo / general* it is not an overhaul. *rehacer* conjugates like *hacer* (rehago, rehice, rehecho).
+- Uses: relocation pack 4.3 (renting, landlord), EN→ES / RU→ES lexical transfer, SRS chunks.
 
 ### 19.11.2026 — «Allegedly» → presuntamente / supuestamente
 - Question from English (no utterance → synthetic eval case `syn-lexical-en-4`: *presume que* → *supone que* / *al parecer*).

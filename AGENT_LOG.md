@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-22 — C.2 slice 2: generic placement test (docs/feedback/2026-11-21) (scheduled run)
+- Branch `agent/placement-generic` → PR into `agent/dev`. Open PR #21 (research import, Roman's weekly task, no comments) — independent, not touched. Sunday, ISO week 47 → ordinary day. Feedback 2026-11-21 is this run's task (findings before features).
+- `curriculum/es/placement.yaml`: the 12 items from Roman's situations replaced by generic ones written from PCIC inventories / CEFR CV 2020 (se le ha roto el móvil, vino, ¿puedes traer el postre?, ¿qué te pongo?, Disculpe…, el problema, ¿quitas el aire?, que tengas buen viaje, espero que te guste, me alegré de que vinieran, por lo tanto, tomar una decisión); A1/B2 contexts neutralised (no Roman / Rusia / pintxos / euskera); meaning item now Spanish-only (valid for any L1). +2 items (a1 ir al, b1 es importante que) → 31 items, ≥7 per level, ≥3 categories per level. Unit grammar points stay linked (units are curriculum topics; only the item contexts changed).
+- `core/placement.py`: `Item.source` required (`PCIC <band> …` / `CEFR …`), `extra="forbid"` (stale `from_learner` fails), bank `calibration: provisional` → `provisional` in the diagnosis, UI line «Оценка предварительная…».
+- Found while self-testing: the key sat at option 2 in 22/31 items, so "always click the 2nd button" placed a learner at B1. `Item.shown_options()` = stable per-item shuffle (salted sha256); now every fixed-position strategy ends as beginner (test).
+- Notion: new 22.11 «overhaul» → `docs/learner` + synthetic case `syn-lexical-ru-overhaul` (RU calque *reparación capital* → *reforma integral*).
+- Tests: 264 → 273. Playwright: fresh DB, es, 14 questions → B1 with provisional note; "always 2nd option" → A1 beginner; no console errors.
+- Open for Roman: item wording and level placement (his and a teacher's judgement); calibration needs real users.
 ## 2026-11-22 — Research import: new course materials (scheduled run)
 - Branch `agent/research-2026-11-22` → PR into `agent/dev`. 34 new files (Pragmatics 18, Research Methods 11, Semantic Analysis 3, Multilingual Education 1, Morphosyntax 1); 11 Pragmatics PDFs and the RM Unit 6 extra copies were scans → OCR (tesseract eng+spa).
 - New `docs/research/pragmatics.md`, `docs/research/semantic-analysis.md`; `research-methods.md` §7–13 (Units 5–6), `multilingual-education.md` §8 (CLIL), `morphosyntax.md` further reading.
