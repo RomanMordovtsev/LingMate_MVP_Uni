@@ -1,0 +1,1711 @@
+{
+  "summary": {
+    "cases": 39,
+    "answered": 39,
+    "provider_failures": 0,
+    "error_cases": 33,
+    "clean_cases": 6,
+    "detection_rate": 0.909,
+    "category_recall": 0.848,
+    "category_precision": 0.933,
+    "text_match_rate": 0.697,
+    "false_positive_rate": 0.0,
+    "transfer_accuracy": 0.462,
+    "transfer_flagged_rate": 0.923,
+    "transfer_source_filled": 1.0,
+    "per_category": {
+      "agreement": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "article": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "clitic": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "gender": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "lexical": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 3,
+        "precision": 1.0,
+        "recall": 0.625
+      },
+      "mood": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "preposition": {
+        "tp": 3,
+        "fp": 2,
+        "fn": 0,
+        "precision": 0.6,
+        "recall": 1.0
+      },
+      "register": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.333
+      },
+      "ser_estar": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "spelling_accent": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "tense_aspect": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.5
+      },
+      "word_order": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0
+      }
+    },
+    "latency_s": {
+      "mean": 6.477,
+      "median": 2.761,
+      "max": 38.851
+    },
+    "quota_stopped": null
+  },
+  "cases": [
+    {
+      "id": "roman-2026-10-31-bus",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register",
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 19.966,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "roman-2026-10-queue",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "transfer_hit": true,
+      "latency_s": 10.642,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "en la línea",
+        "corrected": "en la cola / al teléfono",
+        "error_category": "lexical",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "В испанском языке 'línea' обычно не используется в значении очереди или телефонного разговора.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "en la "
+          },
+          {
+            "op": "del",
+            "text": "línea"
+          },
+          {
+            "op": "ins",
+            "text": "cola / al teléfono"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "roman-2026-10-compliment",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition",
+        "spelling_accent"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 1.352,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "esfuerzo practicar lo más possible",
+        "corrected": "esfuerzo por practicar lo más posible",
+        "error_category": "preposition",
+        "cf_type": "recast",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "После глагола 'esforzarse' нужно использовать предлог 'por', а слово 'posible' пишется с одной 's'.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "esfuerzo"
+          },
+          {
+            "op": "ins",
+            "text": " por"
+          },
+          {
+            "op": "equal",
+            "text": " practicar lo más "
+          },
+          {
+            "op": "del",
+            "text": "possible"
+          },
+          {
+            "op": "ins",
+            "text": "posible"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "roman-2026-11-14-lift",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "gender",
+        "lexical"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 2.293,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "a la cero",
+        "corrected": "a las doce",
+        "error_category": "lexical",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке время обычно называют через «las doce», а не «ноль».",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "a la"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          },
+          {
+            "op": "equal",
+            "text": " "
+          },
+          {
+            "op": "del",
+            "text": "cero"
+          },
+          {
+            "op": "ins",
+            "text": "doce"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-article-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "article",
+        "gender"
+      ],
+      "predicted_category": "gender",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 6.49,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "la máster",
+        "corrected": "el máster",
+        "error_category": "gender",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Слово 'máster' в испанском языке мужского рода.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "la"
+          },
+          {
+            "op": "ins",
+            "text": "el"
+          },
+          {
+            "op": "equal",
+            "text": " máster"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-article-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "article"
+      ],
+      "predicted_category": "article",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": true,
+      "latency_s": 2.637,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "cerca de universidad",
+        "corrected": "cerca de la universidad",
+        "error_category": "article",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке перед существительными, обозначающими конкретные места, обычно нужен артикль.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "cerca de "
+          },
+          {
+            "op": "ins",
+            "text": "la "
+          },
+          {
+            "op": "equal",
+            "text": "universidad"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.article",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Артикли: в русском их нет",
+            "source_example": "Мне нравится кофе. Я купил машину.",
+            "target_example": "Me gusta el café. Compré un coche.",
+            "note": "В русском нет артиклей, поэтому их легко пропустить. el/la — «тот самый» или вещь вообще (me gusta el café), un/una — «какой-то, один» (compré un coche)."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-gender-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": "gender",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 38.851,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "un postal",
+        "corrected": "una postal",
+        "error_category": "gender",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "Слово 'postal' (открытка) женского рода, поэтому нужно использовать 'una'.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "un"
+          },
+          {
+            "op": "ins",
+            "text": "a"
+          },
+          {
+            "op": "equal",
+            "text": " postal"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.gender_mismatch",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Род не совпадает с русским",
+            "source_example": "молоко (ср. р.), открытка",
+            "target_example": "la leche, la postal",
+            "note": "Род в испанском не всегда совпадает с русским: la leche (молоко — ср. р.), la postal, la calle, el coche. Слова на -ción всегда женского рода."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-gender-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": "gender",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 14.766,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "El calefacción",
+        "corrected": "La calefacción",
+        "error_category": "gender",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Слово 'calefacción' женского рода, поэтому нужно использовать артикль 'la'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "El"
+          },
+          {
+            "op": "ins",
+            "text": "La"
+          },
+          {
+            "op": "equal",
+            "text": " calefacción"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.gender_mismatch",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Род не совпадает с русским",
+            "source_example": "молоко (ср. р.), открытка",
+            "target_example": "la leche, la postal",
+            "note": "Род в испанском не всегда совпадает с русским: la leche (молоко — ср. р.), la postal, la calle, el coche. Слова на -ción всегда женского рода."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-agreement-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 2.945,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "simpático",
+        "corrected": "simpáticos",
+        "error_category": "agreement",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке прилагательное должно согласовываться с существительным в числе; здесь 'compañeros' во множественном числе.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "simpático"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-agreement-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement",
+        "article"
+      ],
+      "predicted_category": "agreement",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 4.106,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Las clases de la máster son interesante",
+        "corrected": "Las clases del máster son interesantes",
+        "error_category": "agreement",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Слово 'máster' мужского рода, поэтому нужно 'del' и согласование прилагательного во множественном числе.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Las clases "
+          },
+          {
+            "op": "del",
+            "text": "de la"
+          },
+          {
+            "op": "ins",
+            "text": "del"
+          },
+          {
+            "op": "equal",
+            "text": " máster son interesante"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-serestar-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": "ser_estar",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 2.702,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Soy cansado",
+        "corrected": "Estoy cansado",
+        "error_category": "ser_estar",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Для временных состояний в испанском языке используется глагол estar, а не ser.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "Soy"
+          },
+          {
+            "op": "ins",
+            "text": "Estoy"
+          },
+          {
+            "op": "equal",
+            "text": " cansado"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.ser_estar",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Один глагол «быть» → ser и estar",
+            "source_example": "Я устал. Он врач. Я в Витории.",
+            "target_example": "Estoy cansado. Es médico. Estoy en Vitoria.",
+            "note": "В русском одно «быть» (часто пропускается). ser — что это, кто это, какое по сути; estar — где и в каком состоянии сейчас."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-serestar-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": "ser_estar",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 1.941,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "es",
+        "corrected": "está",
+        "error_category": "ser_estar",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В русском языке мы часто используем глагол «быть» для местоположения, но в испанском для этого нужно использовать глагол estar.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "es"
+          },
+          {
+            "op": "ins",
+            "text": "tá"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.ser_estar",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Один глагол «быть» → ser и estar",
+            "source_example": "Я устал. Он врач. Я в Витории.",
+            "target_example": "Estoy cansado. Es médico. Estoy en Vitoria.",
+            "note": "В русском одно «быть» (часто пропускается). ser — что это, кто это, какое по сути; estar — где и в каком состоянии сейчас."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-tense-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": "tense_aspect",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": true,
+      "latency_s": 7.216,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "me daban",
+        "corrected": "me dieron",
+        "error_category": "tense_aspect",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке для завершенного действия в прошлом лучше использовать Pretérito Indefinido (dieron).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "me "
+          },
+          {
+            "op": "del",
+            "text": "daban"
+          },
+          {
+            "op": "ins",
+            "text": "dieron"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.aspect",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Вид глагола ≠ pretérito / imperfecto",
+            "source_example": "Я читал книгу (долго) / Я прочитал книгу",
+            "target_example": "Leía un libro / Leí el libro",
+            "note": "Похоже на совершенный/несовершенный вид, но не 1:1: imperfecto — фон, привычка, описание в прошлом; indefinido — законченное событие, даже долгое (Viví dos años en Madrid)."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-tense-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 21.089,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": "mood",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 5.377,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "tienes",
+        "corrected": "tengas",
+        "error_category": "mood",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "После конструкции 'espero que' всегда используется сослагательное наклонение (subjuntivo).",
+        "diff": [
+          {
+            "op": "del",
+            "text": "tienes"
+          },
+          {
+            "op": "ins",
+            "text": "tengas"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.subjunctive",
+            "source": "ru",
+            "kind": "negative",
+            "title": "«чтобы + прошедшее» → que + subjuntivo",
+            "source_example": "Хочу, чтобы ты пришёл. Надеюсь, что ты придёшь.",
+            "target_example": "Quiero que vengas. Espero que vengas.",
+            "note": "Где в русском «чтобы» или пожелание, в испанском que + subjuntivo: Quiero que vengas, ¡Que aproveche! После esperar que, para que, cuando (о будущем) — тоже subjuntivo."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-mood-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": "mood",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 11.444,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Cuando llego a casa, te llamaré.",
+        "corrected": "Cuando llegue a casa, te llamaré.",
+        "error_category": "mood",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В придаточных предложениях времени, когда действие относится к будущему, после 'cuando' используется сослагательное наклонение (subjuntivo).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Cuando lleg"
+          },
+          {
+            "op": "del",
+            "text": "o"
+          },
+          {
+            "op": "ins",
+            "text": "ue"
+          },
+          {
+            "op": "equal",
+            "text": " a casa, te llamaré."
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.subjunctive",
+            "source": "ru",
+            "kind": "negative",
+            "title": "«чтобы + прошедшее» → que + subjuntivo",
+            "source_example": "Хочу, чтобы ты пришёл. Надеюсь, что ты придёшь.",
+            "target_example": "Quiero que vengas. Espero que vengas.",
+            "note": "Где в русском «чтобы» или пожелание, в испанском que + subjuntivo: Quiero que vengas, ¡Que aproveche! После esperar que, para que, cuando (о будущем) — тоже subjuntivo."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-prep-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": true,
+      "latency_s": 13.249,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "ceno con pasta",
+        "corrected": "ceno pasta",
+        "error_category": "preposition",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке глагол 'cenar' (ужинать) требует прямого дополнения без предлога.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "ceno "
+          },
+          {
+            "op": "del",
+            "text": "con "
+          },
+          {
+            "op": "equal",
+            "text": "pasta"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.meal_verbs",
+            "source": "ru",
+            "kind": "negative",
+            "title": "ужинать чем → cenar algo",
+            "source_example": "Сегодня ужинаю пастой",
+            "target_example": "Esta noche ceno pasta",
+            "note": "Cenar, comer, desayunar берут еду без предлога: ceno pasta (не «ceno con pasta»). Con — только «с кем»: ceno con amigos."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-prep-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 4.883,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Pienso de mudarme",
+        "corrected": "Pienso mudarme",
+        "error_category": "preposition",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Глагол 'pensar' в значении 'планировать что-то сделать' используется без предлога.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Pienso "
+          },
+          {
+            "op": "del",
+            "text": "de "
+          },
+          {
+            "op": "equal",
+            "text": "mudarme"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clitic-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "clitic",
+        "word_order"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 2.761,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "encendí la ayer",
+        "corrected": "la encendí ayer",
+        "error_category": "word_order",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке местоимение ставится перед глаголом, а не после него.",
+        "diff": [
+          {
+            "op": "ins",
+            "text": "la "
+          },
+          {
+            "op": "equal",
+            "text": "encendí "
+          },
+          {
+            "op": "del",
+            "text": "la "
+          },
+          {
+            "op": "equal",
+            "text": "ayer"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clitic-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "clitic"
+      ],
+      "predicted_category": "clitic",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 2.632,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "A mi hermana gusta",
+        "corrected": "A mi hermana le gusta",
+        "error_category": "clitic",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке с глаголом gustar всегда нужно использовать косвенное местоимение (le).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "A mi hermana "
+          },
+          {
+            "op": "ins",
+            "text": "le "
+          },
+          {
+            "op": "equal",
+            "text": "gusta"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.clitic",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Местоимения-клитики стоят у глагола",
+            "source_example": "Я его видел. Дай мне его.",
+            "target_example": "Lo vi. Dámelo.",
+            "note": "В русском местоимение может стоять где угодно; в испанском lo/la/le/me/te — прямо перед спрягаемым глаголом (lo vi) или слитно после инфинитива/императива (dámelo, quiero verlo)."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-order-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "word_order"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 2.452,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "¿Dónde la parada está?",
+        "corrected": "¿Dónde está la parada?",
+        "error_category": "word_order",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке подлежащее обычно ставится после глагола в вопросительных предложениях.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "¿Dónde"
+          },
+          {
+            "op": "ins",
+            "text": " está"
+          },
+          {
+            "op": "equal",
+            "text": " la parada"
+          },
+          {
+            "op": "del",
+            "text": " está"
+          },
+          {
+            "op": "equal",
+            "text": "?"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-order-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "word_order",
+        "agreement"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 1.034,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "muy bueno profesor",
+        "corrected": "muy buen profesor",
+        "error_category": "word_order",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Перед существительным мужского рода прилагательное 'bueno' сокращается до 'buen'.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "muy buen"
+          },
+          {
+            "op": "del",
+            "text": "o"
+          },
+          {
+            "op": "equal",
+            "text": " profesor"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-lexical-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical",
+        "preposition"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "transfer_hit": true,
+      "latency_s": 4.052,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "aplicar para",
+        "corrected": "solicitar",
+        "error_category": "lexical",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "В испанском языке 'aplicar' обычно означает 'применять', а для подачи заявления на стипендию используется глагол 'solicitar'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "aplicar para"
+          },
+          {
+            "op": "ins",
+            "text": "solicitar"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-lexical-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 10.723,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "embarazado",
+        "corrected": "avergonzado",
+        "error_category": "lexical",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Слово 'embarazado' означает 'беременный', а 'avergonzado' означает 'смущенный'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "embarazado"
+          },
+          {
+            "op": "ins",
+            "text": "avergonzado"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-lexical-3",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 3.136,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "a la ventana",
+        "corrected": "por la ventana",
+        "error_category": "preposition",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке для движения через пространство используется предлог 'por'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "a"
+          },
+          {
+            "op": "ins",
+            "text": "por"
+          },
+          {
+            "op": "equal",
+            "text": " la ventana"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-accent-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": "spelling_accent",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.988,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Esta",
+        "corrected": "Está",
+        "error_category": "spelling_accent",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В слове «está» (глагол estar) всегда ставится графическое ударение.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Est"
+          },
+          {
+            "op": "del",
+            "text": "a"
+          },
+          {
+            "op": "ins",
+            "text": "á"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-accent-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": "spelling_accent",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.562,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "Donde esta la estacion",
+        "corrected": "¿Dónde está la estación?",
+        "error_category": "spelling_accent",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В испанском языке вопросительные слова (dónde) и глаголы (está, estación) требуют графического ударения.",
+        "diff": [
+          {
+            "op": "ins",
+            "text": "¿"
+          },
+          {
+            "op": "equal",
+            "text": "D"
+          },
+          {
+            "op": "del",
+            "text": "o"
+          },
+          {
+            "op": "ins",
+            "text": "ó"
+          },
+          {
+            "op": "equal",
+            "text": "nde est"
+          },
+          {
+            "op": "del",
+            "text": "a"
+          },
+          {
+            "op": "ins",
+            "text": "á"
+          },
+          {
+            "op": "equal",
+            "text": " la estaci"
+          },
+          {
+            "op": "del",
+            "text": "o"
+          },
+          {
+            "op": "ins",
+            "text": "ó"
+          },
+          {
+            "op": "equal",
+            "text": "n"
+          },
+          {
+            "op": "ins",
+            "text": "?"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-register-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.038,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-register-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": "register",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.833,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "dámelo",
+        "corrected": "por favor, ¿podría dármelo?",
+        "error_category": "register",
+        "cf_type": "recast",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "В испанском языке при общении с чиновниками или незнакомыми людьми важно использовать вежливые формы, чтобы звучать более естественно.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "dámelo"
+          },
+          {
+            "op": "ins",
+            "text": "por favor, ¿podría dármelo?"
+          }
+        ],
+        "transfer_note": {
+          "contrast": null,
+          "bridge": {
+            "rule_id": "ru_es.tu_usted",
+            "source": "ru",
+            "kind": "bridge",
+            "title": "ты / вы → tú / usted",
+            "source_example": "Простите, вы не пропустите?",
+            "target_example": "Perdone, ¿me deja pasar?",
+            "note": "Как в русском «ты/вы»: с пожилыми незнакомыми и официально — usted (perdone, ¿me deja…?), с барменом и сверстниками в Испании — tú."
+          }
+        }
+      }
+    },
+    {
+      "id": "syn-clean-porfa",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.237,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-mepones",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.127,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-cola",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.16,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-calefaccion",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.513,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-aproveche",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.707,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-avena",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 12.159,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-3",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": "mood",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 1.1,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "haga",
+        "corrected": "hace",
+        "error_category": "mood",
+        "cf_type": "explicit",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "После 'incluso si' (даже если) в данном контексте используется изъявительное наклонение (indicativo), так как это факт.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "ha"
+          },
+          {
+            "op": "del",
+            "text": "ga"
+          },
+          {
+            "op": "ins",
+            "text": "ce"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.subjunctive",
+            "source": "ru",
+            "kind": "negative",
+            "title": "«чтобы + прошедшее» → que + subjuntivo",
+            "source_example": "Хочу, чтобы ты пришёл. Надеюсь, что ты придёшь.",
+            "target_example": "Quiero que vengas. Espero que vengas.",
+            "note": "Где в русском «чтобы» или пожелание, в испанском que + subjuntivo: Quiero que vengas, ¡Que aproveche! После esperar que, para que, cuando (о будущем) — тоже subjuntivo."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-lexical-en-3",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "lexical",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "transfer_hit": true,
+      "latency_s": 2.225,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "comprometer",
+        "corrected": "conectar con",
+        "error_category": "lexical",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "В испанском 'comprometer' означает 'ставить под угрозу' или 'обязывать', для вовлечения аудитории лучше использовать 'conectar'.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "comprometer"
+          },
+          {
+            "op": "ins",
+            "text": "conectar con"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-mood-4",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": "mood",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 22.144,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "sale",
+        "corrected": "salga",
+        "error_category": "mood",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "После 'espero que' всегда используется сослагательное наклонение (subjuntivo).",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "sal"
+          },
+          {
+            "op": "del",
+            "text": "e"
+          },
+          {
+            "op": "ins",
+            "text": "ga"
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.subjunctive",
+            "source": "ru",
+            "kind": "negative",
+            "title": "«чтобы + прошедшее» → que + subjuntivo",
+            "source_example": "Хочу, чтобы ты пришёл. Надеюсь, что ты придёшь.",
+            "target_example": "Quiero que vengas. Espero que vengas.",
+            "note": "Где в русском «чтобы» или пожелание, в испанском que + subjuntivo: Quiero que vengas, ¡Que aproveche! После esperar que, para que, cuando (о будущем) — тоже subjuntivo."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-lexical-en-4",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": "preposition",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "transfer_hit": false,
+      "latency_s": 3.069,
+      "source": "gemini",
+      "provider_failed": false,
+      "correction": {
+        "original": "presume",
+        "corrected": "presume de",
+        "error_category": "preposition",
+        "cf_type": "explicit",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке после глагола 'presumir' в значении 'хвастаться' обычно используется предлог 'de'.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "presume"
+          },
+          {
+            "op": "ins",
+            "text": " de"
+          }
+        ],
+        "transfer_note": null
+      }
+    }
+  ],
+  "meta": {
+    "date": "2026-11-22",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "sleep_s": 4.0,
+    "profile": null,
+    "precheck": null,
+    "case_files": [
+      "es_roman.jsonl",
+      "es_synthetic.jsonl"
+    ]
+  }
+}

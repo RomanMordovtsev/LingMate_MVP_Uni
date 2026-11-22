@@ -1,0 +1,1006 @@
+{
+  "summary": {
+    "cases": 39,
+    "answered": 39,
+    "provider_failures": 0,
+    "error_cases": 33,
+    "clean_cases": 6,
+    "detection_rate": 0.182,
+    "category_recall": 0.121,
+    "category_precision": 0.667,
+    "text_match_rate": 0.061,
+    "false_positive_rate": 0.0,
+    "transfer_accuracy": 0.0,
+    "transfer_flagged_rate": 0.0,
+    "transfer_source_filled": 1.0,
+    "per_category": {
+      "agreement": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.0
+      },
+      "article": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.0
+      },
+      "clitic": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0.0
+      },
+      "gender": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 4,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "lexical": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "precision": null,
+        "recall": 0.0
+      },
+      "mood": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "precision": null,
+        "recall": 0.0
+      },
+      "preposition": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "precision": null,
+        "recall": 0.0
+      },
+      "register": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.333
+      },
+      "ser_estar": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "spelling_accent": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": null,
+        "recall": 0.0
+      },
+      "tense_aspect": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.5
+      },
+      "word_order": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.667
+      }
+    },
+    "latency_s": {
+      "mean": 29.473,
+      "median": 28.118,
+      "max": 47.993
+    },
+    "quota_stopped": null
+  },
+  "cases": [
+    {
+      "id": "roman-2026-10-31-bus",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register",
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 36.082,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "roman-2026-10-queue",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 23.849,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "roman-2026-10-compliment",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "preposition",
+        "spelling_accent"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 22.581,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "roman-2026-11-14-lift",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender",
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 20.942,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-article-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "article",
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 24.012,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-article-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "article"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 33.656,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-gender-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 20.318,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-gender-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "gender"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 21.989,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-agreement-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement"
+      ],
+      "predicted_category": "gender",
+      "category_hit": false,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 36.852,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "simpático",
+        "corrected": "simpáticos",
+        "error_category": "gender",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "Los compañeros es plural y masculino, así que 'simpático' debe concordar como 'simpáticos'.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "simpático"
+          },
+          {
+            "op": "ins",
+            "text": "s"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-agreement-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "agreement",
+        "article"
+      ],
+      "predicted_category": "gender",
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "latency_s": 32.46,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "las clases de la máster",
+        "corrected": "las clases de la maestra",
+        "error_category": "gender",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "\"Maestra\" es femenino en español. En inglés se usa el mismo término para ambos géneros (teacher), lo que a veces causa confusión.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "las clases de la "
+          },
+          {
+            "op": "del",
+            "text": "máster"
+          },
+          {
+            "op": "ins",
+            "text": "maestra"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-serestar-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 22.022,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-serestar-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "ser_estar"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 20.156,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-tense-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 23.854,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-tense-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "tense_aspect"
+      ],
+      "predicted_category": "tense_aspect",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 44.651,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "Cuando era niño, viví en Moscú.",
+        "corrected": "Cuando **estaba** niño, **vivía** en Moscú.",
+        "error_category": "tense_aspect",
+        "cf_type": "recast",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "En español se usa el imperfecto para describir acciones o estados pasados que duraron en el tiempo.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "Cuando "
+          },
+          {
+            "op": "del",
+            "text": "era"
+          },
+          {
+            "op": "ins",
+            "text": "**estaba**"
+          },
+          {
+            "op": "equal",
+            "text": " niño, "
+          },
+          {
+            "op": "del",
+            "text": "viví"
+          },
+          {
+            "op": "ins",
+            "text": "**vivía**"
+          },
+          {
+            "op": "equal",
+            "text": " en Moscú."
+          }
+        ],
+        "transfer_note": {
+          "contrast": {
+            "rule_id": "ru_es.aspect",
+            "source": "ru",
+            "kind": "negative",
+            "title": "Вид глагола ≠ pretérito / imperfecto",
+            "source_example": "Я читал книгу (долго) / Я прочитал книгу",
+            "target_example": "Leía un libro / Leí el libro",
+            "note": "Похоже на совершенный/несовершенный вид, но не 1:1: imperfecto — фон, привычка, описание в прошлом; indefinido — законченное событие, даже долгое (Viví dos años en Madrid)."
+          },
+          "bridge": null
+        }
+      }
+    },
+    {
+      "id": "syn-mood-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 23.929,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 23.965,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-prep-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 28.545,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-prep-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "preposition"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 27.361,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clitic-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "clitic",
+        "word_order"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "ru",
+      "latency_s": 28.793,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "la ayer",
+        "corrected": "ayer",
+        "error_category": "word_order",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "ru",
+        "explanation": "В испанском языке наречие времени обычно стоит в начале или конце фразы.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "la "
+          },
+          {
+            "op": "equal",
+            "text": "ayer"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-clitic-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "clitic"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 35.913,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-order-1",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "word_order"
+      ],
+      "predicted_category": "word_order",
+      "category_hit": true,
+      "text_match": true,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 45.171,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "¿Dónde la parada está?",
+        "corrected": "¿Dónde está la parada?",
+        "error_category": "word_order",
+        "cf_type": "recast",
+        "is_transfer": false,
+        "transfer_source": null,
+        "explanation": "En español, el verbo 'estar' suele ir antes del sujeto cuando preguntamos por la ubicación.",
+        "diff": [
+          {
+            "op": "equal",
+            "text": "¿Dónde"
+          },
+          {
+            "op": "ins",
+            "text": " está"
+          },
+          {
+            "op": "equal",
+            "text": " la parada"
+          },
+          {
+            "op": "del",
+            "text": " está"
+          },
+          {
+            "op": "equal",
+            "text": "?"
+          }
+        ],
+        "transfer_note": null
+      }
+    },
+    {
+      "id": "syn-order-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "word_order",
+        "agreement"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 34.315,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical",
+        "preposition"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 31.038,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 35.413,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 25.778,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-accent-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 28.118,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-accent-2",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "spelling_accent"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 20.513,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-register-1",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 22.901,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-register-2",
+      "expected_correction": true,
+      "detected": true,
+      "gold_categories": [
+        "register"
+      ],
+      "predicted_category": "register",
+      "category_hit": true,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": true,
+      "predicted_transfer_source": "en",
+      "latency_s": 41.303,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": {
+        "original": "dámelo",
+        "corrected": "póngame",
+        "error_category": "register",
+        "cf_type": "recast",
+        "is_transfer": true,
+        "transfer_source": "en",
+        "explanation": "En español formal o administrativo se usa 'póngame' en lugar de 'dámelo' para pedir algo a una autoridad.",
+        "diff": [
+          {
+            "op": "del",
+            "text": "dámelo"
+          },
+          {
+            "op": "ins",
+            "text": "póngame"
+          }
+        ],
+        "transfer_note": {
+          "contrast": null,
+          "bridge": {
+            "rule_id": "ru_es.tu_usted",
+            "source": "ru",
+            "kind": "bridge",
+            "title": "ты / вы → tú / usted",
+            "source_example": "Простите, вы не пропустите?",
+            "target_example": "Perdone, ¿me deja pasar?",
+            "note": "Как в русском «ты/вы»: с пожилыми незнакомыми и официально — usted (perdone, ¿me deja…?), с барменом и сверстниками в Испании — tú."
+          }
+        }
+      }
+    },
+    {
+      "id": "syn-clean-porfa",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 27.081,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-mepones",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 34.623,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-cola",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 47.993,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-calefaccion",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 29.445,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-aproveche",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 34.566,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-clean-avena",
+      "expected_correction": false,
+      "detected": false,
+      "gold_categories": [],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 23.093,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 31.864,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-en-3",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 34.331,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-mood-4",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "mood"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "latency_s": 22.987,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    },
+    {
+      "id": "syn-lexical-en-4",
+      "expected_correction": true,
+      "detected": false,
+      "gold_categories": [
+        "lexical"
+      ],
+      "predicted_category": null,
+      "category_hit": false,
+      "text_match": false,
+      "false_positive": false,
+      "predicted_is_transfer": false,
+      "predicted_transfer_source": null,
+      "transfer_hit": false,
+      "latency_s": 27.003,
+      "source": "ollama",
+      "provider_failed": false,
+      "correction": null
+    }
+  ],
+  "meta": {
+    "date": "2026-11-22",
+    "provider": "ollama",
+    "model": "qwen3.5:4b-q4_K_M",
+    "sleep_s": 0.0,
+    "profile": null,
+    "precheck": null,
+    "case_files": [
+      "es_roman.jsonl",
+      "es_synthetic.jsonl"
+    ]
+  }
+}
