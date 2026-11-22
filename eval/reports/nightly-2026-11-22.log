@@ -1,0 +1,1253 @@
+19:00:02 start
+Already on 'agent/dev'
+Your branch is behind 'origin/agent/dev' by 15 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+Updating 824efb1..0f3ab08
+Fast-forward
+ AGENT_LOG.md                                       |   35 +
+ CLAUDE.md                                          |    7 +-
+ ROADMAP.md                                         |   10 +-
+ core/checkers/__init__.py                          |    1 +
+ core/checkers/languagetool.py                      |  204 +++
+ core/curriculum.py                                 |  191 +++
+ core/feedback.py                                   |   31 +-
+ core/llm_service.py                                |   11 +-
+ core/models.py                                     |   14 +
+ core/pedagogy/l1_maps/en_es.py                     |    9 +
+ core/placement.py                                  |  242 +++
+ curriculum/es/SOURCES.md                           |   18 +
+ curriculum/es/placement.yaml                       |  115 ++
+ curriculum/es/units/01-a2-en-el-bar.yaml           |   57 +
+ curriculum/es/units/02-a2-hoy-he-hecho.yaml        |   53 +
+ curriculum/es/units/03-a2-ayer-en-el-taller.yaml   |   50 +
+ curriculum/es/units/04-a2-en-casa.yaml             |   55 +
+ curriculum/es/units/05-b1-buenos-deseos.yaml       |   61 +
+ docs/feedback/2026-11-16-eval-run-15-11.md         |    7 +
+ docs/feedback/2026-11-21-placement-generic.md      |   11 +
+ docs/learner/roman-spanish.md                      |   33 +
+ docs/research/_sources.json                        |  842 +++++++++++
+ eval/README.md                                     |   15 +
+ eval/cases/es_synthetic.jsonl                      |    4 +
+ eval/compare.py                                    |    3 +-
+ eval/hybrid.py                                     |  105 ++
+ eval/logfilter.py                                  |   58 +
+ eval/model_candidates.txt                          |    8 +-
+ ...6-11-15-gemini-gemini-3.1-flash-lite-roman.json | 1593 ++++++++++++++++++++
+ ...026-11-15-gemini-gemini-3.1-flash-lite-roman.md |   46 +
+ .../2026-11-15-gemini-gemini-3.1-flash-lite.json   | 1532 +++++++++++++++++++
+ .../2026-11-15-gemini-gemini-3.1-flash-lite.md     |   45 +
+ ...1-15-gemini-gemini-flash-lite-latest-roman.json | 1523 +++++++++++++++++++
+ ...-11-15-gemini-gemini-flash-lite-latest-roman.md |   48 +
+ ...2026-11-15-gemini-gemini-flash-lite-latest.json | 1502 ++++++++++++++++++
+ .../2026-11-15-gemini-gemini-flash-lite-latest.md  |   44 +
+ .../2026-11-15-ollama-gemma4-e2b-roman.json        | 1257 +++++++++++++++
+ eval/reports/2026-11-15-ollama-gemma4-e2b-roman.md |   56 +
+ eval/reports/2026-11-15-ollama-gemma4-e2b.json     | 1074 +++++++++++++
+ eval/reports/2026-11-15-ollama-gemma4-e2b.md       |   61 +
+ eval/run.py                                        |   92 +-
+ main.py                                            |   69 +-
+ requirements.txt                                   |    1 +
+ scripts/README.md                                  |   23 +-
+ scripts/nightly_eval.ps1                           |   65 +-
+ scripts/pull_candidates.ps1                        |   50 +
+ static/index.html                                  |  117 ++
+ tests/test_curriculum.py                           |  155 ++
+ tests/test_eval_night_fixes.py                     |  117 ++
+ tests/test_languagetool.py                         |  231 +++
+ tests/test_placement.py                            |  153 ++
+ tests/test_transfer_maps.py                        |    1 +
+ 52 files changed, 12059 insertions(+), 46 deletions(-)
+ create mode 100644 core/checkers/__init__.py
+ create mode 100644 core/checkers/languagetool.py
+ create mode 100644 core/curriculum.py
+ create mode 100644 core/placement.py
+ create mode 100644 curriculum/es/SOURCES.md
+ create mode 100644 curriculum/es/placement.yaml
+ create mode 100644 curriculum/es/units/01-a2-en-el-bar.yaml
+ create mode 100644 curriculum/es/units/02-a2-hoy-he-hecho.yaml
+ create mode 100644 curriculum/es/units/03-a2-ayer-en-el-taller.yaml
+ create mode 100644 curriculum/es/units/04-a2-en-casa.yaml
+ create mode 100644 curriculum/es/units/05-b1-buenos-deseos.yaml
+ create mode 100644 docs/feedback/2026-11-16-eval-run-15-11.md
+ create mode 100644 docs/feedback/2026-11-21-placement-generic.md
+ create mode 100644 docs/research/_sources.json
+ create mode 100644 eval/hybrid.py
+ create mode 100644 eval/logfilter.py
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-3.1-flash-lite-roman.json
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-3.1-flash-lite-roman.md
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-3.1-flash-lite.json
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-3.1-flash-lite.md
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-flash-lite-latest-roman.json
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-flash-lite-latest-roman.md
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-flash-lite-latest.json
+ create mode 100644 eval/reports/2026-11-15-gemini-gemini-flash-lite-latest.md
+ create mode 100644 eval/reports/2026-11-15-ollama-gemma4-e2b-roman.json
+ create mode 100644 eval/reports/2026-11-15-ollama-gemma4-e2b-roman.md
+ create mode 100644 eval/reports/2026-11-15-ollama-gemma4-e2b.json
+ create mode 100644 eval/reports/2026-11-15-ollama-gemma4-e2b.md
+ create mode 100644 scripts/pull_candidates.ps1
+ create mode 100644 tests/test_curriculum.py
+ create mode 100644 tests/test_eval_night_fixes.py
+ create mode 100644 tests/test_languagetool.py
+ create mode 100644 tests/test_placement.py
+19:00:05 code: 0f3ab08 docs(feedback): placement test must be generic, not built on Roman's errors
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: D:\Downloads\LingMate_test\.venv\Scripts\python.exe -m pip install --upgrade pip
+19:00:10 gemini gemini-flash-lite-latest profile=none
+[1/39] roman-2026-10-31-bus: miss (1.1s)
+[2/39] roman-2026-10-queue: ok (1.1s)
+[3/39] roman-2026-10-compliment: ok (1.0s)
+[4/39] roman-2026-11-14-lift: miss (1.0s)
+[5/39] syn-article-1: ok (0.9s)
+[6/39] syn-article-2: ok (1.2s)
+[7/39] syn-gender-1: ok (0.9s)
+[8/39] syn-gender-2: ok (1.3s)
+[9/39] syn-agreement-1: ok (0.8s)
+[10/39] syn-agreement-2: ok (1.2s)
+[11/39] syn-serestar-1: ok (1.2s)
+[12/39] syn-serestar-2: ok (1.0s)
+[13/39] syn-tense-1: ok (1.0s)
+[14/39] syn-tense-2: ok (1.2s)
+[15/39] syn-mood-1: ok (0.9s)
+[16/39] syn-mood-2: miss (0.8s)
+[17/39] syn-prep-1: ok (0.9s)
+[18/39] syn-prep-2: ok (1.4s)
+[19/39] syn-clitic-1: ok (1.4s)
+[20/39] syn-clitic-2: ok (1.0s)
+[21/39] syn-order-1: ok (1.2s)
+[22/39] syn-order-2: ok (1.0s)
+[23/39] syn-lexical-1: ok (1.9s)
+[24/39] syn-lexical-2: ok (1.1s)
+[25/39] syn-lexical-3: miss (1.7s)
+[26/39] syn-accent-1: ok (1.0s)
+[27/39] syn-accent-2: ok (1.1s)
+[28/39] syn-register-1: miss (3.5s)
+[29/39] syn-register-2: ok (1.0s)
+[30/39] syn-clean-porfa: ok (0.8s)
+[31/39] syn-clean-mepones: ok (0.8s)
+[32/39] syn-clean-cola: ok (0.7s)
+[33/39] syn-clean-calefaccion: ok (0.8s)
+[34/39] syn-clean-aproveche: ok (1.1s)
+[35/39] syn-clean-avena: ok (0.7s)
+[36/39] syn-mood-3: ok (1.1s)
+[37/39] syn-lexical-en-3: miss (0.8s)
+[38/39] syn-mood-4: ok (1.8s)
+[39/39] syn-lexical-en-4: ok (1.0s)
+# Eval 2026-11-22 — gemini / gemini-flash-lite-latest
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 85% |
+| Category recall | 82% |
+| Category precision | 96% |
+| Corrected text matches gold | 73% |
+| False positives on correct input | 0% |
+| Transfer source right | 38% |
+| Transfer flagged (gold transfer, detected) | 83% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 1.14 / 1.016 / 3.463 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 75% | 100% | 3 | 1 | 0 |
+| article | 100% | 100% | 1 | 0 | 0 |
+| clitic | 100% | 100% | 2 | 0 | 0 |
+| gender | 100% | 75% | 3 | 0 | 1 |
+| lexical | 100% | 50% | 4 | 0 | 4 |
+| mood | 100% | 75% | 3 | 0 | 1 |
+| preposition | 100% | 100% | 2 | 0 | 0 |
+| register | 100% | 33% | 1 | 0 | 2 |
+| ser_estar | 100% | 100% | 2 | 0 | 0 |
+| spelling_accent | 100% | 100% | 3 | 0 | 0 |
+| tense_aspect | 100% | 100% | 2 | 0 | 0 |
+| word_order | 100% | 100% | 1 | 0 | 0 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: a la cero → a las cero [agreement]
+- `syn-article-1` gold ['article', 'gender']: la máster → el máster [gender]
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado → Estoy acomplejado [lexical]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → por favor, ¿podría dármelo? [register]
+- `syn-lexical-en-3` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-gemini-gemini-flash-lite-latest.json
+19:03:29 gemini gemini-flash-lite-latest profile=roman
+[1/39] roman-2026-10-31-bus: miss (0.8s)
+[2/39] roman-2026-10-queue: ok (1.3s)
+[3/39] roman-2026-10-compliment: ok (1.0s)
+[4/39] roman-2026-11-14-lift: miss (1.2s)
+[5/39] syn-article-1: ok (1.3s)
+[6/39] syn-article-2: ok (1.3s)
+[7/39] syn-gender-1: ok (1.0s)
+[8/39] syn-gender-2: ok (1.1s)
+[9/39] syn-agreement-1: ok (1.2s)
+[10/39] syn-agreement-2: miss (1.1s)
+[11/39] syn-serestar-1: ok (0.9s)
+[12/39] syn-serestar-2: ok (0.9s)
+[13/39] syn-tense-1: ok (1.2s)
+[14/39] syn-tense-2: ok (0.9s)
+[15/39] syn-mood-1: ok (1.0s)
+[16/39] syn-mood-2: miss (0.9s)
+[17/39] syn-prep-1: ok (1.4s)
+[18/39] syn-prep-2: ok (1.3s)
+[19/39] syn-clitic-1: ok (1.3s)
+[20/39] syn-clitic-2: ok (0.9s)
+[21/39] syn-order-1: ok (1.0s)
+[22/39] syn-order-2: miss (1.1s)
+[23/39] syn-lexical-1: ok (1.1s)
+[24/39] syn-lexical-2: ok (1.4s)
+[25/39] syn-lexical-3: miss (0.8s)
+[26/39] syn-accent-1: ok (0.9s)
+[27/39] syn-accent-2: ok (0.9s)
+[28/39] syn-register-1: miss (1.1s)
+[29/39] syn-register-2: ok (1.5s)
+[30/39] syn-clean-porfa: ok (1.1s)
+[31/39] syn-clean-mepones: ok (1.2s)
+[32/39] syn-clean-cola: ok (1.2s)
+[33/39] syn-clean-calefaccion: ok (1.3s)
+[34/39] syn-clean-aproveche: ok (1.3s)
+[35/39] syn-clean-avena: ok (0.9s)
+[36/39] syn-mood-3: ok (1.3s)
+[37/39] syn-lexical-en-3: ok (1.3s)
+[38/39] syn-mood-4: ok (1.1s)
+[39/39] syn-lexical-en-4: ok (1.1s)
+# Eval 2026-11-22 — gemini / gemini-flash-lite-latest — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 85% |
+| Category recall | 79% |
+| Category precision | 93% |
+| Corrected text matches gold | 76% |
+| False positives on correct input | 0% |
+| Transfer source right | 69% |
+| Transfer flagged (gold transfer, detected) | 92% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 1.116 / 1.088 / 1.512 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 33% | 1 | 0 | 2 |
+| article | 100% | 50% | 1 | 0 | 1 |
+| clitic | 100% | 100% | 2 | 0 | 0 |
+| gender | 60% | 75% | 3 | 2 | 1 |
+| lexical | 100% | 62% | 5 | 0 | 3 |
+| mood | 100% | 75% | 3 | 0 | 1 |
+| preposition | 100% | 100% | 2 | 0 | 0 |
+| register | 100% | 33% | 1 | 0 | 2 |
+| ser_estar | 100% | 100% | 2 | 0 | 0 |
+| spelling_accent | 100% | 100% | 3 | 0 | 0 |
+| tense_aspect | 100% | 100% | 2 | 0 | 0 |
+| word_order | 100% | 50% | 1 | 0 | 1 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: la máster → el máster [gender]
+- `syn-agreement-2` gold ['agreement', 'article']: Las clases de la máster son interesante. → Las clases del máster son interesantes. [gender]
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: muy bueno → muy buen [gender]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → por favor, ¿podría dármelo? [register]
+- `syn-lexical-en-3` gold ['lexical']: comprometer → conectar [lexical]
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-gemini-gemini-flash-lite-latest-roman.json
+19:06:46 gemini gemini-3.1-flash-lite profile=none
+[1/39] roman-2026-10-31-bus: miss (20.0s)
+[2/39] roman-2026-10-queue: ok (10.6s)
+[3/39] roman-2026-10-compliment: ok (1.4s)
+[4/39] roman-2026-11-14-lift: ok (2.3s)
+[5/39] syn-article-1: ok (6.5s)
+[6/39] syn-article-2: ok (2.6s)
+[7/39] syn-gender-1: ok (38.9s)
+[8/39] syn-gender-2: ok (14.8s)
+[9/39] syn-agreement-1: ok (2.9s)
+[10/39] syn-agreement-2: ok (4.1s)
+[11/39] syn-serestar-1: ok (2.7s)
+[12/39] syn-serestar-2: ok (1.9s)
+[13/39] syn-tense-1: ok (7.2s)
+[14/39] syn-tense-2: miss (21.1s)
+[15/39] syn-mood-1: ok (5.4s)
+[16/39] syn-mood-2: ok (11.4s)
+[17/39] syn-prep-1: ok (13.2s)
+[18/39] syn-prep-2: ok (4.9s)
+[19/39] syn-clitic-1: ok (2.8s)
+[20/39] syn-clitic-2: ok (2.6s)
+[21/39] syn-order-1: ok (2.5s)
+[22/39] syn-order-2: ok (1.0s)
+[23/39] syn-lexical-1: ok (4.1s)
+[24/39] syn-lexical-2: ok (10.7s)
+[25/39] syn-lexical-3: miss (3.1s)
+[26/39] syn-accent-1: ok (2.0s)
+[27/39] syn-accent-2: ok (1.6s)
+[28/39] syn-register-1: miss (1.0s)
+[29/39] syn-register-2: ok (1.8s)
+[30/39] syn-clean-porfa: ok (1.2s)
+[31/39] syn-clean-mepones: ok (1.1s)
+[32/39] syn-clean-cola: ok (1.2s)
+[33/39] syn-clean-calefaccion: ok (1.5s)
+[34/39] syn-clean-aproveche: ok (1.7s)
+[35/39] syn-clean-avena: ok (12.2s)
+[36/39] syn-mood-3: ok (1.1s)
+[37/39] syn-lexical-en-3: ok (2.2s)
+[38/39] syn-mood-4: ok (22.1s)
+[39/39] syn-lexical-en-4: miss (3.1s)
+[LLMService] gemini attempt 1 failed: RuntimeError: Gemini request failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+# Eval 2026-11-22 — gemini / gemini-3.1-flash-lite
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 91% |
+| Category recall | 85% |
+| Category precision | 93% |
+| Corrected text matches gold | 70% |
+| False positives on correct input | 0% |
+| Transfer source right | 46% |
+| Transfer flagged (gold transfer, detected) | 92% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 6.477 / 2.761 / 38.851 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 100% | 2 | 0 | 0 |
+| article | 100% | 100% | 1 | 0 | 0 |
+| clitic | 100% | 100% | 1 | 0 | 0 |
+| gender | 100% | 100% | 3 | 0 | 0 |
+| lexical | 100% | 62% | 5 | 0 | 3 |
+| mood | 100% | 100% | 4 | 0 | 0 |
+| preposition | 60% | 100% | 3 | 2 | 0 |
+| register | 100% | 33% | 1 | 0 | 2 |
+| ser_estar | 100% | 100% | 2 | 0 | 0 |
+| spelling_accent | 100% | 100% | 2 | 0 | 0 |
+| tense_aspect | 100% | 50% | 1 | 0 | 1 |
+| word_order | 100% | 100% | 3 | 0 | 0 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: en la línea → en la cola / al teléfono [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: a la cero → a las doce [lexical]
+- `syn-article-1` gold ['article', 'gender']: la máster → el máster [gender]
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-lexical-3` gold ['lexical']: a la ventana → por la ventana [preposition]
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → por favor, ¿podría dármelo? [register]
+- `syn-lexical-en-3` gold ['lexical']: comprometer → conectar con [lexical]
+- `syn-lexical-en-4` gold ['lexical']: presume → presume de [preposition]
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-gemini-gemini-3.1-flash-lite.json
+19:13:32 gemini gemini-3.1-flash-lite profile=roman
+[1/39] roman-2026-10-31-bus: ok (3.4s)
+[2/39] roman-2026-10-queue: ok (1.5s)
+[3/39] roman-2026-10-compliment: ok (17.8s)
+[4/39] roman-2026-11-14-lift: ok (47.7s)
+[5/39] syn-article-1: ok (3.6s)
+[6/39] syn-article-2: ok (3.4s)
+[7/39] syn-gender-1: ok (4.4s)
+[8/39] syn-gender-2: ok (5.7s)
+[9/39] syn-agreement-1: ok (10.7s)
+[10/39] syn-agreement-2: ok (3.4s)
+[11/39] syn-serestar-1: ok (54.2s)
+[12/39] syn-serestar-2: ok (2.4s)
+[13/39] syn-tense-1: ok (3.6s)
+[14/39] syn-tense-2: miss (1.3s)
+[15/39] syn-mood-1: ok (9.6s)
+[16/39] syn-mood-2: ok (4.3s)
+[17/39] syn-prep-1: ok (2.4s)
+[18/39] syn-prep-2: ok (3.9s)
+[19/39] syn-clitic-1: ok (3.1s)
+[20/39] syn-clitic-2: ok (3.3s)
+[21/39] syn-order-1: ok (1.4s)
+[22/39] syn-order-2: ok (6.4s)
+[23/39] syn-lexical-1: ok (44.8s)
+[24/39] syn-lexical-2: ok (1.9s)
+[25/39] syn-lexical-3: miss (3.7s)
+[26/39] syn-accent-1: ok (1.9s)
+[27/39] syn-accent-2: ok (1.1s)
+[28/39] syn-register-1: miss (2.3s)
+[29/39] syn-register-2: ok (2.2s)
+[30/39] syn-clean-porfa: ok (3.5s)
+[31/39] syn-clean-mepones: ok (1.6s)
+[32/39] syn-clean-cola: ok (3.4s)
+[33/39] syn-clean-calefaccion: ok (2.9s)
+[34/39] syn-clean-aproveche: miss (18.8s)
+[35/39] syn-clean-avena: ok (0.9s)
+[36/39] syn-mood-3: ok (4.3s)
+[37/39] syn-lexical-en-3: ok (5.0s)
+[38/39] syn-mood-4: ok (2.6s)
+[39/39] syn-lexical-en-4: ok (2.6s)
+[LLMService] gemini attempt 1 failed: RuntimeError: Gemini request failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+# Eval 2026-11-22 — gemini / gemini-3.1-flash-lite — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 94% |
+| Category recall | 91% |
+| Category precision | 94% |
+| Corrected text matches gold | 70% |
+| False positives on correct input | 17% |
+| Transfer source right | 92% |
+| Transfer flagged (gold transfer, detected) | 100% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 7.722 / 3.378 / 54.225 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 100% | 2 | 0 | 0 |
+| article | 100% | 100% | 1 | 0 | 0 |
+| clitic | 100% | 100% | 1 | 0 | 0 |
+| gender | 100% | 100% | 3 | 0 | 0 |
+| lexical | 100% | 88% | 7 | 0 | 1 |
+| mood | 100% | 100% | 4 | 0 | 0 |
+| preposition | 67% | 100% | 2 | 1 | 0 |
+| register | 100% | 50% | 1 | 0 | 1 |
+| ser_estar | 100% | 100% | 2 | 0 | 0 |
+| spelling_accent | 75% | 100% | 3 | 1 | 0 |
+| tense_aspect | 100% | 50% | 1 | 0 | 1 |
+| word_order | 100% | 100% | 3 | 0 | 0 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: Perdona, ¿puedo? → Perdona, ¿puedo pasar? [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: a la cero → a las doce [lexical]
+- `syn-article-1` gold ['article', 'gender']: la máster → el máster [gender]
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-clitic-1` gold ['clitic', 'word_order']: la ayer → la ayer [word_order]
+- `syn-order-2` gold ['word_order', 'agreement']: muy bueno → buen [word_order]
+- `syn-lexical-3` gold ['lexical']: a la ventana → por la ventana [preposition]
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → me lo podría dar, por favor [register]
+- `syn-clean-aproveche` gold none: Que aproveche → ¿Qué aproveche? [spelling_accent]
+- `syn-lexical-en-3` gold ['lexical']: comprometer → interesar [lexical]
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-gemini-gemini-3.1-flash-lite-roman.json
+19:21:08 pull aya-expanse:8b
+Error: max retries exceeded: Get "https://dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com/ollama/docker/regis
+19:22:14 ollama gemma4:e2b profile=none
+[1/39] roman-2026-10-31-bus: miss (33.1s)
+[2/39] roman-2026-10-queue: miss (22.2s)
+[3/39] roman-2026-10-compliment: miss (27.6s)
+[4/39] roman-2026-11-14-lift: miss (29.1s)
+[5/39] syn-article-1: miss (20.4s)
+[6/39] syn-article-2: ok (27.3s)
+[7/39] syn-gender-1: miss (20.9s)
+[8/39] syn-gender-2: ok (23.2s)
+[9/39] syn-agreement-1: ok (23.4s)
+[10/39] syn-agreement-2: ok (25.5s)
+[11/39] syn-serestar-1: miss (17.9s)
+[12/39] syn-serestar-2: miss (23.4s)
+[13/39] syn-tense-1: ok (25.3s)
+[14/39] syn-tense-2: miss (18.1s)
+[15/39] syn-mood-1: miss (19.0s)
+[16/39] syn-mood-2: miss (24.7s)
+[17/39] syn-prep-1: miss (18.4s)
+[18/39] syn-prep-2: ok (27.5s)
+[19/39] syn-clitic-1: ok (29.2s)
+[20/39] syn-clitic-2: miss (29.7s)
+[21/39] syn-order-1: miss (21.8s)
+[22/39] syn-order-2: miss (20.3s)
+[23/39] syn-lexical-1: miss (17.5s)
+[24/39] syn-lexical-2: miss (35.0s)
+[25/39] syn-lexical-3: miss (19.4s)
+[26/39] syn-accent-1: ok (26.8s)
+[27/39] syn-accent-2: miss (24.4s)
+[28/39] syn-register-1: miss (24.6s)
+[29/39] syn-register-2: miss (25.3s)
+[30/39] syn-clean-porfa: ok (24.4s)
+[31/39] syn-clean-mepones: ok (20.3s)
+[32/39] syn-clean-cola: miss (30.1s)
+[33/39] syn-clean-calefaccion: ok (20.6s)
+[34/39] syn-clean-aproveche: ok (19.4s)
+[35/39] syn-clean-avena: ok (21.6s)
+[36/39] syn-mood-3: miss (34.3s)
+[37/39] syn-lexical-en-3: miss (28.5s)
+[38/39] syn-mood-4: miss (34.0s)
+[39/39] syn-lexical-en-4: miss (27.7s)
+# Eval 2026-11-22 — ollama / gemma4:e2b
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 33% |
+| Category recall | 24% |
+| Category precision | 67% |
+| Corrected text matches gold | 27% |
+| False positives on correct input | 17% |
+| Transfer source right | 23% |
+| Transfer flagged (gold transfer, detected) | 100% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 24.659 / 24.438 / 34.984 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 67% | 67% | 2 | 1 | 1 |
+| article | 100% | 50% | 1 | 0 | 1 |
+| clitic | — | 0% | 0 | 0 | 1 |
+| gender | 50% | 25% | 1 | 1 | 3 |
+| lexical | 0% | 0% | 0 | 1 | 8 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | 100% | 25% | 1 | 0 | 3 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | — | 0% | 0 | 0 | 2 |
+| spelling_accent | 100% | 33% | 1 | 0 | 2 |
+| tense_aspect | 100% | 50% | 1 | 0 | 1 |
+| word_order | 50% | 33% | 1 | 1 | 2 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: lo más possible → lo más posible [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-serestar-1` gold ['ser_estar']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: Pienso de mudarme a otro piso. → Estoy pensando en mudarme a otro piso. [preposition]
+- `syn-clitic-2` gold ['clitic']: A mi hermana gusta la música → A mi hermana le gusta la música [agreement]
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado → Estoy embarazada [gender]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: no correction
+- `syn-clean-cola` gold none: ¿quién es el último? → ¿Quién es el último de la fila? [word_order]
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-gemma4-e2b.json
+19:38:18 ollama gemma4:e2b profile=roman
+[1/39] roman-2026-10-31-bus: miss (29.0s)
+[2/39] roman-2026-10-queue: miss (37.0s)
+[3/39] roman-2026-10-compliment: miss (30.5s)
+[4/39] roman-2026-11-14-lift: miss (31.1s)
+[5/39] syn-article-1: ok (41.7s)
+[6/39] syn-article-2: ok (32.4s)
+[7/39] syn-gender-1: miss (24.7s)
+[8/39] syn-gender-2: ok (32.6s)
+[9/39] syn-agreement-1: ok (36.5s)
+[10/39] syn-agreement-2: ok (30.7s)
+[11/39] syn-serestar-1: miss (31.2s)
+[12/39] syn-serestar-2: miss (25.2s)
+[13/39] syn-tense-1: ok (48.9s)
+[14/39] syn-tense-2: miss (31.4s)
+[15/39] syn-mood-1: miss (24.7s)
+[16/39] syn-mood-2: miss (33.8s)
+[17/39] syn-prep-1: miss (31.5s)
+[18/39] syn-prep-2: miss (40.5s)
+[19/39] syn-clitic-1: ok (37.2s)
+[20/39] syn-clitic-2: miss (39.3s)
+[21/39] syn-order-1: miss (25.0s)
+[22/39] syn-order-2: miss (28.9s)
+[23/39] syn-lexical-1: miss (22.8s)
+[24/39] syn-lexical-2: miss (40.2s)
+[25/39] syn-lexical-3: ok (37.0s)
+[26/39] syn-accent-1: ok (37.7s)
+[27/39] syn-accent-2: ok (35.6s)
+[28/39] syn-register-1: miss (29.4s)
+[29/39] syn-register-2: ok (47.3s)
+[30/39] syn-clean-porfa: ok (29.4s)
+[31/39] syn-clean-mepones: ok (24.1s)
+[32/39] syn-clean-cola: ok (40.0s)
+[33/39] syn-clean-calefaccion: ok (22.3s)
+[34/39] syn-clean-aproveche: ok (24.5s)
+[35/39] syn-clean-avena: ok (25.0s)
+[36/39] syn-mood-3: miss (40.7s)
+[37/39] syn-lexical-en-3: miss (23.0s)
+[38/39] syn-mood-4: miss (24.3s)
+[39/39] syn-lexical-en-4: miss (22.9s)
+# Eval 2026-11-22 — ollama / gemma4:e2b — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 48% |
+| Category recall | 33% |
+| Category precision | 69% |
+| Corrected text matches gold | 27% |
+| False positives on correct input | 0% |
+| Transfer source right | 23% |
+| Transfer flagged (gold transfer, detected) | 80% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 32.043 / 31.211 / 48.89 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 67% | 2 | 0 | 1 |
+| article | 100% | 100% | 2 | 0 | 0 |
+| clitic | — | 0% | 0 | 0 | 1 |
+| gender | 50% | 33% | 1 | 1 | 2 |
+| lexical | 33% | 12% | 1 | 2 | 7 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | 100% | 33% | 1 | 0 | 2 |
+| ser_estar | — | 0% | 0 | 0 | 2 |
+| spelling_accent | 100% | 67% | 2 | 0 | 1 |
+| tense_aspect | 100% | 50% | 1 | 0 | 1 |
+| word_order | 33% | 33% | 1 | 2 | 2 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: lo más possible → lo más posible [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-2` gold ['article']: Busco piso cerca de universidad. → Busco un piso cerca de la universidad. [article]
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-serestar-1` gold ['ser_estar']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: Pienso de mudarme a otro piso. → Estoy pensando en mudarme a otro piso. [word_order]
+- `syn-clitic-1` gold ['clitic', 'word_order']: encendí la ayer → encendí la calefacción ayer [word_order]
+- `syn-clitic-2` gold ['clitic']: A mi hermana gusta la música → A mi hermana le gusta la música [word_order]
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado → Estoy embarazada [gender]
+- `syn-lexical-3` gold ['lexical']: ¿Me deja pasar a la ventana? → ¿Puedo pasar a la ventana? [lexical]
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → dame/me puede dar [register]
+- `syn-mood-3` gold ['mood']: incluso si haga cero grados fuera → incluso si hace cero grados afuera [lexical]
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-gemma4-e2b-roman.json
+19:59:10 ollama qwen3.5:4b-q4_K_M profile=none
+[1/39] roman-2026-10-31-bus: miss (36.1s)
+[2/39] roman-2026-10-queue: miss (23.8s)
+[3/39] roman-2026-10-compliment: miss (22.6s)
+[4/39] roman-2026-11-14-lift: miss (20.9s)
+[5/39] syn-article-1: miss (24.0s)
+[6/39] syn-article-2: miss (33.7s)
+[7/39] syn-gender-1: miss (20.3s)
+[8/39] syn-gender-2: miss (22.0s)
+[9/39] syn-agreement-1: miss (36.9s)
+[10/39] syn-agreement-2: miss (32.5s)
+[11/39] syn-serestar-1: miss (22.0s)
+[12/39] syn-serestar-2: miss (20.2s)
+[13/39] syn-tense-1: miss (23.9s)
+[14/39] syn-tense-2: ok (44.7s)
+[15/39] syn-mood-1: miss (23.9s)
+[16/39] syn-mood-2: miss (24.0s)
+[17/39] syn-prep-1: miss (28.5s)
+[18/39] syn-prep-2: miss (27.4s)
+[19/39] syn-clitic-1: ok (28.8s)
+[20/39] syn-clitic-2: miss (35.9s)
+[21/39] syn-order-1: ok (45.2s)
+[22/39] syn-order-2: miss (34.3s)
+[23/39] syn-lexical-1: miss (31.0s)
+[24/39] syn-lexical-2: miss (35.4s)
+[25/39] syn-lexical-3: miss (25.8s)
+[26/39] syn-accent-1: miss (28.1s)
+[27/39] syn-accent-2: miss (20.5s)
+[28/39] syn-register-1: miss (22.9s)
+[29/39] syn-register-2: ok (41.3s)
+[30/39] syn-clean-porfa: ok (27.1s)
+[31/39] syn-clean-mepones: ok (34.6s)
+[32/39] syn-clean-cola: ok (48.0s)
+[33/39] syn-clean-calefaccion: ok (29.4s)
+[34/39] syn-clean-aproveche: ok (34.6s)
+[35/39] syn-clean-avena: ok (23.1s)
+[36/39] syn-mood-3: miss (31.9s)
+[37/39] syn-lexical-en-3: miss (34.3s)
+[38/39] syn-mood-4: miss (23.0s)
+[39/39] syn-lexical-en-4: miss (27.0s)
+# Eval 2026-11-22 — ollama / qwen3.5:4b-q4_K_M
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 18% |
+| Category recall | 12% |
+| Category precision | 67% |
+| Corrected text matches gold | 6% |
+| False positives on correct input | 0% |
+| Transfer source right | 0% |
+| Transfer flagged (gold transfer, detected) | 0% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 29.473 / 28.118 / 47.993 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | — | 0% | 0 | 0 | 3 |
+| article | — | 0% | 0 | 0 | 3 |
+| clitic | — | 0% | 0 | 0 | 1 |
+| gender | 0% | 0% | 0 | 2 | 4 |
+| lexical | — | 0% | 0 | 0 | 8 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | 100% | 33% | 1 | 0 | 2 |
+| ser_estar | — | 0% | 0 | 0 | 2 |
+| spelling_accent | — | 0% | 0 | 0 | 3 |
+| tense_aspect | 100% | 50% | 1 | 0 | 1 |
+| word_order | 100% | 67% | 2 | 0 | 1 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-agreement-1` gold ['agreement']: simpático → simpáticos [gender]
+- `syn-agreement-2` gold ['agreement', 'article']: las clases de la máster → las clases de la maestra [gender]
+- `syn-serestar-1` gold ['ser_estar']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: Cuando era niño, viví en Moscú. → Cuando **estaba** niño, **vivía** en Moscú. [tense_aspect]
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: no correction
+- `syn-clitic-1` gold ['clitic', 'word_order']: la ayer → ayer [word_order]
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: no correction
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: dámelo → póngame [register]
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-qwen3.5-4b-q4_K_M.json
+20:18:22 ollama qwen3.5:4b-q4_K_M profile=roman
+[1/39] roman-2026-10-31-bus: miss (33.4s)
+[2/39] roman-2026-10-queue: miss (30.3s)
+[3/39] roman-2026-10-compliment: miss (27.0s)
+[4/39] roman-2026-11-14-lift: miss (32.9s)
+[5/39] syn-article-1: miss (30.1s)
+[6/39] syn-article-2: miss (42.8s)
+[7/39] syn-gender-1: miss (32.4s)
+[8/39] syn-gender-2: miss (36.4s)
+[9/39] syn-agreement-1: ok (38.3s)
+[10/39] syn-agreement-2: miss (38.6s)
+[11/39] syn-serestar-1: miss (26.9s)
+[12/39] syn-serestar-2: miss (38.2s)
+[13/39] syn-tense-1: miss (23.2s)
+[14/39] syn-tense-2: miss (32.6s)
+[15/39] syn-mood-1: miss (33.6s)
+[16/39] syn-mood-2: miss (43.0s)
+[17/39] syn-prep-1: miss (35.0s)
+[18/39] syn-prep-2: miss (26.5s)
+[19/39] syn-clitic-1: miss (38.3s)
+[20/39] syn-clitic-2: miss (29.3s)
+[21/39] syn-order-1: miss (31.4s)
+[22/39] syn-order-2: miss (30.5s)
+[23/39] syn-lexical-1: miss (26.4s)
+[24/39] syn-lexical-2: miss (52.4s)
+[25/39] syn-lexical-3: miss (37.2s)
+[26/39] syn-accent-1: miss (33.7s)
+[27/39] syn-accent-2: miss (45.9s)
+[28/39] syn-register-1: miss (29.8s)
+[29/39] syn-register-2: miss (34.6s)
+[30/39] syn-clean-porfa: ok (38.9s)
+[31/39] syn-clean-mepones: ok (30.7s)
+[32/39] syn-clean-cola: ok (37.9s)
+[33/39] syn-clean-calefaccion: ok (32.0s)
+[34/39] syn-clean-aproveche: ok (31.8s)
+[35/39] syn-clean-avena: ok (30.6s)
+[36/39] syn-mood-3: miss (36.3s)
+[37/39] syn-lexical-en-3: miss (52.3s)
+[38/39] syn-mood-4: miss (36.0s)
+[39/39] syn-lexical-en-4: miss (39.5s)
+# Eval 2026-11-22 — ollama / qwen3.5:4b-q4_K_M — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 6% |
+| Category recall | 3% |
+| Category precision | 50% |
+| Corrected text matches gold | 6% |
+| False positives on correct input | 0% |
+| Transfer source right | 0% |
+| Transfer flagged (gold transfer, detected) | — |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 34.795 / 33.637 / 52.387 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 33% | 1 | 0 | 2 |
+| article | — | 0% | 0 | 0 | 3 |
+| clitic | — | 0% | 0 | 0 | 2 |
+| gender | — | 0% | 0 | 0 | 4 |
+| lexical | — | 0% | 0 | 0 | 8 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | — | 0% | 0 | 0 | 2 |
+| spelling_accent | — | 0% | 0 | 0 | 3 |
+| tense_aspect | 0% | 0% | 0 | 1 | 2 |
+| word_order | — | 0% | 0 | 0 | 3 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-agreement-2` gold ['agreement', 'article']: no correction
+- `syn-serestar-1` gold ['ser_estar']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: Cuando llego a casa → Cuando llegue a casa [tense_aspect]
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: no correction
+- `syn-clitic-1` gold ['clitic', 'word_order']: no correction
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: no correction
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: no correction
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-qwen3.5-4b-q4_K_M-roman.json
+20:41:01 ollama ministral-3:3b profile=none
+[1/39] roman-2026-10-31-bus: miss (32.1s)
+[2/39] roman-2026-10-queue: miss (12.2s)
+[3/39] roman-2026-10-compliment: miss (17.1s)
+[4/39] roman-2026-11-14-lift: miss (13.7s)
+[5/39] syn-article-1: miss (9.1s)
+[6/39] syn-article-2: miss (19.0s)
+[7/39] syn-gender-1: miss (11.1s)
+[8/39] syn-gender-2: miss (12.9s)
+[9/39] syn-agreement-1: ok (20.5s)
+[10/39] syn-agreement-2: ok (18.7s)
+[11/39] syn-serestar-1: miss (20.0s)
+[12/39] syn-serestar-2: miss (17.1s)
+[13/39] syn-tense-1: miss (12.7s)
+[14/39] syn-tense-2: miss (10.4s)
+[15/39] syn-mood-1: miss (9.7s)
+[16/39] syn-mood-2: miss (11.9s)
+[17/39] syn-prep-1: miss (20.4s)
+[18/39] syn-prep-2: ok (12.7s)
+[19/39] syn-clitic-1: miss (19.7s)
+[20/39] syn-clitic-2: miss (10.3s)
+[21/39] syn-order-1: miss (11.9s)
+[22/39] syn-order-2: miss (15.5s)
+[23/39] syn-lexical-1: miss (10.4s)
+[24/39] syn-lexical-2: miss (19.8s)
+[25/39] syn-lexical-3: miss (8.0s)
+[26/39] syn-accent-1: miss (11.6s)
+[27/39] syn-accent-2: miss (13.1s)
+[28/39] syn-register-1: miss (12.4s)
+[29/39] syn-register-2: miss (12.9s)
+[30/39] syn-clean-porfa: miss (15.6s)
+[31/39] syn-clean-mepones: ok (14.7s)
+[32/39] syn-clean-cola: ok (11.4s)
+[33/39] syn-clean-calefaccion: ok (9.3s)
+[34/39] syn-clean-aproveche: ok (12.2s)
+[35/39] syn-clean-avena: ok (12.7s)
+[36/39] syn-mood-3: miss (8.2s)
+[37/39] syn-lexical-en-3: miss (10.3s)
+[38/39] syn-mood-4: miss (16.2s)
+[39/39] syn-lexical-en-4: miss (14.0s)
+# Eval 2026-11-22 — ollama / ministral-3:3b
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 42% |
+| Category recall | 9% |
+| Category precision | 21% |
+| Corrected text matches gold | 12% |
+| False positives on correct input | 17% |
+| Transfer source right | 0% |
+| Transfer flagged (gold transfer, detected) | 12% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 14.147 / 12.726 / 32.08 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 50% | 67% | 2 | 2 | 1 |
+| article | — | 0% | 0 | 0 | 2 |
+| clitic | — | 0% | 0 | 0 | 2 |
+| gender | — | 0% | 0 | 0 | 4 |
+| lexical | 0% | 0% | 0 | 1 | 8 |
+| mood | 0% | 0% | 0 | 1 | 4 |
+| preposition | 33% | 25% | 1 | 2 | 3 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | — | 0% | 0 | 0 | 2 |
+| spelling_accent | 0% | 0% | 0 | 3 | 3 |
+| tense_aspect | — | 0% | 0 | 0 | 2 |
+| word_order | 0% | 0% | 0 | 2 | 3 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: puedo → puedes [agreement]
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: possible → más [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: Busco piso cerca de universidad. → Busco piso **cerca de** la universidad. [preposition]
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-serestar-1` gold ['ser_estar']: cansado → cansado [spelling_accent]
+- `syn-serestar-2` gold ['ser_estar']: en el centro → en el corazón [preposition]
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: pasta → pasta **al** carbonara/pasta con *salsa* de tomate [word_order]
+- `syn-prep-2` gold ['preposition']: de → a [preposition]
+- `syn-clitic-1` gold ['clitic', 'word_order']: ayer → ayer [spelling_accent]
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: un muy bueno profesor → un *buen* profesor [None]
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: embarazado → te sientes culpable [mood]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: no correction
+- `syn-clean-porfa` gold none: porfa → por favor [spelling_accent]
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: sale → vaya [word_order]
+- `syn-lexical-en-4` gold ['lexical']: no → hay [agreement]
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-ministral-3-3b.json
+20:50:14 ollama ministral-3:3b profile=roman
+[1/39] roman-2026-10-31-bus: miss (17.9s)
+[2/39] roman-2026-10-queue: miss (12.5s)
+[3/39] roman-2026-10-compliment: miss (27.2s)
+[4/39] roman-2026-11-14-lift: miss (14.7s)
+[5/39] syn-article-1: miss (7.8s)
+[6/39] syn-article-2: miss (16.6s)
+[7/39] syn-gender-1: miss (13.9s)
+[8/39] syn-gender-2: miss (9.7s)
+[9/39] syn-agreement-1: miss (8.9s)
+[10/39] syn-agreement-2: ok (15.7s)
+[11/39] syn-serestar-1: miss (9.9s)
+[12/39] syn-serestar-2: miss (14.6s)
+[13/39] syn-tense-1: miss (8.8s)
+[14/39] syn-tense-2: miss (17.0s)
+[15/39] syn-mood-1: miss (14.3s)
+[16/39] syn-mood-2: miss (19.8s)
+[17/39] syn-prep-1: miss (12.0s)
+[18/39] syn-prep-2: miss (12.7s)
+[19/39] syn-clitic-1: miss (16.4s)
+[20/39] syn-clitic-2: miss (10.7s)
+[21/39] syn-order-1: ok (16.6s)
+[22/39] syn-order-2: miss (15.5s)
+[23/39] syn-lexical-1: miss (14.3s)
+[24/39] syn-lexical-2: miss (18.6s)
+[25/39] syn-lexical-3: miss (17.5s)
+[26/39] syn-accent-1: miss (16.4s)
+[27/39] syn-accent-2: miss (8.9s)
+[28/39] syn-register-1: miss (19.0s)
+[29/39] syn-register-2: miss (12.9s)
+[30/39] syn-clean-porfa: ok (13.3s)
+[31/39] syn-clean-mepones: ok (13.1s)
+[32/39] syn-clean-cola: ok (13.1s)
+[33/39] syn-clean-calefaccion: ok (12.3s)
+[34/39] syn-clean-aproveche: ok (9.8s)
+[35/39] syn-clean-avena: miss (26.1s)
+[36/39] syn-mood-3: miss (12.1s)
+[37/39] syn-lexical-en-3: miss (16.3s)
+[38/39] syn-mood-4: miss (12.9s)
+[39/39] syn-lexical-en-4: miss (18.2s)
+# Eval 2026-11-22 — ollama / ministral-3:3b — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 24% |
+| Category recall | 6% |
+| Category precision | 25% |
+| Corrected text matches gold | 9% |
+| False positives on correct input | 17% |
+| Transfer source right | 8% |
+| Transfer flagged (gold transfer, detected) | 50% |
+| transfer_source filled when flagged | 100% |
+| Latency mean / median / max, s | 14.568 / 14.279 / 27.217 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | — | 0% | 0 | 0 | 2 |
+| article | 100% | 33% | 1 | 0 | 2 |
+| clitic | — | 0% | 0 | 0 | 2 |
+| gender | — | 0% | 0 | 0 | 4 |
+| lexical | 0% | 0% | 0 | 1 | 8 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | 0% | 0% | 0 | 1 | 2 |
+| spelling_accent | — | 0% | 0 | 0 | 3 |
+| tense_aspect | 0% | 0% | 0 | 1 | 2 |
+| word_order | 25% | 33% | 1 | 3 | 2 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: possible → más posible [lexical]
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-agreement-1` gold ['agreement']: no correction
+- `syn-agreement-2` gold ['agreement', 'article']: clases de la máster → clases de **el** máster [article]
+- `syn-serestar-1` gold ['ser_estar']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: Cuando llego → llegue [tense_aspect]
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: Pienso de → Pienso **que** [word_order]
+- `syn-clitic-1` gold ['clitic', 'word_order']: no correction
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado → no estás embarazado (pero sí tienes confianza) [ser_estar]
+- `syn-lexical-3` gold ['lexical']:  →  [word_order]
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: Oye → Hola [word_order]
+- `syn-register-2` gold ['register']: no correction
+- `syn-clean-avena` gold none: café con leche de avena → café con leche de avena (correcto) [None]
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-ministral-3-3b-roman.json
+20:59:44 ollama granite4.1:3b profile=none
+[1/39] roman-2026-10-31-bus: miss (18.1s)
+[2/39] roman-2026-10-queue: miss (6.6s)
+[3/39] roman-2026-10-compliment: miss (4.4s)
+[4/39] roman-2026-11-14-lift: miss (5.6s)
+[5/39] syn-article-1: miss (7.4s)
+[6/39] syn-article-2: miss (10.6s)
+[7/39] syn-gender-1: miss (4.0s)
+[8/39] syn-gender-2: miss (7.7s)
+[9/39] syn-agreement-1: miss (6.5s)
+[10/39] syn-agreement-2: ok (8.5s)
+[11/39] syn-serestar-1: ok (14.0s)
+[12/39] syn-serestar-2: miss (5.7s)
+[13/39] syn-tense-1: miss (7.8s)
+[14/39] syn-tense-2: miss (4.5s)
+[15/39] syn-mood-1: miss (9.0s)
+[16/39] syn-mood-2: miss (8.9s)
+[17/39] syn-prep-1: miss (4.0s)
+[18/39] syn-prep-2: miss (7.6s)
+[19/39] syn-clitic-1: miss (10.6s)
+[20/39] syn-clitic-2: miss (8.2s)
+[21/39] syn-order-1: miss (7.8s)
+[22/39] syn-order-2: miss (6.2s)
+[23/39] syn-lexical-1: miss (10.4s)
+[24/39] syn-lexical-2: miss (14.2s)
+[25/39] syn-lexical-3: miss (5.3s)
+[26/39] syn-accent-1: miss (4.8s)
+[27/39] syn-accent-2: miss (10.9s)
+[28/39] syn-register-1: miss (5.8s)
+[29/39] syn-register-2: miss (10.0s)
+[30/39] syn-clean-porfa: ok (9.4s)
+[31/39] syn-clean-mepones: ok (8.3s)
+[32/39] syn-clean-cola: ok (3.0s)
+[33/39] syn-clean-calefaccion: ok (8.6s)
+[34/39] syn-clean-aproveche: ok (8.9s)
+[35/39] syn-clean-avena: ok (11.0s)
+[36/39] syn-mood-3: miss (8.0s)
+[37/39] syn-lexical-en-3: miss (8.8s)
+[38/39] syn-mood-4: miss (4.8s)
+[39/39] syn-lexical-en-4: miss (5.3s)
+# Eval 2026-11-22 — ollama / granite4.1:3b
+Profile: none (legacy prompts, no profile context or transfer hints).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 9% |
+| Category recall | 6% |
+| Category precision | 67% |
+| Corrected text matches gold | 6% |
+| False positives on correct input | 0% |
+| Transfer source right | 0% |
+| Transfer flagged (gold transfer, detected) | 0% |
+| transfer_source filled when flagged | — |
+| Latency mean / median / max, s | 7.98 / 7.843 / 18.123 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 33% | 1 | 0 | 2 |
+| article | — | 0% | 0 | 0 | 2 |
+| clitic | — | 0% | 0 | 0 | 2 |
+| gender | 0% | 0% | 0 | 1 | 4 |
+| lexical | — | 0% | 0 | 0 | 8 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | 100% | 50% | 1 | 0 | 1 |
+| spelling_accent | — | 0% | 0 | 0 | 3 |
+| tense_aspect | — | 0% | 0 | 0 | 2 |
+| word_order | — | 0% | 0 | 0 | 3 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: no correction
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-agreement-1` gold ['agreement']: no correction
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: no correction
+- `syn-clitic-1` gold ['clitic', 'word_order']: no correction
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado → Estoy embarazada [gender]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: no correction
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-granite4.1-3b.json
+21:04:57 ollama granite4.1:3b profile=roman
+[1/39] roman-2026-10-31-bus: miss (12.9s)
+[2/39] roman-2026-10-queue: ok (26.6s)
+[3/39] roman-2026-10-compliment: miss (9.0s)
+[4/39] roman-2026-11-14-lift: miss (10.7s)
+[5/39] syn-article-1: miss (11.6s)
+[6/39] syn-article-2: miss (10.4s)
+[7/39] syn-gender-1: miss (10.1s)
+[8/39] syn-gender-2: miss (13.4s)
+[9/39] syn-agreement-1: miss (10.3s)
+[10/39] syn-agreement-2: ok (18.9s)
+[11/39] syn-serestar-1: miss (17.9s)
+[12/39] syn-serestar-2: miss (12.5s)
+[13/39] syn-tense-1: miss (20.2s)
+[14/39] syn-tense-2: miss (10.7s)
+[15/39] syn-mood-1: miss (4.3s)
+[16/39] syn-mood-2: miss (13.0s)
+[17/39] syn-prep-1: miss (11.0s)
+[18/39] syn-prep-2: miss (22.5s)
+[19/39] syn-clitic-1: miss (14.2s)
+[20/39] syn-clitic-2: miss (11.4s)
+[21/39] syn-order-1: miss (10.7s)
+[22/39] syn-order-2: miss (10.8s)
+[23/39] syn-lexical-1: miss (9.9s)
+[24/39] syn-lexical-2: ok (18.8s)
+[25/39] syn-lexical-3: miss (8.5s)
+[26/39] syn-accent-1: miss (7.6s)
+[27/39] syn-accent-2: miss (8.9s)
+[28/39] syn-register-1: miss (9.7s)
+[29/39] syn-register-2: miss (14.4s)
+[30/39] syn-clean-porfa: ok (7.7s)
+[31/39] syn-clean-mepones: ok (8.4s)
+[32/39] syn-clean-cola: ok (14.7s)
+[33/39] syn-clean-calefaccion: ok (10.9s)
+[34/39] syn-clean-aproveche: ok (10.2s)
+[35/39] syn-clean-avena: ok (12.4s)
+[36/39] syn-mood-3: miss (14.6s)
+[37/39] syn-lexical-en-3: miss (8.1s)
+[38/39] syn-mood-4: miss (8.6s)
+[39/39] syn-lexical-en-4: miss (12.2s)
+# Eval 2026-11-22 — ollama / granite4.1:3b — profile roman
+Profile: **roman** (prompts include the profile context and transfer hints; 39/39 cases match its target language).
+Cases: 39, answered: 39 (33 with errors, 6 correct). Provider failures: 0 (excluded from the metrics below).
+| Metric | Value |
+|---|---|
+| Detection (error cases) | 15% |
+| Category recall | 9% |
+| Category precision | 60% |
+| Corrected text matches gold | 3% |
+| False positives on correct input | 0% |
+| Transfer source right | 0% |
+| Transfer flagged (gold transfer, detected) | 0% |
+| transfer_source filled when flagged | — |
+| Latency mean / median / max, s | 12.28 / 10.934 / 26.63 |
+## Per category
+| Category | P | R | tp | fp | fn |
+|---|---|---|---|---|---|
+| agreement | 100% | 33% | 1 | 0 | 2 |
+| article | — | 0% | 0 | 0 | 2 |
+| clitic | — | 0% | 0 | 0 | 2 |
+| gender | — | 0% | 0 | 0 | 4 |
+| lexical | 100% | 25% | 2 | 0 | 6 |
+| mood | — | 0% | 0 | 0 | 4 |
+| preposition | — | 0% | 0 | 0 | 4 |
+| register | — | 0% | 0 | 0 | 3 |
+| ser_estar | 0% | 0% | 0 | 1 | 2 |
+| spelling_accent | — | 0% | 0 | 0 | 3 |
+| tense_aspect | 0% | 0% | 0 | 1 | 2 |
+| word_order | — | 0% | 0 | 0 | 3 |
+## Misses
+- `roman-2026-10-31-bus` gold ['register', 'lexical']: no correction
+- `roman-2026-10-queue` gold ['lexical']: No estoy en la línea. → No estoy en la fila (o en la cola). [lexical]
+- `roman-2026-10-compliment` gold ['preposition', 'spelling_accent']: no correction
+- `roman-2026-11-14-lift` gold ['gender', 'lexical']: no correction
+- `syn-article-1` gold ['article', 'gender']: no correction
+- `syn-article-2` gold ['article']: no correction
+- `syn-gender-1` gold ['gender']: no correction
+- `syn-gender-2` gold ['gender']: no correction
+- `syn-agreement-1` gold ['agreement']: no correction
+- `syn-serestar-1` gold ['ser_estar']: Soy cansado → Siento cansancio [tense_aspect]
+- `syn-serestar-2` gold ['ser_estar']: no correction
+- `syn-tense-1` gold ['tense_aspect']: no correction
+- `syn-tense-2` gold ['tense_aspect']: no correction
+- `syn-mood-1` gold ['mood']: no correction
+- `syn-mood-2` gold ['mood']: no correction
+- `syn-prep-1` gold ['preposition']: no correction
+- `syn-prep-2` gold ['preposition']: Pienso de mudarme a otro piso. → Me gustaría mudarme a otro piso. [ser_estar]
+- `syn-clitic-1` gold ['clitic', 'word_order']: no correction
+- `syn-clitic-2` gold ['clitic']: no correction
+- `syn-order-1` gold ['word_order']: no correction
+- `syn-order-2` gold ['word_order', 'agreement']: no correction
+- `syn-lexical-1` gold ['lexical', 'preposition']: no correction
+- `syn-lexical-2` gold ['lexical']: Estoy embarazado porque no hablo bien español. → Siento incomodidad porque no entiendo bien el español. [lexical]
+- `syn-lexical-3` gold ['lexical']: no correction
+- `syn-accent-1` gold ['spelling_accent']: no correction
+- `syn-accent-2` gold ['spelling_accent']: no correction
+- `syn-register-1` gold ['register']: no correction
+- `syn-register-2` gold ['register']: no correction
+- `syn-mood-3` gold ['mood']: no correction
+- `syn-lexical-en-3` gold ['lexical']: no correction
+- `syn-mood-4` gold ['mood']: no correction
+- `syn-lexical-en-4` gold ['lexical']: no correction
+report: D:\Downloads\LingMate_test\eval\reports\2026-11-22-ollama-granite4.1-3b-roman.json
+21:12:58 ollama aya-expanse:8b profile=none
+ollama is not configured (need a running Ollama with the model pulled).
+21:13:00 ollama aya-expanse:8b profile=roman
+ollama is not configured (need a running Ollama with the model pulled).
+21:13:01 compare (no profile vs profile)
+# Profile effect 2026-11-22: no profile → with profile
+Cells: without → with (difference in points; ↑ better). Metrics over answered cases only; check `answered` — a quota stop makes a column incomparable.
+| Model | Profile | Answered | Detection | Category recall | Text match | False positives | Transfer source right | `lexical` recall | `register` recall |
+|---|---|---|---|---|---|---|---|---|---|
+| gemini/gemini-3.1-flash-lite | roman | 39 → 39 | 91% → 94% (+3 ↑) | 85% → 91% (+6 ↑) | 70% → 70% (=) | 0% → 17% (+17 ↓) | 46% → 92% (+46 ↑) | 62% → 88% (+25 ↑) | 33% → 50% (+17 ↑) |
+| gemini/gemini-flash-lite-latest | roman | 39 → 39 | 85% → 85% (=) | 82% → 79% (-3 ↓) | 73% → 76% (+3 ↑) | 0% → 0% (=) | 38% → 69% (+31 ↑) | 50% → 62% (+12 ↑) | 33% → 33% (=) |
+| ollama/gemma4:e2b | roman | 39 → 39 | 33% → 48% (+15 ↑) | 24% → 33% (+9 ↑) | 27% → 27% (=) | 17% → 0% (-17 ↑) | 23% → 23% (=) | 0% → 12% (+12 ↑) | 0% → 33% (+33 ↑) |
+| ollama/granite4.1:3b | roman | 39 → 39 | 9% → 15% (+6 ↑) | 6% → 9% (+3 ↑) | 6% → 3% (-3 ↓) | 0% → 0% (=) | 0% → 0% (=) | 0% → 25% (+25 ↑) | 0% → 0% (=) |
+| ollama/ministral-3:3b | roman | 39 → 39 | 42% → 24% (-18 ↓) | 9% → 6% (-3 ↓) | 12% → 9% (-3 ↓) | 17% → 17% (=) | 0% → 8% (+8 ↑) | 0% → 0% (=) | 0% → 0% (=) |
+| ollama/qwen3.5:4b-q4_K_M | roman | 39 → 39 | 18% → 6% (-12 ↓) | 12% → 3% (-9 ↓) | 6% → 6% (=) | 0% → 0% (=) | 0% → 0% (=) | 0% → 0% (=) | 33% → 0% (-33 ↓) |
+Caveat: the `en` hints name *línea* (Roman's real error), so the 3 `roman-*` cases are partly taught to the test; compare their lines under Misses in each report, and trust gains on the 31 synthetic cases and Roman's live check more.
+21:13:03 done
