@@ -130,6 +130,23 @@ def test_units_for_error_category():
     assert "es-b1-buenos-deseos" in [u.id for u in units_for_category(UNITS, "mood")]
 
 
+def test_slice2_units_ser_estar_and_tramites():
+    """C.1 slice 2: ser/estar and the first relocation unit (personal data, address) are on the
+    A2 path before the B1 unit; the relocation unit is linked to the 23.11 «Адрес» situation."""
+    ids = [u.id for u in UNITS]
+    assert ids.index("es-a2-como-esta") < ids.index("es-b1-buenos-deseos")
+    assert ids.index("es-a2-tramites") < ids.index("es-b1-buenos-deseos")
+    assert all(u.level == "A2" for u in UNITS[:ids.index("es-b1-buenos-deseos")])  # A2 before B1
+    assert "es-a2-como-esta" in [u.id for u in units_for_category(UNITS, "ser_estar")]
+    tramites = next(u for u in UNITS if u.id == "es-a2-tramites")
+    assert "register" in tramites.error_categories
+    assert any(s.startswith("23.11.2026") for s in tramites.situations.learner)
+    # ser/estar opens after «En casa»; trámites only needs the bar unit (tú/usted)
+    assert "es-a2-como-esta" not in [u.id for u in next_units(UNITS, ["es-a2-en-el-bar"])]
+    assert "es-a2-como-esta" in [u.id for u in next_units(UNITS, ["es-a2-en-el-bar", "es-a2-en-casa"])]
+    assert "es-a2-tramites" in [u.id for u in next_units(UNITS, ["es-a2-en-el-bar"])]
+
+
 @pytest.fixture
 def client():
     import main

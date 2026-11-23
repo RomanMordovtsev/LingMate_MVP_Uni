@@ -1,0 +1,55 @@
+id: es-a2-como-esta
+language: es
+variant: es-ES
+level: A2
+order: 5
+title_ru: "Какой и в каком состоянии: ser и estar в быту"
+title_target: "¿Cómo es? ¿Cómo está?"
+can_do:
+  - ru: "Могу описать квартиру, вещь или человека (какой он) и сказать, в каком они сейчас состоянии."
+    cefr_scale: "Sustained monologue: describing experience"
+    cefr_level: A2
+  - ru: "Могу спросить, готово ли что-то, и сказать, что вещь сломана, включена или закрыта."
+    cefr_scale: "Goal-oriented co-operation"
+    cefr_level: A2
+pcic:
+  - inventory: gramatica
+    band: A1-A2
+    title: "Verbos ser y estar: ser + adjetivo (cualidad) / estar + adjetivo (estado)"
+  - inventory: gramatica
+    band: A1-A2
+    title: "Estar + participio (resultado), concordancia del participio"
+  - inventory: nociones_generales
+    band: A1-A2
+    title: "Nociones cualitativas: estado, cualidades físicas"
+grammar:
+  - id: ser_estar_estado
+    label_ru: "ser — какой, estar — в каком состоянии"
+    tip_ru: "Ser отвечает «какой это по сути» (El piso es grande), estar — «как оно сейчас» (El piso está sucio). Одно прилагательное может менять смысл: es aburrido (скучный человек) / está aburrido (ему скучно)."
+    examples: ["El piso es pequeño, pero está muy limpio.", "Mi compañera es simpática, pero hoy está cansada."]
+    error_categories: [ser_estar]
+  - id: estar_participio
+    label_ru: "estar + причастие: está roto, está lista"
+    tip_ru: "Результат действия — estar + причастие, и причастие согласуется с вещью как прилагательное: la puerta está abierta, los platos están lavados. Не путай с he roto (что я сделал)."
+    examples: ["La ventana está abierta.", "¿Ya están listas las fotos?"]
+    error_categories: [ser_estar, agreement]
+chunks:
+  - {es: "¿Cómo es el piso?", ru: "Какая квартира? (описание)"}
+  - {es: "¿Ya está listo?", ru: "Уже готово?"}
+  - {es: "Está roto / Está rota.", ru: "Сломан / сломана."}
+  - {es: "La tienda ya está cerrada.", ru: "Магазин уже закрыт."}
+  - {es: "Es muy luminoso, pero está un poco sucio.", ru: "Он очень светлый, но немного грязный."}
+  - {es: "¿Está encendida la luz?", ru: "Свет включён?"}
+vocabulary:
+  - {es: "luminoso / oscuro", ru: "светлый / тёмный"}
+  - {es: "amplio / pequeño", ru: "просторный / маленький"}
+  - {es: "limpio / sucio", ru: "чистый / грязный"}
+  - {es: "roto / estropeado", ru: "сломанный / испорченный"}
+  - {es: "abierto / cerrado", ru: "открытый / закрытый"}
+  - {es: "listo / preparado", ru: "готовый"}
+situations:
+  scenarios: []
+  learner: ["13.11.2026 — \"Yesterday I left you a backpack to repair\"", "06.11.2026 — «Отопление»"]
+  seeds: ["visitar un piso de alquiler y describirlo", "recoger algo en una tienda: ¿ya está listo?"]
+culture_ru: "В объявлениях об аренде много ser-прилагательных (luminoso, exterior, amplio) и пометок о состоянии: reformado — с ремонтом, a reformar — нужен ремонт, amueblado — с мебелью. Exterior — окна на улицу, interior — во двор."
+prerequisites: [es-a2-en-casa]

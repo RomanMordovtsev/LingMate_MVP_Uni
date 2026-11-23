@@ -228,3 +228,15 @@ def test_clicking_one_button_position_does_not_pass_levels(position):
     item = BANK.items[0]
     assert sorted(item.public()["options"]) == sorted(item.options)
     assert item.public()["options"] == item.public()["options"]      # stable between requests
+
+
+def test_gap_in_new_a2_unit_sets_start_unit():
+    """An A2 learner who gets everything right except «su» with usted starts at the trámites unit
+    (the first open unit with a gap at the placed level), not at the first unit of the course."""
+    known_a2 = [i for i in BANK.items if i.level in ("A1", "A2")]
+    answers = [{"item_id": i.id, "choice": i.answer if i.id != "a2-su-usted"
+                else next(o for o in i.options if o != i.answer)} for i in known_a2]
+    answers += [{"item_id": i.id, "choice": None} for i in BANK.items if i.level == "B1"][:4]
+    res = diagnose(BANK, answers, UNITS, start_level="A2")
+    assert res["level"] == "A2"
+    assert res["start_unit"] == "es-a2-tramites" and res["start_reason"] == "gap"

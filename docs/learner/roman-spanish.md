@@ -33,12 +33,21 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | concessive "even if": *aunque* + subjuntivo vs indicativo; never *si* + present subjunctive | mood | even if 15.11 |
 | academic / presentation vocabulary from EN (*engage* ≠ *comprometer*; *público* vs *audiencia*) | lexical, transfer EN | engage 15.11 |
 | hoping / wishing: *espero que* + subjuntivo (*salga, vaya*), *ojalá*, *eso espero* | mood / chunk | espero 19.11 |
+| personal data in forms: *dirección / domicilio*, Spanish address format; spelling *dirección* (cc, EN *direction*) | lexical / spelling_accent, transfer EN | address 23.11 |
 | EN/RU "overhaul / капитальный ремонт" → *reforma integral* (flat, system), *revisión a fondo* (car); *la reforma* = flat renovation in Spain | lexical, transfer EN/RU | overhaul 22.11 |
 | EN news/academic adverbs (*allegedly*) → *presuntamente / supuestamente / al parecer*; *presumir* = to boast, not *to presume* | lexical, transfer EN | allegedly 19.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 23.11.2026 — «Адрес» (address)
+- Question (no utterance → synthetic eval case `syn-spelling-en-direccion`: *direción* under EN *direction* → **dirección**).
+- **la dirección** = address (also "direction", "management"); **el domicilio** = address of residence in forms, banks, documents (*domicilio habitual, domicilio fiscal*); **la dirección de correo (electrónico) / el correo / el email**; **la dirección de envío** = delivery address.
+- Chunks: *¿Cuál es tu dirección? / ¿Me das tu dirección?*, *Vivo en la calle… número…*, *¿Me lo puedes enviar a esta dirección?*, *He cambiado de domicilio.*
+- Spanish address format: **C/ Mayor 12, 3º izda., 01001 Vitoria-Gasteiz** (street, number, floor + side/letter, then *código postal* (5 digits) + city); abbreviations *C/, Avda., Pza., Pº, nº, s/n*; flat by side *izda. / dcha.* or letter *A, B*; read aloud *calle Mayor, doce, tercero izquierda*.
+- Spelling / gender: dire**cc**ión (two c, tilde), **la** dirección, plural *direcciones* (no tilde). No Spanish word resembles RU «адрес».
+- Uses: curriculum unit «Mis datos, por favor» (C.1, `es-a2-tramites`), relocation pack 4.3 (empadronamiento, bank, deliveries), SRS chunks.
 
 ### 22.11.2026 — «Overhaul» → reforma integral / revisión a fondo
 - Question from English (no utterance → synthetic eval case `syn-lexical-ru-overhaul`: RU calque *reparación capital* «капитальный ремонт» → *reforma integral*).

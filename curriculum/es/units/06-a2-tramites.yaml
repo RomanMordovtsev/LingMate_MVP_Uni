@@ -1,0 +1,64 @@
+id: es-a2-tramites
+language: es
+variant: es-ES
+level: A2
+order: 6
+title_ru: "Бумаги: адрес, личные данные, empadronamiento"
+title_target: "Mis datos, por favor"
+can_do:
+  - ru: "Могу продиктовать свои данные в офисе или по телефону: имя по буквам, адрес, телефон, почту."
+    cefr_scale: "Information exchange"
+    cefr_level: A2
+  - ru: "Могу понять и заполнить простую анкету (nombre, apellidos, domicilio, código postal)."
+    cefr_scale: "Notes, messages and forms"
+    cefr_level: A2
+  - ru: "Могу вежливо на «вы» попросить сотрудника о помощи с документом."
+    cefr_scale: "Sociolinguistic appropriateness"
+    cefr_level: A2
+pcic:
+  - inventory: nociones_especificas
+    band: A1-A2
+    title: "Individuo: dimensión física — datos personales (nombre, dirección, teléfono, correo electrónico)"
+  - inventory: gramatica
+    band: A1-A2
+    title: "Interrogativos: qué / cuál (¿Cuál es + SN?)"
+  - inventory: gramatica
+    band: A1-A2
+    title: "Posesivos átonos: su (usted / ustedes)"
+  - inventory: saberes_socioculturales
+    band: A1-A2
+    title: "Servicios: ayuntamiento, trámites administrativos"
+grammar:
+  - id: cual_es
+    label_ru: "¿Cuál es…? — когда спрашиваешь данные"
+    tip_ru: "Когда просишь конкретное значение (адрес, номер, почту), говорят ¿Cuál es…?, а не ¿Qué es…?: ¿Cuál es tu dirección? ¿Qué es…? — это «что такое…?» (¿Qué es el padrón?)."
+    examples: ["¿Cuál es su número de teléfono?", "¿Cuál es el código postal?"]
+    error_categories: [lexical]
+  - id: su_usted
+    label_ru: "su = ваш (на «вы»)"
+    tip_ru: "С usted притяжательное — su, как и «его/её»: ¿Me da su dirección? (ваш адрес). Tu — только на «ты». Перед множественным — sus: sus apellidos."
+    examples: ["¿Me puede decir su nombre completo?", "Necesito sus apellidos y su domicilio."]
+    error_categories: [register, agreement]
+chunks:
+  - {es: "¿Cuál es su dirección?", ru: "Какой у вас адрес?"}
+  - {es: "Vivo en la calle Mayor, número doce, tercero izquierda.", ru: "Живу на улице Майор, дом 12, 3-й этаж, левая квартира."}
+  - {es: "¿Se lo deletreo?", ru: "Продиктовать по буквам?"}
+  - {es: "Mi correo es… arroba… punto com.", ru: "Моя почта — … собака … точка ком."}
+  - {es: "He cambiado de domicilio.", ru: "Я сменил адрес проживания."}
+  - {es: "Quería pedir cita para empadronarme.", ru: "Я хотел бы записаться на прописку (empadronamiento)."}
+  - {es: "¿Me puede ayudar con este formulario?", ru: "Можете помочь с этой анкетой?"}
+vocabulary:
+  - {es: "la dirección / el domicilio", ru: "адрес / адрес проживания (в документах)"}
+  - {es: "el código postal", ru: "почтовый индекс"}
+  - {es: "los apellidos", ru: "фамилия (в Испании обычно две)"}
+  - {es: "la cita (previa)", ru: "запись на приём"}
+  - {es: "el ayuntamiento", ru: "мэрия"}
+  - {es: "el empadronamiento / el padrón", ru: "регистрация по месту жительства / реестр жителей"}
+  - {es: "el formulario / la solicitud", ru: "анкета / заявление"}
+  - {es: "arroba / punto / guion bajo", ru: "@ / точка / нижнее подчёркивание"}
+situations:
+  scenarios: []
+  learner: ["23.11.2026 — «Адрес»"]
+  seeds: ["empadronarse en el ayuntamiento", "abrir una cuenta en el banco", "dar la dirección de envío por teléfono"]
+culture_ru: "Адрес в Испании пишут так: C/ Mayor 12, 3º izda., 01001 Vitoria-Gasteiz — улица, дом, этаж и сторона (izda./dcha.) или буква, потом индекс из 5 цифр и город. Empadronamiento — запись в реестр жителей в ayuntamiento; справка (certificado de empadronamiento) нужна для многих следующих шагов, например для медицинской карты. Обычно нужна cita previa."
+prerequisites: [es-a2-en-el-bar]
