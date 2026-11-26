@@ -142,13 +142,14 @@ def test_score_drops_unknown_and_repeats():
 
 
 def test_unit_start_is_first_open_unit_with_gap():
-    # A2 learner who failed the se le ha roto item → starts at unit 2, not unit 1.
-    _, answers = run("A2", "A2", wrong={"a2-se-le-roto"})
+    # A2 learner who failed the perfecto item → starts at unit 2, not unit 1.
+    _, answers = run("A2", "A2", wrong={"a2-perfecto-todavia"})
     res = diagnose(BANK, answers, UNITS, "A2")
     assert res["level"] == "A2"
     assert res["start_unit"] == "es-a2-hoy-he-hecho" and res["start_reason"] == "gap"
-    gap = next(g for g in res["gaps"] if g["item_id"] == "a2-se-le-roto")
-    assert gap["correct"] == "ha roto" and gap["category"] == "agreement"
+    gap = next(g for g in res["gaps"] if g["item_id"] == "a2-perfecto-todavia")
+    assert gap["category"] == "tense_aspect" and gap["grammar"] == "perfecto_hoy"
+    assert res["unit_evidence"]["es-a2-hoy-he-hecho"] == "gap"
     assert res["provisional"] is True
     assert "es-a2-hoy-he-hecho" not in res["suggested_known"]
     assert {p["level"] for p in res["production_prompts"]} == {"A2", "B1"}
@@ -240,3 +241,80 @@ def test_gap_in_new_a2_unit_sets_start_unit():
     res = diagnose(BANK, answers, UNITS, start_level="A2")
     assert res["level"] == "A2"
     assert res["start_unit"] == "es-a2-tramites" and res["start_reason"] == "gap"
+
+
+# --- content coverage (C.2: the test samples every unit, not the first items of the file) ---
+
+from core.placement import _pick, grammar_units  # noqa: E402
+
+G2U = grammar_units(UNITS)
+
+
+def _units_probed(answers):
+    return {G2U[ITEMS[a["item_id"]].grammar] for a in answers if ITEMS[a["item_id"]].grammar}
+
+
+@pytest.mark.parametrize("true_level,start", [("A2", "A2"), ("B1", "A2"), ("A2", "B1"), ("B2", "A1")])
+def test_pass_probes_every_unit_of_the_level(true_level, start):
+    """Before: a clear A2 pass asked the first 4 A2 items in YAML order, so units 5–6 were
+    never probed and still came out «похоже, знаешь»."""
+    _, answers = run(true_level, start)
+    for lvl in ("A2", "B1"):
+        if TEST_LEVELS.index(lvl) <= TEST_LEVELS.index(true_level):
+            assert {u.id for u in UNITS if u.level == lvl} <= _units_probed(answers), lvl
+    res = diagnose(BANK, answers, UNITS, start)
+    assert set(res["unit_evidence"]) == {u.id for u in UNITS}
+    assert all(res["unit_evidence"][u.id] == "right" for u in UNITS
+               if TEST_LEVELS.index(u.level) <= TEST_LEVELS.index(true_level))
+
+
+def test_clear_fail_gets_no_coverage_items():
+    _, answers = run("A1", "A2")
+    assert sum(ITEMS[a["item_id"]].level == "A2" for a in answers) == BLOCK
+
+
+def test_pass_that_breaks_down_on_coverage_items_fails_the_level():
+    """3/4 in the first block, then both coverage items wrong → 3/6 < 2/3: not passed."""
+    answers = []
+    for _ in range(BLOCK + EXTRA):
+        res = step(BANK, answers, "A2")
+        item = ITEMS[res["item"]["id"]]
+        assert item.level == "A2"
+        ok = len(answers) < 3
+        answers.append({"item_id": item.id, "choice": item.answer if ok else "x"})
+    res = step(BANK, answers, "A2")
+    assert res["done"] or res["item"]["level"] == "A1"
+
+
+def test_pick_prefers_unprobed_unit_then_grammar_then_category():
+    a2 = [i for i in BANK.items if i.level == "A2"]
+    first = _pick(a2, [], G2U)
+    assert first.id == a2[0].id                                 # nothing asked: YAML order
+    same_unit = [i for i in a2 if i.grammar and G2U[i.grammar] == G2U[first.grammar] and i is not first]
+    nxt = _pick([i for i in a2 if i is not first], [first], G2U)
+    assert G2U.get(nxt.grammar) != G2U[first.grammar] and same_unit
+    # every unit probed → a new grammar point beats a repeated one
+    probed = [next(i for i in a2 if i.grammar and G2U[i.grammar] == u.id) for u in UNITS if u.level == "A2"]
+    rest = [i for i in a2 if i not in probed]
+    pick = _pick(rest, probed, G2U)
+    assert pick.grammar and pick.grammar not in {i.grammar for i in probed}
+
+
+def test_selection_is_stateless():
+    _, answers = run("B1", "A2")
+    for n in range(len(answers)):
+        assert step(BANK, answers[:n], "A2")["item"]["id"] == answers[n]["item_id"]
+
+
+def test_units_answered_right_are_unlocked_not_known():
+    """Roman 2026-11-26, option 3: a clear A2 pass opens every A2 unit answered right, but does
+    not mark it as known (one item per unit is not enough evidence)."""
+    _, answers = run("A2", "A2")
+    res = diagnose(BANK, answers, UNITS, "A2")
+    a2 = {u.id for u in UNITS if u.level == "A2"}
+    assert set(res["unlocked"]) | set(res["suggested_known"]) >= a2
+    assert not set(res["unlocked"]) & set(res["suggested_known"])
+    assert res["start_unit"] == UNITS[0].id
+    _, answers = run("A2", "A2", wrong={"a2-perfecto-todavia"})
+    res = diagnose(BANK, answers, UNITS, "A2")
+    assert "es-a2-hoy-he-hecho" not in res["unlocked"]        # a gap is never unlocked early

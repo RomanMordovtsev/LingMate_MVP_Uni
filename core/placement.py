@@ -1,11 +1,12 @@
-"""Placement + diagnosis (roadmap C.2, slice 1): short adaptive receptive test → level,
+"""Placement + diagnosis (roadmap C.2): short adaptive receptive test → level,
 known gaps and the starting unit of the curriculum (C.1).
 
 - Auto-checked without an LLM (quota strategy in ROADMAP): items live in
   `curriculum/<lang>/placement.yaml`; the answer key never leaves the server.
 - Adaptive staircase by CEFR level: 4 items per level, 2 more when the result is borderline
   (2/4); pass → one level up, fail → one level down; stop when a passed level sits under a
-  failed one (or at the ends). The start is the profile level — only a starting point:
+  failed one (or at the ends). Items within a level are picked for content coverage (every
+  unit of the level gets probed; research-methods §10), not in file order. The start is the profile level — only a starting point:
   the placement result, not the self-report, decides (Roman 2026-11-20: "never assume a level").
 - Generic: items come from level descriptors (PCIC, CEFR CV 2020), not from one learner
   (docs/feedback/2026-11-21); their levels stay provisional until calibrated.
@@ -29,7 +30,7 @@ from typing import Dict, Iterable, List, Literal, Optional
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from core.curriculum import CURRICULUM_DIR, LEVELS, Unit, next_units
+from core.curriculum import CURRICULUM_DIR, LEVELS, Unit, curriculum, next_units
 from core.feedback import ERROR_CATEGORIES
 
 TEST_LEVELS = ("A1", "A2", "B1", "B2")
@@ -37,6 +38,7 @@ BLOCK = 4            # items per level before a decision
 EXTRA = 2            # extra items when the block is borderline
 RECHECK_AFTER_UNITS = 3   # re-check every few units (C.2); used by C.4
 SHUFFLE_SALT = "lingmate-placement-v1"
+COVER_UNITS = True        # on a pass, use the extra items to probe units not probed yet
 
 
 class Item(BaseModel):
@@ -162,9 +164,43 @@ def _decide(results: List[bool], remaining: int) -> Optional[bool]:
     return None
 
 
-def step(b: PlacementBank, answers: Iterable[dict], start_level: Optional[str] = None) -> dict:
+def grammar_units(units: Iterable[Unit]) -> Dict[str, str]:
+    """grammar point id → unit id."""
+    return {gp.id: u.id for u in units for gp in u.grammar}
+
+
+def _uncovered(remaining: List[Item], asked: List[Item], g2u: Dict[str, str]) -> List[Item]:
+    """Remaining items that probe a unit no answered item has probed."""
+    probed = {g2u.get(i.grammar) for i in asked if i.grammar}
+    return [i for i in remaining if i.grammar and g2u.get(i.grammar) not in probed | {None}]
+
+
+def _pick(remaining: List[Item], asked: List[Item], g2u: Dict[str, str]) -> Item:
+    """Next item at a level, chosen for content coverage (research-methods §3, §10: a short test
+    must sample the curriculum, not the first items of the file): prefer an item that probes a
+    unit not probed yet, then a grammar point not probed yet, then an error category not asked at
+    this level; ties keep YAML order. Depends only on the answered items, so the stateless API
+    replays the same path."""
+    units = {g2u.get(i.grammar) for i in asked if i.grammar} - {None}
+    grammar = {i.grammar for i in asked if i.grammar}
+    level = remaining[0].level
+    cats = {i.category for i in asked if i.level == level}
+
+    def rank(item: Item) -> tuple:
+        unit = g2u.get(item.grammar) if item.grammar else None
+        return (not (unit and unit not in units),
+                not (item.grammar and item.grammar not in grammar),
+                item.category in cats)
+    return min(remaining, key=rank)      # min() keeps the first of equal ranks
+
+
+def step(b: PlacementBank, answers: Iterable[dict], start_level: Optional[str] = None,
+         units: Optional[Iterable[Unit]] = None) -> dict:
     """Next item, or the final level when the staircase has settled."""
     graded = score(b, answers)
+    g2u = grammar_units(curriculum(b.language) if units is None else units)
+    items = b.by_id()
+    asked = [items[g["item_id"]] for g in graded]
     level = start_level if start_level in TEST_LEVELS else (
         "B2" if start_level in LEVELS[4:] else "A2")
     decisions: Dict[str, bool] = {}
@@ -178,8 +214,13 @@ def step(b: PlacementBank, answers: Iterable[dict], start_level: Optional[str] =
         d = decisions.get(level)
         if d is None:
             d = _decide(by_level[level], len(remaining))
+            # A pass after the first block still asks the extra items when units of this
+            # level were not probed yet: "you seem to know the A2 units" must rest on
+            # items from those units (research-methods §10, content validity).
+            if d and COVER_UNITS and len(by_level[level]) < BLOCK + EXTRA and _uncovered(remaining, asked, g2u):
+                d = None
         if d is None:
-            return {"done": False, "item": remaining[0].public(), "answered": len(graded),
+            return {"done": False, "item": _pick(remaining, asked, g2u).public(), "answered": len(graded),
                     "level_now": level}
         decisions[level] = d
         idx = TEST_LEVELS.index(level)
@@ -209,7 +250,7 @@ def diagnose(b: PlacementBank, answers: Iterable[dict], units: List[Unit],
     """Final result: level, per-level stats, gaps, suggested-known units, start unit,
     production prompts to show (placed level and the next stage)."""
     graded = score(b, answers)
-    settled = step(b, answers, start_level)
+    settled = step(b, answers, start_level, units)
     if not settled["done"]:
         raise ValueError("placement not finished")
     level = settled["level"]
@@ -241,6 +282,13 @@ def diagnose(b: PlacementBank, answers: Iterable[dict], units: List[Unit],
     with_gap = [u for u in open_units if {gp.id for gp in u.grammar} & wrong_grammar
                 and LEVELS.index(u.level) <= LEVELS.index(level)]
     start = (with_gap or open_units or [None])[0]
+    # Per-unit evidence: which units the short test actually probed (C.4 checks the rest
+    # in the unit itself instead of assuming either way).
+    evidence = {}
+    for u in units:
+        gp = {g.id for g in u.grammar}
+        evidence[u.id] = ("gap" if gp & wrong_grammar else "right" if gp & right_grammar
+                          else "untested")
     show = {level, LEVELS[min(cap, len(LEVELS) - 1)]}
     prompts = [p.model_dump() for p in b.production if p.level in show]
     return {"language": b.language, "level": level, "beginner": settled["beginner"],
@@ -249,6 +297,12 @@ def diagnose(b: PlacementBank, answers: Iterable[dict], units: List[Unit],
             "start_unit": start.id if start else None,
             "start_unit_title": start.title_ru if start else None,
             "start_reason": ("gap" if with_gap else "next") if start else None,
+            "unit_evidence": evidence,
+            # Roman 2026-11-26 (option 3): a unit answered right in the test is open right away
+            # (no waiting for its prerequisites), but not counted as known — that still needs
+            # every grammar point right (receptive ≠ production, sla §6; C.4 decides mastery).
+            "unlocked": [u.id for u in units if evidence[u.id] == "right" and u.id not in known
+                         and LEVELS.index(u.level) <= LEVELS.index(level)],
             "production_prompts": prompts, "recheck_after_units": RECHECK_AFTER_UNITS,
             "provisional": b.calibration == "provisional"}
 
