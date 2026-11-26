@@ -1157,13 +1157,14 @@ async function loadProgram(placement) {
   box.innerHTML = '';
   if (!data.units.length) { box.textContent = 'Для этого языка программы пока нет.'; return; }
   const start = placement && placement.language === lang ? placement.start_unit : null;
+  const unlocked = (placement && placement.language === lang && placement.unlocked) || [];
   data.units.forEach((u, i) => {
     const row = document.createElement('div');
     row.className = 'program-unit';
     row.dataset.unit = u.id;
     const status = u.id === start ? 'начать здесь'
       : known.includes(u.id) ? 'похоже, знаешь'
-      : data.next.includes(u.id) ? 'открыт' : 'позже';
+      : data.next.includes(u.id) || unlocked.includes(u.id) ? 'открыт' : 'позже';
     if (u.id === start) row.classList.add('program-start');
     const head = document.createElement('div');
     head.textContent = (i + 1) + '. ' + u.title_ru + ' · ' + u.level;

@@ -304,3 +304,17 @@ def test_selection_is_stateless():
     _, answers = run("B1", "A2")
     for n in range(len(answers)):
         assert step(BANK, answers[:n], "A2")["item"]["id"] == answers[n]["item_id"]
+
+
+def test_units_answered_right_are_unlocked_not_known():
+    """Roman 2026-11-26, option 3: a clear A2 pass opens every A2 unit answered right, but does
+    not mark it as known (one item per unit is not enough evidence)."""
+    _, answers = run("A2", "A2")
+    res = diagnose(BANK, answers, UNITS, "A2")
+    a2 = {u.id for u in UNITS if u.level == "A2"}
+    assert set(res["unlocked"]) | set(res["suggested_known"]) >= a2
+    assert not set(res["unlocked"]) & set(res["suggested_known"])
+    assert res["start_unit"] == UNITS[0].id
+    _, answers = run("A2", "A2", wrong={"a2-perfecto-todavia"})
+    res = diagnose(BANK, answers, UNITS, "A2")
+    assert "es-a2-hoy-he-hecho" not in res["unlocked"]        # a gap is never unlocked early

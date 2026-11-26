@@ -298,6 +298,11 @@ def diagnose(b: PlacementBank, answers: Iterable[dict], units: List[Unit],
             "start_unit_title": start.title_ru if start else None,
             "start_reason": ("gap" if with_gap else "next") if start else None,
             "unit_evidence": evidence,
+            # Roman 2026-11-26 (option 3): a unit answered right in the test is open right away
+            # (no waiting for its prerequisites), but not counted as known — that still needs
+            # every grammar point right (receptive ≠ production, sla §6; C.4 decides mastery).
+            "unlocked": [u.id for u in units if evidence[u.id] == "right" and u.id not in known
+                         and LEVELS.index(u.level) <= LEVELS.index(level)],
             "production_prompts": prompts, "recheck_after_units": RECHECK_AFTER_UNITS,
             "provisional": b.calibration == "provisional"}
 
