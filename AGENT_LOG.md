@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-26 — C.2 slice 3: placement covers every unit (scheduled run)
+- Branch `agent/placement-coverage` → PR into `agent/dev`. No open PRs (#24 merged, no comments). docs/feedback: nothing new after 2026-11-21. Notion: no new entries after 23.11. Thursday, ISO week 48 → ordinary day.
+- Task: the defect found on 23.11 — the staircase asked the first 4 items of a level in YAML order, so a clear A2 pass probed only units 2–3 and never units 1, 4, 5, 6.
+- `core/placement.py`: `_pick` (unprobed unit → new grammar point → new category at this level → YAML order), `grammar_units`, `COVER_UNITS`: a pass after the first block asks the 2 extra items while units of the level are unprobed; decision then by the 6-item rule (≥ 2/3). Stateless: the path depends only on the answers. `diagnose` → `unit_evidence` {unit: gap | right | untested}. Grounding: research-methods §3, §10 (content validity), §8 (item pools).
+- Effect: clear A2 pass 8 → 10 questions, all 6 A2 units probed; A1 learner unchanged (8); B2 from A1 16 → 18. Side effect: units 2–3 no longer come out «похоже, знаешь» for a clear A2 pass (1 item per unit instead of 2; «known» still needs every grammar point right) → question for Roman.
+- UI «Программа»: per-unit note «В тесте ответил верно — этот урок может пойти быстрее» / «В тесте этой темы не было — проверим в начале урока».
+- Tests: 276 → 284. Playwright: fresh DB, es, A2 learner (10 questions, all A2 units probed, notes rendered), A1 learner (8 questions); phone width; no console errors.
+
 ## 2026-11-23 — C.1 slice 2: ser/estar + first relocation unit + «Программа» card (scheduled run)
 - Branch `agent/curriculum-a2-slice2` → PR into `agent/dev`. No open PRs (#20–#23 merged, no comments). docs/feedback: nothing new after 2026-11-21 (handled in #22). Monday, ISO week 48 → ordinary day.
 - Notion: new 23.11 «Адрес» → `docs/learner` (+ pattern row) + synthetic case `syn-spelling-en-direccion` (*direción* under EN *direction*).

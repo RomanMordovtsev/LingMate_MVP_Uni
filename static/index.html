@@ -1176,6 +1176,16 @@ async function loadProgram(placement) {
     chip.textContent = status;
     head.appendChild(chip);
     row.appendChild(head); row.appendChild(sub);
+    const evidence = placement && placement.language === lang && placement.unit_evidence;
+    const ev = evidence ? evidence[u.id] : null;
+    const evText = ev === 'untested' && status !== 'позже' ? 'В тесте этой темы не было — проверим в начале урока.'
+      : ev === 'right' && status !== 'похоже, знаешь' ? 'В тесте ответил верно — этот урок может пойти быстрее.' : '';
+    if (evText) {
+      const note = document.createElement('div');
+      note.className = 'muted program-evidence';
+      note.textContent = evText;
+      row.appendChild(note);
+    }
     box.appendChild(row);
   });
 }
