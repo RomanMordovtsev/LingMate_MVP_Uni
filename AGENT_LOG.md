@@ -4,6 +4,15 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-23 — C.1 slice 2: ser/estar + first relocation unit + «Программа» card (scheduled run)
+- Branch `agent/curriculum-a2-slice2` → PR into `agent/dev`. No open PRs (#20–#23 merged, no comments). docs/feedback: nothing new after 2026-11-21 (handled in #22). Monday, ISO week 48 → ordinary day.
+- Notion: new 23.11 «Адрес» → `docs/learner` (+ pattern row) + synthetic case `syn-spelling-en-direccion` (*direción* under EN *direction*).
+- `curriculum/es/units/05-a2-como-esta.yaml` (ser = quality / estar = state; estar + participio with agreement; rental-ad culture note) and `06-a2-tramites.yaml` (¿Cuál es…? for data, su with usted, address format, empadronamiento / cita previa). B1 «Buenos deseos» renumbered to order 7 (file 07-…) so all A2 units come first.
+- `placement.yaml`: +4 generic A2 items (PCIC-sourced) for the 4 new grammar points (test: every unit grammar point is diagnosable). Found: the staircase takes the first 4 items of a level in file order, so on a clear pass the new items are never shown → roadmap C.2 next slice (item selection covering unit grammar points).
+- UI: card «Программа» (units in order, status chips «начать здесь» / «похоже, знаешь» / «открыт» / «позже» from the stored placement result), reloads on target-language change.
+- Tests: 274 → 276. Playwright: fresh DB, es, placement as an A2 learner (8 questions) → program card shows «начать здесь» on unit 1, units 2–3 «похоже, знаешь»; no console errors; phone width: chips wrapped over the title → fixed (inline-block chips).
+- Open for Roman: naturalness of the two units (his judgement), unit order on his path.
+
 ## 2026-11-22 — C.2 slice 2: generic placement test (docs/feedback/2026-11-21) (scheduled run)
 - Branch `agent/placement-generic` → PR into `agent/dev`. Open PR #21 (research import, Roman's weekly task, no comments) — independent, not touched. Sunday, ISO week 47 → ordinary day. Feedback 2026-11-21 is this run's task (findings before features).
 - `curriculum/es/placement.yaml`: the 12 items from Roman's situations replaced by generic ones written from PCIC inventories / CEFR CV 2020 (se le ha roto el móvil, vino, ¿puedes traer el postre?, ¿qué te pongo?, Disculpe…, el problema, ¿quitas el aire?, que tengas buen viaje, espero que te guste, me alegré de que vinieran, por lo tanto, tomar una decisión); A1/B2 contexts neutralised (no Roman / Rusia / pintxos / euskera); meaning item now Spanish-only (valid for any L1). +2 items (a1 ir al, b1 es importante que) → 31 items, ≥7 per level, ≥3 categories per level. Unit grammar points stay linked (units are curriculum topics; only the item contexts changed).

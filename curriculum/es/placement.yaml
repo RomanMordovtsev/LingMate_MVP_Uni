@@ -82,6 +82,26 @@ items:
   - {id: a2-lo-tengo, level: A2, category: clitic, topic_ru: "местоимения lo / la (прямое дополнение)",
      source: "PCIC A2 Gramática: pronombres de objeto directo átonos",
      stem: "—¿Tienes el billete? —Sí, ya ___ tengo.", options: ["le", "lo", "la", "se"], answer: "lo"}
+  - {id: a2-estar-estado, level: A2, category: ser_estar, grammar: ser_estar_estado,
+     topic_ru: "ser / estar: качество или состояние",
+     source: "PCIC A2 Gramática: ser + adjetivo (cualidad) / estar + adjetivo (estado)",
+     stem: "No puedo beber el café todavía, ___ muy caliente.", options: ["es", "está", "hay", "tiene"],
+     answer: "está"}
+  - {id: a2-participio-abierta, level: A2, category: agreement, grammar: estar_participio,
+     topic_ru: "estar + причастие (согласование)",
+     source: "PCIC A2 Gramática: estar + participio, concordancia de género y número",
+     stem: "Entra, la puerta del garaje está ___.", options: ["abierto", "abierta", "abiertos", "abriendo"],
+     answer: "abierta"}
+  - {id: a2-cual-telefono, level: A2, category: lexical, grammar: cual_es,
+     topic_ru: "¿Cuál es…? — спросить данные",
+     source: "PCIC A2 Gramática: interrogativos qué / cuál; Funciones: pedir información personal",
+     stem: "Para el formulario necesito un dato más: ¿___ es tu número de móvil?",
+     options: ["Qué", "Cuál", "Cómo", "Quién"], answer: "Cuál"}
+  - {id: a2-su-usted, level: A2, category: register, grammar: su_usted,
+     topic_ru: "su = ваш (usted)",
+     source: "PCIC A2 Gramática: posesivos átonos (su con usted); Tácticas: tratamiento formal",
+     stem: "Buenos días, señora. ¿Me escribe aquí ___ correo electrónico, por favor?",
+     options: ["tu", "su", "vuestro", "sus"], answer: "su"}
 
   # --- B1 -----------------------------------------------------------------
   - {id: b1-que-tengas, level: B1, category: mood, grammar: que_subjuntivo_deseo,
