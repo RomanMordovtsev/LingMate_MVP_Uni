@@ -1,0 +1,61 @@
+# Controlled practice (roadmap C.3 slice 1): auto-checked without an LLM, see core/practice.py.
+unit: es-a2-hoy-he-hecho
+exercises:
+  - id: hoy-he-ido
+    kind: gap
+    grammar: perfecto_hoy
+    instruction_ru: "Расскажи, что ты сделал сегодня (ir, yo)."
+    prompt: "Hoy ___ a la universidad en bici."
+    answers: ["he ido"]
+    hint_ru: "Сегодня → pretérito perfecto: haber + participio."
+    explain_ru: "hoy, esta mañana, esta semana → he + participio; ir → ido."
+  - id: hoy-he-tomado
+    kind: gap
+    grammar: perfecto_hoy
+    instruction_ru: "Что было сегодня утром? (tomar, yo)"
+    prompt: "Esta mañana ___ un café con mi compañero."
+    answers: ["he tomado"]
+    hint_ru: "Esta mañana — часть сегодняшнего дня. Participio на -ar → -ado."
+    explain_ru: "Esta mañana + pretérito perfecto: he tomado."
+  - id: hoy-todavia-no
+    kind: choose
+    grammar: perfecto_hoy
+    instruction_ru: "Скажи, что ещё не ел."
+    prompt: "Todavía no ___."
+    options: ["he comido", "comí", "como"]
+    answers: ["he comido"]
+    hint_ru: "«Ещё не» — время, которое ещё не закончилось."
+    explain_ru: "ya / todavía no почти всегда с pretérito perfecto: Todavía no he comido."
+  - id: hoy-se-me-ha
+    kind: gap
+    grammar: se_me_accidental
+    instruction_ru: "Ты забыл зонт (случайно)."
+    prompt: "¡Ay! Se me ___ olvidado el paraguas."
+    answers: ["ha"]
+    hint_ru: "Подлежащее здесь — el paraguas (одна вещь), а не «я»."
+    explain_ru: "Se me ha olvidado el paraguas: глагол согласуется с забытой вещью."
+  - id: hoy-se-me-han
+    kind: choose
+    grammar: se_me_accidental
+    instruction_ru: "Ты забыл ключи."
+    prompt: "Se me ___ olvidado las llaves."
+    options: ["ha", "han", "he"]
+    answers: ["han"]
+    hint_ru: "Глагол согласуется с тем, что забыто: las llaves — их много."
+    explain_ru: "Se me han olvidado las llaves — мн. ч., потому что ключей несколько."
+  - id: hoy-se-me-movil
+    kind: transform
+    grammar: se_me_accidental
+    instruction_ru: "Скажи «я забыл телефон» через se me — «вылетело из головы»."
+    prompt: "He olvidado el móvil."
+    answers: ["Se me ha olvidado el móvil."]
+    hint_ru: "Забытая вещь — подлежащее, me — «у меня»."
+    explain_ru: "Se me ha olvidado… — самый живой способ сказать, что забыл случайно."
+  - id: hoy-dia-largo
+    kind: order
+    grammar: perfecto_hoy
+    instruction_ru: "Собери фразу."
+    prompt: "Сегодня у меня был очень длинный день."
+    answers: ["Hoy he tenido un día muy largo."]
+    hint_ru: "Начни с «сегодня», потом haber + participio от tener."
+    explain_ru: "Hoy he tenido… — pretérito perfecto, потому что день ещё не закончился."

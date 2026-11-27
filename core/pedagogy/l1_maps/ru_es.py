@@ -37,6 +37,15 @@ RULES = (
         corrected_markers=(r"\b(planta baja|a la baja|al (cero|uno|dos|tres|cuatro|cinco))\b",),
     ),
     TransferRule(
+        "ru_es.adverb_primero", _S, _T, "agreement", "«первыми» → primero (наречие не меняется)",
+        "Можете оплатить первыми", "Podéis pagar primero / Pasad delante",
+        {"ru": "«Первыми, первой» после глагола — это наречие primero «сначала», оно не согласуется: "
+               "podéis pagar primero (не primeros). Primeros/as — только с артиклем или существительным: "
+               "los primeros días, ser los primeros.",
+         "en": "After a verb, 'first' is the adverb primero and never agrees: podéis pagar primero."},
+        original_markers=(r"\b(pag|pas|entr|sal|lleg|habl|empez|termin|com|vay|id)\w*\s+primer(os|as|a)\b",),
+    ),
+    TransferRule(
         "ru_es.pensar_en", _S, _T, "preposition", "думать о → pensar en",
         "Я думаю о тебе", "Pienso en ti",
         {"ru": "«Думать о ком-то» — pensar en (не de/sobre): Pienso en ti. "

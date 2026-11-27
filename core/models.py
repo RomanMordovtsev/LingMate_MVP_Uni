@@ -1,4 +1,4 @@
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Union
 from pydantic import BaseModel
 
 class UserSettings(BaseModel):
@@ -33,3 +33,17 @@ class PlacementRequest(BaseModel):
     answers: List[PlacementAnswer] = []
     production: List[PlacementProduction] = []
     apply_level: bool = False   # finish only: write the placed level into the profile
+
+class PracticeCheckRequest(BaseModel):
+    exercise_id: str
+    response: Union[str, List[str], None] = None   # text, or the ordered tokens for `order`
+    attempt: int = 1
+
+class PracticeResult(BaseModel):
+    exercise_id: str
+    result: str
+    attempts: int = 1
+
+class PracticeFinishRequest(BaseModel):
+    user_id: str
+    results: List[PracticeResult] = []

@@ -4,6 +4,14 @@ Newest entries at the top. Each scheduled run appends one entry: date, roadmap i
 
 ---
 
+## 2026-11-27 — C.3 slice 1: controlled practice per unit (scheduled run)
+- Branch `agent/lesson-practice` → PR into `agent/dev`. No open PRs (#25 merged, no comments). docs/feedback: nothing new after 2026-11-21. Friday, ISO week 48 → ordinary day.
+- Notion: new 27.11 «Пропустить людей вперёд на кассе» → `docs/learner` (+ pattern row) + real case `roman-2026-11-27-checkout` (*pagar primeros* → *primero*, *objetos* → *cosas*); new RU→ES rule `ru_es.adverb_primero` (RU «первыми» agrees, ES adverb *primero* does not) so the case gets a transfer note.
+- Task: C.3 first slice — the controlled-practice step of the lesson, auto-checked without an LLM (quota strategy). `core/practice.py` + `curriculum/es/practice/*.yaml` for units 1–3 (20 exercises: gap, choose, order, transform). Graded hints (syllabus-design §6), diff + short explanation on reveal (morphosyntax §2, §6), accent-only slips accepted with a note, result = `practised` not done (sla §6), summary sends the learner to the role-play.
+- UI: «Упражнения» button per unit in «Программа», practice panel (one task at a time, word chips for order), summary «N из M с первой попытки» + «стоит повторить», result line under the unit.
+- Tests: 285 → 309. Playwright: fresh DB, es, unit 2 — wrong ×2 on a gap (hint, then cue «h_ i__»), right on the 3rd; accent slip *movil* accepted with diff; order task via chips; summary + stored line in «Программа»; phone width 390 px; no console errors. Found: renderCorrection printed «✓ undefined» without `corrected` → server now returns `full_answer`.
+- Open for Roman: naturalness of the exercises (his judgement), whether practice errors should go into the error log (now they don't: drills ≠ free production).
+
 ## 2026-11-26 — C.2 slice 3: placement covers every unit (scheduled run)
 - Branch `agent/placement-coverage` → PR into `agent/dev`. No open PRs (#24 merged, no comments). docs/feedback: nothing new after 2026-11-21. Notion: no new entries after 23.11. Thursday, ISO week 48 → ordinary day.
 - Task: the defect found on 23.11 — the staircase asked the first 4 items of a level in YAML order, so a clear A2 pass probed only units 2–3 and never units 1, 4, 5, 6.
