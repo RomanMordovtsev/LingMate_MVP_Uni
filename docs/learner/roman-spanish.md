@@ -35,11 +35,21 @@ Roman adds new situations at the top. Each agent run: fetch the page with the No
 | hoping / wishing: *espero que* + subjuntivo (*salga, vaya*), *ojalá*, *eso espero* | mood / chunk | espero 19.11 |
 | personal data in forms: *dirección / domicilio*, Spanish address format; spelling *dirección* (cc, EN *direction*) | lexical / spelling_accent, transfer EN | address 23.11 |
 | EN/RU "overhaul / капитальный ремонт" → *reforma integral* (flat, system), *revisión a fondo* (car); *la reforma* = flat renovation in Spain | lexical, transfer EN/RU | overhaul 22.11 |
+| RU adverbial «первыми» agreed like an adjective (*pagar primeros* → *primero*); formal *objetos* for shopping (→ *cosas*); offering vs apologising (*perdón* not needed) | agreement / lexical, transfer RU | checkout 27.11 |
 | EN news/academic adverbs (*allegedly*) → *presuntamente / supuestamente / al parecer*; *presumir* = to boast, not *to presume* | lexical, transfer EN | allegedly 19.11 |
 
 Note: many of Roman's errors come from **English** (C1), not Russian — the transfer map must allow any language in the repertoire as `transfer_source` (multilingual-education §1, morphosyntax §7).
 
 ## Situations (newest first)
+
+### 27.11.2026 — Letting people go first at the supermarket checkout
+- Said: «Perdón, podéis pagar primeros. Solo tenéis 2 objetos.» (understood; meaning and politeness were there) → eval case `roman-2026-11-27-checkout`.
+- **primeros → primero**: adverb "first", does not agree (RU «первыми» agrees). **objetos → cosas**: shopping items are *cosas*; *objeto* sounds formal. **perdón** not needed: it is an offer, not an apology; to get attention *oye / oigan* or the phrase directly.
+- Natural: **Pasad, pasad, que solo lleváis dos cosas.** (most typical), *Pasad delante, si queréis.*, *¿Queréis pasar? Yo llevo un montón.*; one person *Pasa, pasa* (tú) / *Pase, pase usted* (older); several on usted *Pasen, pasen*.
+- Replies: *¡Muchas gracias, qué amable!* → **De nada / Nada, nada / No hay de qué**.
+- Grammar: **pasar delante** (go ahead in a queue) vs **colarse** (jump the queue: *¡Oye, que te has colado!*); **que** at the start of the second clause = "since" (colloquial reason); **llevar** = to carry / have with you (more natural than *tener* for shopping in hand).
+- Vocabulary: *el carro / el carrito, la cesta, la cola, la caja, el/la cajero/a*, *¿Estás en la cola?*
+- Uses: relocation pack 4.3 (supermarket), speech acts 4.10 (offers), queue vocabulary (see queue 2026-10), SRS chunks.
 
 ### 23.11.2026 — «Адрес» (address)
 - Question (no utterance → synthetic eval case `syn-spelling-en-direccion`: *direción* under EN *direction* → **dirección**).

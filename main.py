@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from core.models import UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest, PlacementRequest
+from core.models import (UserSettings, ChatRequest, LessonStartRequest, LessonMessageRequest, PlacementRequest,
+                         PracticeCheckRequest, PracticeFinishRequest)
 from core.storage import make_store
 from core.profile import LearnerProfile, profile_from_settings
 from core.scenarios import SCENARIOS
@@ -13,6 +14,7 @@ from core.feedback import correction_to_text
 from core.error_log import make_entry, summarize
 from core.curriculum import curriculum, get_unit, next_units
 from core import placement as placement_test
+from core import practice
 
 from dotenv import load_dotenv
 
@@ -259,7 +261,8 @@ def curriculum_map(language: str, done: str = "", level: str | None = None):
     units = curriculum(language)
     done_ids = [d for d in done.split(",") if d]
     return {"language": language, "units": [u.summary() for u in units],
-            "next": [u.id for u in next_units(units, done_ids, level=level)]}
+            "next": [u.id for u in next_units(units, done_ids, level=level)],
+            "practice": [u.id for u in units if practice.practice_for(language, u.id)]}
 
 
 @app.get("/api/curriculum/{language}/units/{unit_id}")
@@ -268,6 +271,49 @@ def curriculum_unit(language: str, unit_id: str):
     if unit is None:
         raise HTTPException(status_code=404, detail="Unit not found")
     return unit.model_dump()
+
+
+def _practice_set(language: str, unit_id: str):
+    unit = get_unit(language, unit_id)
+    ps = practice.practice_for(language, unit_id) if unit else None
+    if ps is None:
+        raise HTTPException(status_code=404, detail="No practice for this unit")
+    return unit, ps
+
+
+@app.get("/api/curriculum/{language}/units/{unit_id}/practice")
+def practice_get(language: str, unit_id: str):
+    """Controlled practice (roadmap C.3 slice 1): exercises without the answer key."""
+    unit, ps = _practice_set(language, unit_id)
+    return {"unit": unit.id, "title_ru": unit.title_ru,
+            "grammar": [{"id": g.id, "label_ru": g.label_ru, "tip_ru": g.tip_ru} for g in unit.grammar],
+            "exercises": [e.public() for e in ps.exercises]}
+
+
+@app.post("/api/curriculum/{language}/units/{unit_id}/practice/check")
+def practice_check(language: str, unit_id: str, req: PracticeCheckRequest):
+    """Checked on the server, no LLM: graded hints, then the answer with a diff."""
+    _, ps = _practice_set(language, unit_id)
+    ex = ps.by_id().get(req.exercise_id)
+    if ex is None:
+        raise HTTPException(status_code=404, detail="Exercise not found")
+    return practice.check(ex, req.response, req.attempt)
+
+
+@app.post("/api/curriculum/{language}/units/{unit_id}/practice/finish")
+def practice_finish(language: str, unit_id: str, req: PracticeFinishRequest):
+    """Summary stored under settings["practice"][unit_id] (additive). «practised», not «done»."""
+    unit, ps = _practice_set(language, unit_id)
+    summary = practice.summarize(ps, [r.model_dump() for r in req.results], unit)
+    settings = store.get_settings(req.user_id) or {"user_id": req.user_id, "target_language": language}
+    settings.setdefault("practice", {})[unit.id] = practice.record(summary)
+    store.save_settings(req.user_id, settings)
+    return summary
+
+
+@app.get("/api/practice/{user_id}")
+def practice_progress(user_id: str):
+    return {"practice": (store.get_settings(user_id) or {}).get("practice", {})}
 
 
 def _placement_bank(language: str):

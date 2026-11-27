@@ -1,0 +1,61 @@
+# Controlled practice (roadmap C.3 slice 1): auto-checked without an LLM, see core/practice.py.
+unit: es-a2-ayer-en-el-taller
+exercises:
+  - id: taller-deje
+    kind: gap
+    grammar: indefinido_ayer
+    instruction_ru: "В мастерской: вчера ты оставил рюкзак (dejar, yo)."
+    prompt: "Ayer les ___ una mochila para arreglar."
+    answers: ["dejé"]
+    hint_ru: "Ayer → pretérito indefinido; у yo ударение на окончании."
+    explain_ru: "Ayer + indefinido: dejé (с тильдой; deje без неё — другая форма)."
+  - id: taller-traje
+    kind: gap
+    grammar: indefinido_ayer
+    instruction_ru: "Ты в мастерской и говоришь, что принёс вещь сюда вчера (traer, yo)."
+    prompt: "Ayer ___ unos zapatos a arreglar."
+    answers: ["traje"]
+    hint_ru: "traer — неправильный глагол в pretérito indefinido (основа traj-)."
+    explain_ru: "traer → traje, trajiste, trajo: ты сейчас здесь, значит «принёс сюда»."
+  - id: taller-fui
+    kind: gap
+    grammar: indefinido_ayer
+    instruction_ru: "Расскажи про прошлую субботу (ir, yo)."
+    prompt: "El sábado ___ al mercado con unos amigos."
+    answers: ["fui"]
+    hint_ru: "ir в pretérito indefinido совсем неправильный (как у ser)."
+    explain_ru: "ir → fui, fuiste, fue; el sábado (прошедший) → indefinido."
+  - id: taller-lleve
+    kind: choose
+    grammar: dejar_traer_llevar
+    instruction_ru: "Ты дома и рассказываешь, что вчера отнёс рюкзак в ремонт."
+    prompt: "Ayer ___ la mochila a arreglar."
+    options: ["llevé", "traje", "di"]
+    answers: ["llevé"]
+    hint_ru: "Ты дома, мастерская — «там». Нужен глагол «отнести туда»."
+    explain_ru: "llevar — отнести туда; traer — принести сюда (где ты сейчас); dar здесь звучит как «подарил»."
+  - id: taller-que-deje
+    kind: choose
+    grammar: dejar_traer_llevar
+    instruction_ru: "В мастерской: пришёл забрать вещь."
+    prompt: "Vengo a recoger la mochila que ___ ayer."
+    options: ["dejé", "di", "llevé"]
+    answers: ["dejé"]
+    hint_ru: "«Отдал в ремонт» по-испански — не «дать», а «оставить»."
+    explain_ru: "dejar — оставить, сдать (в ремонт, в химчистку, в гардероб)."
+  - id: taller-ayer-abrigo
+    kind: transform
+    grammar: indefinido_ayer
+    instruction_ru: "Перескажи про вчера: начни с «Ayer…»."
+    prompt: "Hoy he dejado el abrigo en la tintorería."
+    answers: ["Ayer dejé el abrigo en la tintorería."]
+    hint_ru: "Ayer — законченный день → pretérito indefinido вместо he + participio."
+    explain_ru: "hoy he dejado → ayer dejé: сегодня — perfecto, вчера — indefinido."
+  - id: taller-recoger
+    kind: order
+    grammar: dejar_traer_llevar
+    instruction_ru: "Собери фразу."
+    prompt: "Я пришёл забрать рюкзак, который оставил вчера."
+    answers: ["Vengo a recoger la mochila que dejé ayer."]
+    hint_ru: "Начни с «я пришёл»: venir + a + инфинитив."
+    explain_ru: "Vengo a recoger… — «пришёл забрать»; que dejé ayer — «который оставил вчера»."

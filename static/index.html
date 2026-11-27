@@ -201,6 +201,12 @@
     .program-unit { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); line-height: 1.5; }
     .program-unit .chip { display: inline-block; margin: 2px 0 2px 8px; vertical-align: middle; line-height: 1.2; }
     .program-start { border-left: 3px solid var(--accent-2); padding-left: 8px; }
+    .program-unit button.ghost { width: auto; padding: 6px 12px; margin-top: 6px; }
+    #practicePanel { margin-top: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    #practicePrompt { font-size: 1.1em; margin: 8px 0; }
+    #practiceBuilt { min-height: 2.2em; padding: 6px; border: 1px dashed var(--line); border-radius: 8px; margin-bottom: 8px; }
+    .practice-feedback { margin-top: 8px; line-height: 1.5; }
+    .practice-ok { color: #067647; font-weight: 600; }
     .dashboard-box {
       background: white;
       border-radius: 18px;
@@ -587,7 +593,21 @@
   <!-- Curriculum map (roadmap C.1): units in course order, start unit from the placement test. -->
   <div class="dashboard-box" id="programCard" style="margin-top:18px;">
     <h3>Программа</h3>
-    <div class="muted" id="programIntro">Уроки по порядку. Отмечено, с чего начать по тесту уровня и что, похоже, ты уже знаешь. Сами уроки появятся скоро.</div>
+    <div class="muted" id="programIntro">Уроки по порядку. Отмечено, с чего начать по тесту уровня и что, похоже, ты уже знаешь. В первых уроках уже есть упражнения; остальные части урока появятся скоро.</div>
+    <div id="practicePanel" style="display:none;">
+      <div style="font-weight:600;" id="practiceTitle"></div>
+      <div class="muted" id="practiceTip" style="margin-top:4px;"></div>
+      <div class="muted" id="practiceCounter" style="margin-top:8px;"></div>
+      <div id="practiceInstruction" style="margin-top:4px;"></div>
+      <div id="practicePrompt"></div>
+      <div id="practiceInputBox"></div>
+      <div class="practice-feedback" id="practiceFeedback"></div>
+      <div class="choice-row" style="margin-top:8px;">
+        <button class="primary" id="practiceCheckBtn" onclick="checkPractice()">Проверить</button>
+        <button class="ghost" id="practiceNextBtn" style="display:none;" onclick="nextPractice()">Дальше</button>
+        <button class="ghost" onclick="closePractice()">Закрыть</button>
+      </div>
+    </div>
     <div id="programList" style="margin-top:10px;"></div>
   </div>
 
@@ -1158,6 +1178,9 @@ async function loadProgram(placement) {
   if (!data.units.length) { box.textContent = 'Для этого языка программы пока нет.'; return; }
   const start = placement && placement.language === lang ? placement.start_unit : null;
   const unlocked = (placement && placement.language === lang && placement.unlocked) || [];
+  let done = {};
+  try { done = (await api('/api/practice/' + encodeURIComponent(document.getElementById('userId').value))).practice || {}; }
+  catch (err) { console.error(err); }
   data.units.forEach((u, i) => {
     const row = document.createElement('div');
     row.className = 'program-unit';
@@ -1187,8 +1210,152 @@ async function loadProgram(placement) {
       note.textContent = evText;
       row.appendChild(note);
     }
+    if ((data.practice || []).includes(u.id)) {
+      const p = done[u.id];
+      if (p) {
+        const pn = document.createElement('div');
+        pn.className = 'muted program-practice';
+        pn.textContent = 'Упражнения: ' + p.first_try + ' из ' + p.total + ' с первой попытки · ' + (p.at || '').slice(0, 10)
+          + (p.weak && p.weak.length ? ' — стоит повторить' : '');
+        row.appendChild(pn);
+      }
+      const b = document.createElement('button');
+      b.className = 'ghost';
+      b.type = 'button';
+      b.textContent = p ? 'Упражнения ещё раз' : 'Упражнения';
+      b.onclick = () => openPractice(u.id);
+      row.appendChild(b);
+    }
     box.appendChild(row);
   });
+}
+
+// --- Controlled practice (roadmap C.3 slice 1): checked on the server, no LLM ------------
+let PRACTICE = null;
+
+async function openPractice(unitId) {
+  let data;
+  try { data = await api('/api/curriculum/' + placementLang() + '/units/' + unitId + '/practice'); }
+  catch (err) { console.error(err); return; }
+  PRACTICE = { unit: unitId, data, i: 0, attempt: 1, results: [], built: [] };
+  document.getElementById('practiceTitle').textContent = 'Упражнения: ' + data.title_ru;
+  document.getElementById('practicePanel').style.display = '';
+  renderPractice();
+  document.getElementById('practicePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closePractice() {
+  document.getElementById('practicePanel').style.display = 'none';
+  PRACTICE = null;
+}
+
+function practiceResponse() {
+  const e = PRACTICE.data.exercises[PRACTICE.i];
+  if (e.kind === 'order') return PRACTICE.built.slice();
+  if (e.kind === 'choose') return PRACTICE.choice || '';
+  const inp = document.getElementById('practiceInput');
+  return inp ? inp.value : '';
+}
+
+function renderPractice() {
+  const e = PRACTICE.data.exercises[PRACTICE.i];
+  const g = PRACTICE.data.grammar.find(x => x.id === e.grammar);
+  PRACTICE.attempt = 1; PRACTICE.built = []; PRACTICE.choice = null;
+  document.getElementById('practiceTip').textContent = g ? g.label_ru + ': ' + g.tip_ru : '';
+  document.getElementById('practiceCounter').textContent = 'Задание ' + (PRACTICE.i + 1) + ' из ' + PRACTICE.data.exercises.length;
+  document.getElementById('practiceInstruction').textContent = e.instruction_ru;
+  document.getElementById('practicePrompt').textContent = e.prompt;
+  document.getElementById('practiceFeedback').innerHTML = '';
+  document.getElementById('practiceCheckBtn').style.display = '';
+  document.getElementById('practiceNextBtn').style.display = 'none';
+  const box = document.getElementById('practiceInputBox');
+  box.innerHTML = '';
+  if (e.kind === 'choose') {
+    const row = document.createElement('div');
+    row.className = 'choice-row';
+    e.options.forEach(o => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = o;
+      b.onclick = () => { PRACTICE.choice = o; [...row.children].forEach(c => c.classList.toggle('on', c === b)); };
+      row.appendChild(b);
+    });
+    box.appendChild(row);
+  } else if (e.kind === 'order') {
+    const built = document.createElement('div');
+    built.id = 'practiceBuilt';
+    const pool = document.createElement('div');
+    pool.className = 'choice-row';
+    const redraw = () => {
+      built.textContent = PRACTICE.built.join(' ') || 'Нажимай на слова по порядку…';
+      pool.innerHTML = '';
+      const left = e.tokens.slice();
+      PRACTICE.built.forEach(w => left.splice(left.indexOf(w), 1));
+      left.forEach(w => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = w;
+        b.onclick = () => { PRACTICE.built.push(w); redraw(); };
+        pool.appendChild(b);
+      });
+      const undo = document.createElement('button');
+      undo.type = 'button'; undo.textContent = '← убрать';
+      undo.onclick = () => { PRACTICE.built.pop(); redraw(); };
+      if (PRACTICE.built.length) pool.appendChild(undo);
+    };
+    box.appendChild(built); box.appendChild(pool);
+    PRACTICE.redraw = redraw;
+    redraw();
+  } else {
+    const inp = document.createElement('input');
+    inp.id = 'practiceInput';
+    inp.placeholder = e.kind === 'gap' ? 'Что вместо ___ ?' : 'Напиши фразу целиком';
+    inp.onkeydown = ev => { if (ev.key === 'Enter') checkPractice(); };
+    box.appendChild(inp);
+    setTimeout(() => inp.focus(), 0);
+  }
+}
+
+async function checkPractice() {
+  const e = PRACTICE.data.exercises[PRACTICE.i];
+  const r = await api('/api/curriculum/' + placementLang() + '/units/' + PRACTICE.unit + '/practice/check', 'POST',
+    { exercise_id: e.id, response: practiceResponse(), attempt: PRACTICE.attempt });
+  const fb = document.getElementById('practiceFeedback');
+  fb.innerHTML = '';
+  const line = (text, cls) => { const d = document.createElement('div'); d.textContent = text; if (cls) d.className = cls; fb.appendChild(d); };
+  if (r.done) {
+    if (r.result === 'correct') line('Верно! ' + r.full_answer, 'practice-ok');
+    else if (r.result === 'accent') line(r.note_ru);
+    const diff = renderCorrection({ diff: r.diff, corrected: r.full_answer });
+    if (diff) fb.appendChild(diff);
+    else if (r.result === 'revealed') line('Правильный ответ: ' + r.full_answer);
+    line(r.explain_ru, 'muted');
+    PRACTICE.results.push({ exercise_id: e.id, result: r.result, attempts: r.attempt });
+    document.querySelectorAll('#practiceInputBox button, #practiceInputBox input').forEach(el => el.disabled = true);
+    document.getElementById('practiceCheckBtn').style.display = 'none';
+    document.getElementById('practiceNextBtn').style.display = '';
+    document.getElementById('practiceNextBtn').textContent =
+      PRACTICE.i + 1 < PRACTICE.data.exercises.length ? 'Дальше' : 'Итог';
+  } else {
+    line('Пока не так. Подсказка: ' + r.hint_ru);
+    if (r.cue) line('Начало ответа: ' + r.cue, 'muted');
+    PRACTICE.attempt = r.attempt + 1;
+  }
+}
+
+async function nextPractice() {
+  PRACTICE.i += 1;
+  if (PRACTICE.i < PRACTICE.data.exercises.length) { renderPractice(); return; }
+  const s = await api('/api/curriculum/' + placementLang() + '/units/' + PRACTICE.unit + '/practice/finish', 'POST',
+    { user_id: document.getElementById('userId').value, results: PRACTICE.results });
+  document.getElementById('practiceCounter').textContent = 'Готово!';
+  ['practiceInstruction', 'practicePrompt', 'practiceInputBox', 'practiceTip'].forEach(id => document.getElementById(id).textContent = '');
+  const fb = document.getElementById('practiceFeedback');
+  fb.innerHTML = '';
+  [s.first_try + ' из ' + s.total + ' — с первой попытки' + (s.with_help ? ', ' + s.with_help + ' — с подсказкой' : '')
+     + (s.revealed ? ', ' + s.revealed + ' — посмотрел ответ' : '') + '.',
+   s.weak.length ? 'Стоит повторить: ' + s.weak.map(w => w.label_ru).join('; ') + '.' : 'Все темы урока получились — отлично!',
+   s.next_ru].forEach(t => { const d = document.createElement('div'); d.textContent = t; fb.appendChild(d); });
+  document.getElementById('practiceNextBtn').style.display = 'none';
+  loadPlacement(document.getElementById('userId').value);
 }
 
 async function loadPlacement(userId) {

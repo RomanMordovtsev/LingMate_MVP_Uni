@@ -1,0 +1,53 @@
+# Controlled practice (roadmap C.3 slice 1): auto-checked without an LLM, see core/practice.py.
+unit: es-a2-en-el-bar
+exercises:
+  - id: bar-pones
+    kind: gap
+    grammar: poner_pedir
+    instruction_ru: "Попроси у молодого бармена кофе (на «ты»)."
+    prompt: "¿Me ___ un café con leche?"
+    answers: ["pones"]
+    hint_ru: "Глагол poner в форме для «ты»."
+    explain_ru: "В баре poner = «подать»: ¿Me pones…? — обычная вежливая просьба на «ты»."
+  - id: bar-trae-cuenta
+    kind: choose
+    grammar: tu_usted_servicio
+    instruction_ru: "Попроси счёт у официанта на «вы»."
+    prompt: "Perdone, ¿me ___ la cuenta?"
+    options: ["trae", "traes", "traen"]
+    answers: ["trae"]
+    hint_ru: "«Perdone» — значит, ты говоришь на usted (3-е лицо ед. ч.)."
+    explain_ru: "usted спрягается как él / ella: ¿me trae…? (а ¿me traes…? — на «ты»)."
+  - id: bar-para-mi
+    kind: order
+    grammar: poner_pedir
+    instruction_ru: "Собери фразу: заказываешь в компании."
+    prompt: "Мне колу (когда заказывает компания)."
+    answers: ["Para mí, una Coca-Cola."]
+    hint_ru: "Начни с «мне» — через предлог para."
+    explain_ru: "Para mí, … — так каждый в компании говорит, что он хочет."
+  - id: bar-quiero-cortado
+    kind: transform
+    grammar: poner_pedir
+    instruction_ru: "Скажи мягче, как обычно говорят в испанском баре (на «ты»)."
+    prompt: "Quiero un cortado."
+    answers: ["¿Me pones un cortado?", "¿Me pones un cortado, por favor?"]
+    hint_ru: "Вместо «хочу» — вопрос с глаголом poner."
+    explain_ru: "«Quiero…» не ошибка, но звучит прямолинейно; ¿Me pones…? — естественно и вежливо."
+  - id: bar-perdone-senora
+    kind: choose
+    grammar: tu_usted_servicio
+    instruction_ru: "Пожилая незнакомая женщина стоит на проходе. Как начать?"
+    prompt: "___, ¿me deja pasar?"
+    options: ["Perdone", "Perdona", "Oye"]
+    answers: ["Perdone"]
+    hint_ru: "С пожилыми и незнакомыми — на «вы» (usted)."
+    explain_ru: "Perdone / disculpe — формы для usted; perdona и oye — на «ты»."
+  - id: bar-pone-cana
+    kind: transform
+    grammar: tu_usted_servicio
+    instruction_ru: "Перескажи эту просьбу на «вы» — официанту постарше в ресторане."
+    prompt: "¿Me pones una caña?"
+    answers: ["¿Me pone una caña?", "¿Me pone una caña, por favor?", "Póngame una caña.", "Póngame una caña, por favor."]
+    hint_ru: "Форма usted — как для él: без -s на конце."
+    explain_ru: "tú: ¿me pones…? → usted: ¿me pone…? или повелительное póngame…"
